@@ -1,5 +1,7 @@
 # Only One-pass Shader (oops.js)
 
+### “Patience is not the ability to wait, but the ability to keep a good attitude while waiting.”
+
 This is a library which attempts to squeeze higher performance from Three.js postprocessing effects, by:
 
 * merging the source codes of several shaders
@@ -11,5 +13,7 @@ these shaders are merged and all uniforms (except for the texture) are defined a
 
 * Original rendering: 26802 ms / 10000 frames (373 fps)
 * Merged rendering: 17737 ms / 10000 frames (564 fps)
+
+Merging the last pass (`OutputPass`) may increase performence further on.
 
 This is a work in progress. Be patient.
