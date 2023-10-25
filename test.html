@@ -189,7 +189,11 @@ if( 1 )
 {
 
 				var oops = new OOPSShader( );
-				console.log(oops)
+					oops.addShader( 'DotScreenShader' );
+					oops.addShader( 'RGBShiftShader' );
+
+					
+				//console.log(oops)
 				const effect = new ShaderPass( oops );
 				composer.addPass( effect );
 }
@@ -232,7 +236,7 @@ var aa = 240;
 aa--;
 if( aa==0 || aa==120 )
 {
-var n = 100;
+var n = 1;
 console.time('Time '+n);
 for( var i=0; i<n; i++ ) composer.render();
 console.timeEnd('Time '+n);

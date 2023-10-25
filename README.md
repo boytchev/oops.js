@@ -13,8 +13,8 @@ using `RGBShiftShader` and `DotScreenShader`. When these two shaders are merged
 and their uniforms (except for the texture) are defined as constants, the
 performance increases by 50%:
 
-* Original rendering: 26802 ms / 10000 frames (373 fps)
-* Merged rendering: 17737 ms / 10000 frames (564 fps)
+* Original rendering: 26136 ms / 10000 frames (383 fps)
+* Merged rendering: 17081 ms / 10000 frames (585 fps)
 
 Merging the last pass (`OutputPass`) with the other two may increase performence
 even more.
