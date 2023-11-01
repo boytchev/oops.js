@@ -133,9 +133,7 @@ Example: [SobelOperatorShader.html](examples/SobelOperatorShader.html)
 
 All Three.js shaders from `three/addons/shaders`:
 
-<small>
-<small>
-
+<span style="font-size: 0.75em; color: lightgray;">
  ACESFilmicToneMappingShader
  AfterimageShader
  BasicShader
@@ -143,21 +141,21 @@ All Three.js shaders from `three/addons/shaders`:
  BlendShader
  BokehShader
  BokehShader2
- <span style="background:palegreen">BrightnessContrastShader</span>
- <span style="background:palegreen">ColorCorrectionShader</span>
+ <b style="background:palegreen; color: black; padding:0.3em;">BrightnessContrastShader</b>
+ <b style="background:palegreen; color: black; padding:0.3em;">ColorCorrectionShader</b>
  ColorifyShader
  ConvolutionShader
  CopyShader
  DepthLimitedBlurShader
  DigitalGlitch
  DOFMipMapShader
- <span style="background:palegreen">DotScreenShader</span>
+ <b style="background:palegreen; color: black; padding:0.3em;">DotScreenShader</b>
  ExposureShader
  FilmShader
  FocusShader
  FreiChenShader
  FXAAShader
- <span style="background:palegreen">GammaCorrectionShader</span>
+ <b style="background:palegreen; color: black; padding:0.3em;">GammaCorrectionShader</b>
  GodRaysShader
  HalftoneShader
  HorizontalBlurShader
@@ -170,11 +168,11 @@ All Three.js shaders from `three/addons/shaders`:
  MMDToonShader
  NormalMapShader
  OutputShader
- <span style="background:palegreen">RGBShiftShader</span>
+ <b style="background:palegreen; color: black; padding:0.3em;">RGBShiftShader</b>
  SAOShader
- <span style="background:palegreen">SepiaShader</span>
+ <b style="background:palegreen; color: black; padding:0.3em;">SepiaShader</b>
  SMAAShader
- <span style="background:palegreen">SobelOperatorShader</span>
+ <b style="background:palegreen; color: black; padding:0.3em;">SobelOperatorShader</b>
  SSAOShader
  SSRShader
  SubsurfaceScatteringShader
@@ -188,6 +186,4 @@ All Three.js shaders from `three/addons/shaders`:
  VignetteShader
  VolumeShader
  WaterRefractionShader
- 
-</small>
-</small>
+</span>
