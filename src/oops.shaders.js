@@ -247,6 +247,24 @@ const ColorCorrectionShader = {
 
 
 
+
+const ExposureShader = {
+	name: 'ExposureShader',
+	uniforms: {
+		exposure: { value: 1.0 },
+	},
+	fragmentShader: /* glsl */`
+		vec4 $( vec2 vUv ) {
+
+			vec4 color = $$( vUv );
+			color.rgb *= exposure_$;
+			return color;
+		}`
+};
+
+
+
+
 const SHADERS = {
 		DefaultShader: 				DefaultShader,
 		HeaderShader: 				HeaderShader,
@@ -257,6 +275,7 @@ const SHADERS = {
 		GammaCorrectionShader:		GammaCorrectionShader,
 		BrightnessContrastShader: 	BrightnessContrastShader,
 		ColorCorrectionShader:		ColorCorrectionShader,
+		ExposureShader:				ExposureShader,
 }
 
 

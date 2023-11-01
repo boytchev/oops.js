@@ -15,7 +15,7 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [GammaCorrectionShader](#gammacorrectionshader),
+* **Shaders about colors:** [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ExposureShader](#exposureshader), [GammaCorrectionShader](#gammacorrectionshader),
 [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader)
 
 * **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [SobelOperatorShader](#sobeloperatorshader)
@@ -68,6 +68,19 @@ Shader weight is 1 sweight.
 Example: [DotScreenShader.html](examples/DotScreenShader.html)
 		
 [<img src="examples/DotScreenShader.jpg">](examples/DotScreenShader.html)
+
+
+
+
+## ExposureShader
+
+A shader that changes the exposure of a frame. Exposure factor less than 1 makes the colors darker, while exposure above 1 makes them brighter. Exposure is multiplicative, i.e. the black color does not change and the 'opposite' of 2 is 1/2. Shader weight is 1 sweight.
+	
+* **`exposure`** – exposure factor (float, default value 1}
+
+Example: [ExposureShader.html](examples/ExposureShader.html)
+		
+[<img src="examples/ExposureShader.jpg">](examples/ExposureShader.html)
 
 
 
@@ -150,7 +163,7 @@ All Three.js shaders from `three/addons/shaders`:
  DigitalGlitch
  DOFMipMapShader
  <b style="background:palegreen; color: black; padding:0.3em;">DotScreenShader</b>
- ExposureShader
+ <b style="background:palegreen; color: black; padding:0.3em;">ExposureShader</b>
  FilmShader
  FocusShader
  FreiChenShader
