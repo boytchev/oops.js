@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+		  "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
+		  "oops": "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import * as THREE from 'three';
+
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+		import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+		import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+		import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+		import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+		import { OOPSShader } from 'oops';
+		import { renderer, camera, scene, randomBalls, controls, light, setAnimationLoop } from './examples.js';
+
+
+
+		randomBalls( 100 );
+
+
+
+		// custom postprocessing
+
+		var oops = new OOPSShader( )
+				.addShader( 'ColorCorrectionShader' )
+				.addUniform( 'powRGB', 'powRGB', new THREE.Vector3(2,2,2) )
+				.addUniform( 'mulRGB', 'mulRGB', new THREE.Vector3(1,1,1) )
+				.addUniform( 'addRGB', 'addRGB', new THREE.Vector3(0,0,0) );
+				
+		var effect = new ShaderPass( oops );
+		var composer = new EffectComposer( renderer );
+			composer.addPass( new RenderPass( scene, camera ) );
+			composer.addPass( effect );
+			composer.addPass( new OutputPass() );
+
+
+
+		// process window resize
+
+		window.addEventListener( 'resize', onWindowResize );
+
+		function onWindowResize()
+		{
+			camera.aspect = innerWidth / innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( innerWidth, innerHeight );
+			composer.setSize( innerWidth, innerHeight );
+		}
+
+
+
+		// create control panel
+		
+		var gui = new GUI( { title: '<big><em>Color Correction Shader</em></big>' } );
+			gui.add( effect.uniforms[ 'powRGB' ][ 'value' ], 'x', -2, 4 ).step( 0.01 ).name( 'PowRGB <right>red</right>' );
+			gui.add( effect.uniforms[ 'powRGB' ][ 'value' ], 'y', -2, 4 ).step( 0.01 ).name( '<right>green</right>' );
+			gui.add( effect.uniforms[ 'powRGB' ][ 'value' ], 'z', -2, 4 ).step( 0.01 ).name( '<right>blue</right>' );
+			gui.add( effect.uniforms[ 'mulRGB' ][ 'value' ], 'x', -1, 2 ).step( 0.01 ).name( 'MulRGB <right>red</right>' );
+			gui.add( effect.uniforms[ 'mulRGB' ][ 'value' ], 'y', -1, 2 ).step( 0.01 ).name( '<right>green</right>' );
+			gui.add( effect.uniforms[ 'mulRGB' ][ 'value' ], 'z', -1, 2 ).step( 0.01 ).name( '<right>blue</right>' );
+			gui.add( effect.uniforms[ 'addRGB' ][ 'value' ], 'x', -1, 1 ).step( 0.01 ).name( 'AddRGB <right>red</right>' );
+			gui.add( effect.uniforms[ 'addRGB' ][ 'value' ], 'y', -1, 1 ).step( 0.01 ).name( '<right>green</right>' );
+			gui.add( effect.uniforms[ 'addRGB' ][ 'value' ], 'z', -1, 1 ).step( 0.01 ).name( '<right>blue</right>' );
+
+
+
+		// animation loop
+		
+		setAnimationLoop( composer );
+
+	</script>
+
+</body>
+</html>

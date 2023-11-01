@@ -1,17 +1,6 @@
 # Only One-pass Shader (oops.js)
 
-### “Patience is not the ability to wait, but the ability to keep a good attitude while waiting.”
-
-This is a work in progress.
-
-Be patient.
-
-Please.
-
-
-# About 
-
-This is a library which attempts to squeeze higher performance from Three.js postprocessing effects, by:
+**Oops.js** is a library which attempts to squeeze higher performance from Three.js postprocessing effects, by:
 
 * merging the source codes of several shaders
 * embedding static uniforms as shader constants
@@ -20,20 +9,17 @@ Additionally, the library makes small adjustment to the shaders properties,
 so they are not completely the same as their Three.js counterparts.
   
 A very preliminary test with the [webgl_postprocessing](https://threejs.org/examples/?q=post#webgl_postprocessing)
-example looks promising. The example uses 4 passes, two of which are `ShaderPass`
-using `RGBShiftShader` and `DotScreenShader`. When these two shaders are merged
-and their uniforms (except for the texture) are defined as constants, the
-performance increases by 50%.
+example shows increased performance by 50%.
+
 
 
 # Supported shaders
 
-### Shaders about colors
-[BrightnessContrastShader](#brightnesscontrastshader), [GammaCorrectionShader](#gammacorrectionshader),
+* **Shaders about colors:** [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [GammaCorrectionShader](#gammacorrectionshader),
 [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader)
 
-### Shaders about shapes
-[DotScreenShader](#dotscreenshader), [SobelOperatorShader](#sobeloperatorshader)
+* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [SobelOperatorShader](#sobeloperatorshader)
+
 
 
 ## BrightnessContrastShader
@@ -48,6 +34,23 @@ Example: [BrightnessContrastShader.html](examples/BrightnessContrastShader.html)
 		
 [<img src="examples/BrightnessContrastShader.jpg">](examples/BrightnessContrastShader.html)
 		
+
+
+
+## ColorCorrectionShader
+
+A shader that transforms the colors in a frame by *m*&times;(*color* + *a*)<sup>*p*</sup>.
+Each color component is transformed by its own factors *m*, *a* and *p*.
+Shader weight is 1 sweight.
+	
+* **`mulRGB`** – scaling factor *m* (vector, default value THREE.Vector3(1,1,1)}
+* **`addRGB`** – offset factor *a* (vector, default value THREE.Vector3(0,0,0)}
+* **`powRGB`** – power factor *p* (vector, default value THREE.Vector3(2,2,2)}
+
+Example: [ColorCorrectionShader.html](examples/ColorCorrectionShader.html)
+		
+[<img src="examples/ColorCorrectionShader.jpg">](examples/ColorCorrectionShader.html)
+
 
 
 
@@ -134,7 +137,57 @@ All Three.js shaders from `three/addons/shaders`:
 <small>
 
  ACESFilmicToneMappingShader
- AfterimageShader BasicShader BleachBypassShader BlendShader BokehShader BokehShader2 <span style="background:palegreen">BrightnessContrastShader</span> ColorCorrectionShader ColorifyShader ConvolutionShader CopyShader DepthLimitedBlurShader DigitalGlitch DOFMipMapShader <span style="background:palegreen">DotScreenShader</span> ExposureShader FilmShader FocusShader FreiChenShader FXAAShader <span style="background:palegreen">GammaCorrectionShader</span> GodRaysShader HalftoneShader HorizontalBlurShader HorizontalTiltShiftShader HueSaturationShader KaleidoShader LuminosityHighPassShader LuminosityShader MirrorShader MMDToonShader NormalMapShader OutputShader <span style="background:palegreen">RGBShiftShader</span> SAOShader <span style="background:palegreen">SepiaShader</span> SMAAShader <span style="background:palegreen">SobelOperatorShader</span> SSAOShader SSRShader SubsurfaceScatteringShader TechnicolorShader ToonShader TriangleBlurShader UnpackDepthRGBAShader VelocityShader VerticalBlurShader VerticalTiltShiftShader VignetteShader VolumeShader WaterRefractionShader
+ AfterimageShader
+ BasicShader
+ BleachBypassShader
+ BlendShader
+ BokehShader
+ BokehShader2
+ <span style="background:palegreen">BrightnessContrastShader</span>
+ <span style="background:palegreen">ColorCorrectionShader</span>
+ ColorifyShader
+ ConvolutionShader
+ CopyShader
+ DepthLimitedBlurShader
+ DigitalGlitch
+ DOFMipMapShader
+ <span style="background:palegreen">DotScreenShader</span>
+ ExposureShader
+ FilmShader
+ FocusShader
+ FreiChenShader
+ FXAAShader
+ <span style="background:palegreen">GammaCorrectionShader</span>
+ GodRaysShader
+ HalftoneShader
+ HorizontalBlurShader
+ HorizontalTiltShiftShader
+ HueSaturationShader
+ KaleidoShader
+ LuminosityHighPassShader
+ LuminosityShader
+ MirrorShader
+ MMDToonShader
+ NormalMapShader
+ OutputShader
+ <span style="background:palegreen">RGBShiftShader</span>
+ SAOShader
+ <span style="background:palegreen">SepiaShader</span>
+ SMAAShader
+ <span style="background:palegreen">SobelOperatorShader</span>
+ SSAOShader
+ SSRShader
+ SubsurfaceScatteringShader
+ TechnicolorShader
+ ToonShader
+ TriangleBlurShader
+ UnpackDepthRGBAShader
+ VelocityShader
+ VerticalBlurShader
+ VerticalTiltShiftShader
+ VignetteShader
+ VolumeShader
+ WaterRefractionShader
  
 </small>
 </small>

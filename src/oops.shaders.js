@@ -228,15 +228,35 @@ const GammaCorrectionShader = {
 
 
 
+const ColorCorrectionShader = {
+	name: 'ColorCorrectionShader',
+	uniforms: {
+		powRGB:  { value: new THREE.Vector3( 2, 2, 2 ) },
+		mulRGB:  { value: new THREE.Vector3( 1, 1, 1 ) },
+		addRGB:  { value: new THREE.Vector3( 0, 0, 0 ) },
+	},
+	fragmentShader: /* glsl */`
+		vec4 $( vec2 vUv ) {
+
+			vec4 color = $$( vUv );
+			color.rgb = mulRGB_$ * pow( ( color.rgb + addRGB_$ ), powRGB_$ );
+			return color;
+		}`
+};
+
+
+
+
 const SHADERS = {
-		DefaultShader: 		DefaultShader,
-		HeaderShader: 		HeaderShader,
-		RGBShiftShader: 	RGBShiftShader,
-		DotScreenShader: 	DotScreenShader,
-		SepiaShader:		SepiaShader,
-		SobelOperatorShader:	SobelOperatorShader,
-		GammaCorrectionShader:	GammaCorrectionShader,
-		BrightnessContrastShader, BrightnessContrastShader,
+		DefaultShader: 				DefaultShader,
+		HeaderShader: 				HeaderShader,
+		RGBShiftShader:			 	RGBShiftShader,
+		DotScreenShader: 			DotScreenShader,
+		SepiaShader:				SepiaShader,
+		SobelOperatorShader:		SobelOperatorShader,
+		GammaCorrectionShader:		GammaCorrectionShader,
+		BrightnessContrastShader: 	BrightnessContrastShader,
+		ColorCorrectionShader:		ColorCorrectionShader,
 }
 
 

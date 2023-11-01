@@ -103,6 +103,9 @@ class OOPSShader
 		if( value instanceof THREE.Vector2 )
 			return `#define ${name}_${n+1} vec2(${value.x},${value.y})\n`;
 			
+		if( value instanceof THREE.Vector3 )
+			return `#define ${name}_${n+1} vec3(${value.x},${value.y},${value.z})\n`;
+			
 		if( Number.isInteger(value) )
 			return `#define ${name}_${n+1} ${value.toFixed(1)}\n`;
 			
@@ -118,6 +121,9 @@ class OOPSShader
 		
 		if( value instanceof THREE.Vector2 )
 			return str + `uniform vec2 ${name}_${n+1};\n`;
+		
+		if( value instanceof THREE.Vector3 )
+			return str + `uniform vec3 ${name}_${n+1};\n`;
 		
 		return str + `uniform float ${name}_${n+1};\n`;
 		
