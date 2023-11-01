@@ -29,20 +29,19 @@
 		import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 		import { OOPSShader } from 'oops';
-		import { renderer, camera, scene, randomBalls, controls, light, setAnimationLoop } from './examples.js';
+		import { renderer, camera, scene, randomBallsAndCubes, controls, light, setAnimationLoop } from './examples.js';
 
 
 
-		randomBalls( 100 );
+		randomBallsAndCubes( 100 );
 
 
 
 		// custom postprocessing
 
 		var oops = new OOPSShader( )
-				.addShader( 'RGBShiftShader' )
-				.addUniform( 'amount', 'amount', 0.02 )
-				.addUniform( 'angle', 'angle', 1.57 )
+				.addShader( 'SobelOperatorShader' )
+				.addUniform( 'resolution', 'resolution', new THREE.Vector2(innerWidth,innerHeight) )
 				.addUniform( 'opacity', 'opacity', 1 );
 				
 		var effect = new ShaderPass( oops );
@@ -65,15 +64,19 @@
 
 			renderer.setSize( innerWidth, innerHeight );
 			composer.setSize( innerWidth, innerHeight );
+			
+			effect.uniforms['resolution'].value.set( innerWidth, innerHeight );
+			gui.controllers[0].updateDisplay( );
+			gui.controllers[1].updateDisplay( );
 		}
 
 
 
 		// create control panel
 		
-		var gui = new GUI( { title: '<big><em>RGB Shift Shader</em></big>' } );
-			gui.add( effect.uniforms[ 'amount' ], 'value', 0, 0.04 ).step( 0.001 ).name( 'Amount' );//.$input.classList.add('top');
-			gui.add( effect.uniforms[ 'angle' ], 'value', 0, 6.28 ).step( 0.01 ).name( 'Angle' );
+		var gui = new GUI( { title: '<big><em>Sobel Operator Shader</em></big>' } );
+			gui.add( effect.uniforms[ 'resolution' ][ 'value' ], 'x', 100, 4000 ).step( 1 ).listen( ).name( 'Resolution <right>x</right>' );
+			gui.add( effect.uniforms[ 'resolution' ][ 'value' ], 'y', 100, 4000 ).step( 1 ).listen( ).name( '<right>y</right>' );
 			gui.add( effect.uniforms[ 'opacity' ], 'value', 0, 1 ).step( 0.01 ).name( 'Opacity' ).$input.classList.add('bottom');
 
 
