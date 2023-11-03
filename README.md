@@ -15,10 +15,27 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ExposureShader](#exposureshader), [GammaCorrectionShader](#gammacorrectionshader),
-[RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader)
+* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader),
+[RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [VignetteShader](#vignetteshader)
 
-* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [SobelOperatorShader](#sobeloperatorshader)
+* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
+[VerticalBlurShader](#verticalblurshader)
+
+
+
+## BleachBypassShader
+
+A shader that applies the [bleach bypass](https://en.wikipedia.org/wiki/Bleach_bypass)
+effect in photography. Shader weight is 1 sweight.
+	
+* **`amount`** – amount of effect intensity (float, default value 3}
+
+Example: [BleachBypassShader.html](examples/BleachBypassShader.html)
+		
+[<img src="examples/BleachBypassShader.jpg">](examples/BleachBypassShader.html)
+		
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is renamed to **amount** and has another default value.</span>*
+
 
 
 
@@ -69,18 +86,54 @@ Example: [DotScreenShader.html](examples/DotScreenShader.html)
 		
 [<img src="examples/DotScreenShader.jpg">](examples/DotScreenShader.html)
 
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **tSize** is renamed to **resolution** and
+has another default value; (2) **opacity** is added.</span>*
+
 
 
 
 ## ExposureShader
 
-A shader that changes the exposure of a frame. Exposure factor less than 1 makes the colors darker, while exposure above 1 makes them brighter. Exposure is multiplicative, i.e. the black color does not change and the 'opposite' of 2 is 1/2. Shader weight is 1 sweight.
+A shader that changes the exposure of a frame by myltiplying colors by factor *f*. Exposure factor *f*&lt;1 makes the colors darker, while exposure *f*&gt;1 makes them brighter. Exposure is multiplicative, i.e. the black color does not change and the 'opposite' of *f*=2 is *f*=1/2. Shader weight is 1 sweight.
 	
 * **`exposure`** – exposure factor (float, default value 1}
 
 Example: [ExposureShader.html](examples/ExposureShader.html)
 		
 [<img src="examples/ExposureShader.jpg">](examples/ExposureShader.html)
+
+
+
+
+## ExposureExpShader
+
+A shader that changes the exposure of a frame by myltiplying colors by factor *e<sup>f</sup>*, where *e*&approx;2.718 is the [Euler's number](https://en.wikipedia.org/wiki/E_(mathematical_constant)). Exposure factor *f*&lt;0 makes the colors darker, while exposure *f*&gt;0 makes them brighter. Exposure is linear, i.e. the 'opposite' of *f*=2 is *f*=-2. Shader weight is 1 sweight.
+	
+* **`exposure`** – exposure factor (float, default value 0}
+
+Example: [ExposureExpShader.html](examples/ExposureExpShader.html)
+		
+[<img src="examples/ExposureExpShader.jpg">](examples/ExposureExpShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) this shader is new.</span>*
+
+
+
+
+## FreiChenShader
+
+A shader that marks the edges of shapes based on the Frei-Chen edge detection
+algorithm. Shader weight is 10 sweights.
+	
+* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
+* **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
+
+Example: [FreiChenShader.html](examples/FreiChenShader.html)
+		
+[<img src="examples/FreiChenShader.jpg">](examples/FreiChenShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **aspect** is renamed to **resolution** and
+has another default value; (2) **opacity** is added; (3) a syntax bug in the shader is fixed.</span>*
 
 
 
@@ -95,6 +148,37 @@ approximation of &gamma;=2.2. Shader weight is 1 sweight.
 Example: [GammaCorrectionShader.html](examples/GammaCorrectionShader.html)
 		
 [<img src="examples/GammaCorrectionShader.jpg">](examples/GammaCorrectionShader.html)
+
+
+
+
+## HorizontalBlurShader
+
+A shader that blurs the frame horizontally with a Gaussian blur filter. Shader weight is 9 sweights.
+	
+* **`resolution`** – canvas width (float, default value innerWidth)
+* **`amount`** – amount of shader effect (float, default value 1.0) 
+
+Example: [HorizontalBlurShader.html](examples/HorizontalBlurShader.html)
+		
+[<img src="examples/HorizontalBlurShader.jpg">](examples/HorizontalBlurShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **h** is renamed to **resolution**,
+it is not 1/*width* and has another default value; (2) **amount** is added.</span>*
+		
+
+
+
+## MirrorShader
+
+A shader that mirrors half of the frame onto the other half. Shader weight is 1 sweight.
+	
+* **`side`** – which half frame is the source of mirror (int, 0=left&rarr;right, 1=right&rarr;left, 2:top&rarr;bottom, 3:bottom&rarr;top, default value 1)
+
+Example: [MirrorShader.html](examples/MirrorShader.html)
+		
+[<img src="examples/MirrorShader.jpg">](examples/MirrorShader.html)
+
 		
 
 
@@ -111,7 +195,9 @@ Shader weight is 3 sweights.
 Example: [RGBShiftShader.html](examples/RGBShiftShader.html)
 		
 [<img src="examples/RGBShiftShader.jpg">](examples/RGBShiftShader.html)
-		
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
+
 
 
 
@@ -139,18 +225,54 @@ Shader weight is 9 sweights.
 Example: [SobelOperatorShader.html](examples/SobelOperatorShader.html)
 		
 [<img src="examples/SobelOperatorShader.jpg">](examples/SobelOperatorShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **resolution** 
+has another default value; (2) **opacity** is added.</span>*
+
+
+
+
+## VerticalBlurShader
+
+A shader that blurs the frame vertically with a Gaussian blur filter. Shader weight is 9 sweights.
+	
+* **`resolution`** – canvas height (float, default value innerHeight)
+* **`amount`** – amount of shader effect (float, default value 1.0) 
+
+Example: [VerticalBlurShader.html](examples/VerticalBlurShader.html)
 		
+[<img src="examples/VerticalBlurShader.jpg">](examples/VerticalBlurShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **h** is renamed to **resolution**,
+it is not 1/*height* and has another default value; (2) **amount** is added.</span>*
+
+
+
+
+## VignetteShader
+
+A shader that adds a vignette effect on the frame. Shader weight is 1 sweight.
+	
+* **`radius`** – internal vignette radius (float, in NDC space units, default value 1.0)
+* **`blur`** – amount of blur effect on vignette border (float, 0 for no blur, default value 1.0) 
+* **`color`** – vignette color (vector, default value THREE.Vector3(0,0,0) for black color) 
+
+Example: [VignetteShader.html](examples/VignetteShader.html)
+		
+[<img src="examples/VignetteShader.jpg">](examples/VignetteShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) the shader is written from scratch
+and is unrelated with the Three.js VignetteShader.</span>*
+	
 
 
 # To do
-
-All Three.js shaders from `three/addons/shaders`:
 
 <span style="font-size: 0.75em; color: lightgray;">
  ACESFilmicToneMappingShader
  AfterimageShader
  BasicShader
- BleachBypassShader
+ <b style="background:palegreen; color: black; padding:0.3em;">BleachBypassShader</b>
  BlendShader
  BokehShader
  BokehShader2
@@ -164,20 +286,21 @@ All Three.js shaders from `three/addons/shaders`:
  DOFMipMapShader
  <b style="background:palegreen; color: black; padding:0.3em;">DotScreenShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">ExposureShader</b>
+ <b style="background:palegreen; color: black; padding:0.3em;">ExposureExpShader</b>
  FilmShader
  FocusShader
- FreiChenShader
+ <b style="background:palegreen; color: black; padding:0.3em;">FreiChenShader</b>
  FXAAShader
  <b style="background:palegreen; color: black; padding:0.3em;">GammaCorrectionShader</b>
  GodRaysShader
  HalftoneShader
- HorizontalBlurShader
+ <b style="background:palegreen; color: black; padding:0.3em;">HorizontalBlurShader</b>
  HorizontalTiltShiftShader
  HueSaturationShader
  KaleidoShader
  LuminosityHighPassShader
  LuminosityShader
- MirrorShader
+ <b style="background:palegreen; color: black; padding:0.3em;">MirrorShader</b>
  MMDToonShader
  NormalMapShader
  OutputShader
@@ -194,9 +317,9 @@ All Three.js shaders from `three/addons/shaders`:
  TriangleBlurShader
  UnpackDepthRGBAShader
  VelocityShader
- VerticalBlurShader
+ <b style="background:palegreen; color: black; padding:0.3em;">VerticalBlurShader</b>
  VerticalTiltShiftShader
- VignetteShader
+ <b style="background:palegreen; color: black; padding:0.3em;">VignetteShader</b>
  VolumeShader
  WaterRefractionShader
 </span>

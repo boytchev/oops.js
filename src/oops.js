@@ -98,13 +98,16 @@ class OOPSShader
 	
 	
 	
-	processDefine( name, value, n )
+	processDefine( name, value, n, type )
 	{
 		if( value instanceof THREE.Vector2 )
 			return `#define ${name}_${n+1} vec2(${value.x},${value.y})\n`;
 			
 		if( value instanceof THREE.Vector3 )
 			return `#define ${name}_${n+1} vec3(${value.x},${value.y},${value.z})\n`;
+			
+		if( type == 'int' )
+			return `#define ${name}_${n+1} ${Math.round(value)}\n`;
 			
 		if( Number.isInteger(value) )
 			return `#define ${name}_${n+1} ${value.toFixed(1)}\n`;
@@ -115,7 +118,7 @@ class OOPSShader
 
 
 
-	processUniform( name, alias, value, n )
+	processUniform( name, alias, value, n, type )
 	{
 		var str = `#define ${name}_${n+1} ${alias}\n`;
 		
@@ -124,6 +127,9 @@ class OOPSShader
 		
 		if( value instanceof THREE.Vector3 )
 			return str + `uniform vec3 ${name}_${n+1};\n`;
+console.log( name, alias, value, n, type )		
+		if( type == 'int' )
+			return str + `uniform int ${name}_${n+1};\n`;
 		
 		return str + `uniform float ${name}_${n+1};\n`;
 		
@@ -157,19 +163,21 @@ class OOPSShader
 		{
 			for( var name of Object.keys(shader.uniforms) )
 			{
+				var type = shader.uniforms[name].type;
+				
 				if( shaderPass.uniforms[name] )
 				{
 					var value = shaderPass.uniforms[name].value!==undefined ? shaderPass.uniforms[name].value : shader.uniforms[name].value,
 						alias = shaderPass.uniforms[name].alias;
 
-					glsl = this.processUniform( name, alias, value, n ) + glsl;
+					glsl = this.processUniform( name, alias, value, n, type ) + glsl;
 					this.uniforms[alias] = {value: value};
 				}
 				else
 				{
 					var value = shaderPass.values[name]!==undefined ? shaderPass.values[name] : shader.uniforms[name].value;
 					
-					glsl = this.processDefine( name, value, n ) + glsl;
+					glsl = this.processDefine( name, value, n, type ) + glsl;
 					
 				}
 			} // for name
