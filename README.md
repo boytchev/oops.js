@@ -18,7 +18,7 @@ example shows increased performance by 50%.
 * **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader),
 [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [VignetteShader](#vignetteshader)
 
-* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
+* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
 [VerticalBlurShader](#verticalblurshader)
 
 
@@ -169,6 +169,24 @@ it is not 1/*width* and has another default value; (2) **amount** is added.</spa
 
 
 
+## KaleidoShader
+
+A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https://en.wikipedia.org/wiki/Kaleidoscope) image. Shader weight is 1 sweight.
+	
+* **`sides`** – number of side of the kaleidoscope image (int, 3 or more, default value 6)
+* **`angle`** – rotation of the kaleidoscope image in radians (float, default value 0)
+* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
+
+Example: [KaleidoShader.html](examples/KaleidoShader.html)
+		
+[<img src="examples/KaleidoShader.jpg">](examples/KaleidoShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) added **resolution** and
+fixed aspect.</span>*
+
+
+
+
 ## MirrorShader
 
 A shader that mirrors half of the frame onto the other half. Shader weight is 1 sweight.
@@ -297,7 +315,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  <b style="background:palegreen; color: black; padding:0.3em;">HorizontalBlurShader</b>
  HorizontalTiltShiftShader
  HueSaturationShader
- KaleidoShader
+ <b style="background:palegreen; color: black; padding:0.3em;">KaleidoShader</b>
  LuminosityHighPassShader
  LuminosityShader
  <b style="background:palegreen; color: black; padding:0.3em;">MirrorShader</b>

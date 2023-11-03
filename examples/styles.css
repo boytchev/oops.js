@@ -22,7 +22,6 @@
 
 .lil-gui input.bottom, .lil-gui select.bottom, .lil-gui button.bottom{
 	border-bottom-right-radius: 0.65em !important;
-	background: red;
 }
 
 .lil-gui .controller.option .widget div {
