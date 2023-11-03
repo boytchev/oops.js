@@ -41,8 +41,8 @@
 
 		var oops = new OOPSShader( )
 			.addShader( 'FreiChenShader' )
-			.addUniform( 'resolution', 'resolution', new THREE.Vector2(innerWidth,innerHeight) )
-			.addUniform( 'opacity', 'opacity', 1 );
+			.addUniform( 'resolution', new THREE.Vector2(innerWidth,innerHeight) )
+			.addUniform( 'opacity' );
 				
 		var effect = new ShaderPass( oops );
 

@@ -41,7 +41,7 @@
 
 		var oops = new OOPSShader( )
 			.addShader( 'MirrorShader' )
-			.addUniform( 'side', 'side', 1 );
+			.addUniform( 'side' );
 
 		var effect = new ShaderPass( oops );
 
@@ -70,7 +70,7 @@
 		// create control panel
 		
 		var gui = new GUI( { title: '<big><em>Mirror Shader</em></big>' } );
-			gui.add( effect.uniforms['side'], 'value', {'Left-to-right':0, 'Right-to-left':1, 'Top-to-bottom':2, 'Bottom-to-top':3} ).name( 'Side' );
+			gui.add( effect.uniforms['side'], 'value', {'Left-to-right (0)':0, 'Right-to-left (1)':1, 'Top-to-bottom (2)':2, 'Bottom-to-top (3)':3} ).name( 'Side' ).$display.classList.add('bottom');
 
 
 

@@ -20,12 +20,12 @@
 	border-top-right-radius: 0.65em;
 }
 
-.lil-gui input.bottom, .lil-gui select.bottom, .lil-gui button.bottom{
+.lil-gui input.bottom, .lil-gui div.display.bottom, .lil-gui button.bottom{
 	border-bottom-right-radius: 0.65em !important;
 }
 
 .lil-gui .controller.option .widget div {
-	width: 9.15em;
+	width: 13.6em;
 }
 
 .lil-gui em {

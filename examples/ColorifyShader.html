@@ -42,8 +42,8 @@
 
 		var oops = new OOPSShader( )
 				.addShader( 'ColorifyShader' )
-				.addUniform( 'color', 'color', new THREE.Vector3(1,1,1) )
-				.addUniform( 'opacity', 'opacity', 1 );
+				.addUniform( 'color', new THREE.Vector3(1,1,1) )
+				.addUniform( 'opacity' );
 				
 		var effect = new ShaderPass( oops );
 

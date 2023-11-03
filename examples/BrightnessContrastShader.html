@@ -41,8 +41,8 @@
 
 		var oops = new OOPSShader( )
 				.addShader( 'BrightnessContrastShader' )
-				.addUniform( 'brightness', 'brightness', 0 )
-				.addUniform( 'contrast', 'contrast', 0 );
+				.addUniform( 'brightness' )
+				.addUniform( 'contrast' );
 				
 		var effect = new ShaderPass( oops );
 
@@ -72,7 +72,7 @@
 		
 		var gui = new GUI( { title: '<big><em>Brightness Contrast Shader</em></big>' } );
 			gui.add( effect.uniforms[ 'brightness' ], 'value', -1, 1 ).step( 0.01 ).name( 'Brightness' );
-			gui.add( effect.uniforms[ 'contrast' ], 'value', -1, 1 ).step( 0.01 ).name( 'Contrast' );
+			gui.add( effect.uniforms[ 'contrast' ], 'value', -1, 1 ).step( 0.01 ).name( 'Contrast' ).$input.classList.add('bottom');
 
 
 		// animation loop

@@ -40,9 +40,8 @@
 		// custom postprocessing
 
 		var oops = new OOPSShader( )
-			.addShader( 'HorizontalBlurShader' )
-			.addUniform( 'resolution', innerWidth )
-			.addUniform( 'amount' );
+				.addShader( 'TechnicolorShader' )
+				.addUniform( 'opacity' );
 				
 		var effect = new ShaderPass( oops );
 
@@ -64,18 +63,14 @@
 
 			renderer.setSize( innerWidth, innerHeight );
 			composer.setSize( innerWidth, innerHeight );
-			
-			effect.uniforms['resolution'].value = innerWidth;
-			gui.controllers[0].updateDisplay( );
 		}
 
 
 
 		// create control panel
 		
-		var gui = new GUI( { title: '<big><em>Horizontal Blur Shader</em></big>' } );
-			gui.add( effect.uniforms['resolution'], 'value', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
-			gui.add( effect.uniforms['amount'], 'value', 0, 4 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');
+		var gui = new GUI( { title: '<big><em>Technicolor Shader</em></big>' } );
+			gui.add( effect.uniforms[ 'opacity' ], 'value', 0, 1 ).step( 0.1 ).name( 'Opacity' ).$input.classList.add('bottom');
 
 
 

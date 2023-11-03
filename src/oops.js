@@ -2,6 +2,14 @@
 import {SHADERS} from './oops.shaders.js';
 
 
+console.log( `
+
+     :
+ '.  _  .'
+-=  (~)  =-     OOPS.JS
+ .'  #  '.
+ 
+` )
 
 // a THREE.ShaderPass-compatible shader, that merges other shaders
 
@@ -80,7 +88,35 @@ class OOPSShader
 
 	addUniform( name, alias, value )
 	{
+		// (1) addUniform( name )					string
+		// (2) addUniform( name, alias )			string string
+		// (3) addUniform( name, alias, value )		string string value
+		// (4) addUniform( name, value )			string value
+//console.log('addUniform', name, alias, value )
+
+		if( typeof alias === 'undefined' )
+		{	// (1) -> (2)
+			alias = name;
+//console.log('(1) -> (2)', name, alias, value )
+		} else
+		if( typeof alias !== 'string' )
+		{
+			// (4) -> (3)
+			value = alias;
+			alias = name;
+//console.log('(4) -> (3)', name, alias, value )
+		}
+		
+		// (2) -> (3)
+		if( typeof value === 'undefined' )
+		{
+			value = this.passes[this.passes.length-1].shader.uniforms[name].value;
+//console.log('(2) -> (3)', name, alias, value )
+		}
+		
+		// (3)
 		// searches backwards
+//console.log('       (3)', name, alias, value )
 		for( var i=this.passes.length-1; i>=0; i-- )
 		{
 			if( this.passes[i].shader.uniforms[name] )
@@ -92,8 +128,7 @@ class OOPSShader
 		
 		this.updateShaders( );
 		
-		return this;
-		
+		return this;		
 	} // OOPSShader.addUniform
 	
 	
@@ -127,7 +162,7 @@ class OOPSShader
 		
 		if( value instanceof THREE.Vector3 )
 			return str + `uniform vec3 ${name}_${n+1};\n`;
-console.log( name, alias, value, n, type )		
+
 		if( type == 'int' )
 			return str + `uniform int ${name}_${n+1};\n`;
 		

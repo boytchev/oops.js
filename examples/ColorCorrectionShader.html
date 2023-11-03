@@ -41,9 +41,9 @@
 
 		var oops = new OOPSShader( )
 				.addShader( 'ColorCorrectionShader' )
-				.addUniform( 'powRGB', 'powRGB', new THREE.Vector3(2,2,2) )
-				.addUniform( 'mulRGB', 'mulRGB', new THREE.Vector3(1,1,1) )
-				.addUniform( 'addRGB', 'addRGB', new THREE.Vector3(0,0,0) );
+				.addUniform( 'powRGB', new THREE.Vector3(2,2,2) )
+				.addUniform( 'mulRGB', new THREE.Vector3(1,1,1) )
+				.addUniform( 'addRGB', new THREE.Vector3(0,0,0) );
 				
 		var effect = new ShaderPass( oops );
 		var composer = new EffectComposer( renderer );
@@ -79,7 +79,7 @@
 			gui.add( effect.uniforms[ 'mulRGB' ][ 'value' ], 'z', -1, 2 ).step( 0.01 ).name( '<right>blue</right>' );
 			gui.add( effect.uniforms[ 'addRGB' ][ 'value' ], 'x', -1, 1 ).step( 0.01 ).name( 'AddRGB <right>red</right>' );
 			gui.add( effect.uniforms[ 'addRGB' ][ 'value' ], 'y', -1, 1 ).step( 0.01 ).name( '<right>green</right>' );
-			gui.add( effect.uniforms[ 'addRGB' ][ 'value' ], 'z', -1, 1 ).step( 0.01 ).name( '<right>blue</right>' );
+			gui.add( effect.uniforms[ 'addRGB' ][ 'value' ], 'z', -1, 1 ).step( 0.01 ).name( '<right>blue</right>' ).$input.classList.add('bottom');
 
 
 

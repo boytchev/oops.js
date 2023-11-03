@@ -41,7 +41,7 @@
 
 		var oops = new OOPSShader( )
 				.addShader( 'SepiaShader' )
-				.addUniform( 'amount', 'amount', 1 );
+				.addUniform( 'amount' );
 				
 		var effect = new ShaderPass( oops );
 
@@ -70,7 +70,7 @@
 		// create control panel
 		
 		var gui = new GUI( { title: '<big><em>Sepia Shader</em></big>' } );
-			gui.add( effect.uniforms[ 'amount' ], 'value', 0, 1 ).step( 0.01 ).name( 'Amount' );
+			gui.add( effect.uniforms[ 'amount' ], 'value', 0, 1 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');;
 
 
 

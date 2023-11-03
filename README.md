@@ -15,8 +15,7 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader),
-[RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [VignetteShader](#vignetteshader)
+* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
 
 * **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
 [VerticalBlurShader](#verticalblurshader)
@@ -73,7 +72,7 @@ Example: [ColorCorrectionShader.html](examples/ColorCorrectionShader.html)
 
 ## ColorifyShader
 
-A shader converts the colors of the frame into specific color. Shader weight is 1 sweight.
+A shader that converts the colors of the frame into specific color. Shader weight is 1 sweight.
 	
 * **`color`** – target color (vector, default value THREE.Vector3(1,1,1) for white color) 
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
@@ -266,6 +265,21 @@ has another default value; (2) **opacity** is added.</span>*
 
 
 
+## TechnicolorShader
+
+A shader that converts the colors of the frame into Technicolor cyan-red hues. Shader weight is 1 sweight.
+	
+* **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
+
+Example: [TechnicolorShader.html](examples/TechnicolorShader.html)
+		
+[<img src="examples/TechnicolorShader.jpg">](examples/TechnicolorShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
+
+
+
+
 ## VerticalBlurShader
 
 A shader that blurs the frame vertically with a Gaussian blur filter. Shader weight is 9 sweights.
@@ -346,7 +360,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  SSAOShader
  SSRShader
  SubsurfaceScatteringShader
- TechnicolorShader
+ <b style="background:palegreen; color: black; padding:0.3em;">TechnicolorShader</b>
  ToonShader
  TriangleBlurShader
  UnpackDepthRGBAShader

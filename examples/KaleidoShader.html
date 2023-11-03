@@ -41,9 +41,9 @@
 
 		var oops = new OOPSShader( )
 			.addShader( 'KaleidoShader' )
-			.addUniform( 'sides', 'sides', 6 )
-			.addUniform( 'angle', 'angle', 0 )
-			.addUniform( 'resolution', 'resolution', new THREE.Vector2(innerWidth,innerHeight) )
+			.addUniform( 'sides' )
+			.addUniform( 'angle' )
+			.addUniform( 'resolution', new THREE.Vector2(innerWidth,innerHeight) )
 
 
 		var effect = new ShaderPass( oops );

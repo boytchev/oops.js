@@ -41,8 +41,8 @@
 
 		var oops = new OOPSShader( )
 			.addShader( 'VerticalBlurShader' )
-			.addUniform( 'resolution', 'resolution', innerHeight )
-			.addUniform( 'amount', 'amount', 1 );
+			.addUniform( 'resolution', innerHeight )
+			.addUniform( 'amount' );
 				
 		var effect = new ShaderPass( oops );
 
@@ -75,7 +75,7 @@
 		
 		var gui = new GUI( { title: '<big><em>Vertical Blur Shader</em></big>' } );
 			gui.add( effect.uniforms['resolution'], 'value', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
-			gui.add( effect.uniforms['amount'], 'value', 0, 4 ).step( 0.01 ).name( 'Amount' );
+			gui.add( effect.uniforms['amount'], 'value', 0, 4 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');
 
 
 
