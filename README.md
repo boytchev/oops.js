@@ -15,7 +15,7 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader),
+* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader),
 [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [VignetteShader](#vignetteshader)
 
 * **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
@@ -68,6 +68,22 @@ Example: [ColorCorrectionShader.html](examples/ColorCorrectionShader.html)
 		
 [<img src="examples/ColorCorrectionShader.jpg">](examples/ColorCorrectionShader.html)
 
+
+
+
+## ColorifyShader
+
+A shader converts the colors of the frame into specific color. Shader weight is 1 sweight.
+	
+* **`color`** – target color (vector, default value THREE.Vector3(1,1,1) for white color) 
+* **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
+
+Example: [ColorifyShader.html](examples/ColorifyShader.html)
+		
+[<img src="examples/ColorifyShader.jpg">](examples/ColorifyShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
+	
 
 
 
@@ -296,7 +312,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  BokehShader2
  <b style="background:palegreen; color: black; padding:0.3em;">BrightnessContrastShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">ColorCorrectionShader</b>
- ColorifyShader
+ <b style="background:palegreen; color: black; padding:0.3em;">ColorifyShader</b>
  ConvolutionShader
  CopyShader
  DepthLimitedBlurShader
