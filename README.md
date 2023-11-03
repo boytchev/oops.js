@@ -15,7 +15,7 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
+* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
 
 * **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
 [VerticalBlurShader](#verticalblurshader)
@@ -180,6 +180,21 @@ Example: [HorizontalBlurShader.html](examples/HorizontalBlurShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **h** is renamed to **resolution**,
 it is not 1/*width* and has another default value; (2) **amount** is added.</span>*
+
+
+
+
+## HueSaturationShader
+
+A shader that changes the [hue](https://en.wikipedia.org/wiki/Hue) (the colorness of colors, like *red*, *green* or *yellow*) and the [saturation](https://en.wikipedia.org/wiki/Colorfulness#Saturation) (the colorfulness or strength of colors, line *gray* or *colorful*) of a frame.
+Shader weight is 1 sweight.
+	
+* **`hue`** – relative change of hue (float, from -1 to 1, default value 0}
+* **`saturation`** – relative change of saturation (float, from -1 to 1, default value 0}
+
+Example: [HueSaturationShader.html](examples/HueSaturationShader.html)
+		
+[<img src="examples/HueSaturationShader.jpg">](examples/HueSaturationShader.html)
 		
 
 
@@ -344,7 +359,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  HalftoneShader
  <b style="background:palegreen; color: black; padding:0.3em;">HorizontalBlurShader</b>
  HorizontalTiltShiftShader
- HueSaturationShader
+ <b style="background:palegreen; color: black; padding:0.3em;">HueSaturationShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">KaleidoShader</b>
  LuminosityHighPassShader
  LuminosityShader
