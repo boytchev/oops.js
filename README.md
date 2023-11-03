@@ -15,7 +15,7 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
+* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [LuminosityShader](#luminosityshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
 
 * **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
 [VerticalBlurShader](#verticalblurshader)
@@ -195,6 +195,22 @@ Shader weight is 1 sweight.
 Example: [HueSaturationShader.html](examples/HueSaturationShader.html)
 		
 [<img src="examples/HueSaturationShader.jpg">](examples/HueSaturationShader.html)
+
+
+
+
+## LuminosityShader
+
+A shader that converts colors of a frame to grayscale based on luminocity, i.e. color components contribute with their different factors: &approx;21% (red), &approx;72% (green) and &approx;7%(blue).
+Shader weight is 1 sweight.
+	
+* **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
+
+Example: [LuminosityShader.html](examples/LuminosityShader.html)
+		
+[<img src="examples/LuminosityShader.jpg">](examples/LuminosityShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 		
 
 
@@ -362,7 +378,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  <b style="background:palegreen; color: black; padding:0.3em;">HueSaturationShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">KaleidoShader</b>
  LuminosityHighPassShader
- LuminosityShader
+ <b style="background:palegreen; color: black; padding:0.3em;">LuminosityShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">MirrorShader</b>
  MMDToonShader
  NormalMapShader

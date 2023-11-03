@@ -578,6 +578,27 @@ const HueSaturationShader = {
 
 
 
+const LuminosityShader = {
+	name: 'LuminosityShader',
+	uniforms: {
+		opacity: { value: 1 },
+	},
+	fragmentShader: /* glsl */`
+		#include <common>
+
+		vec4 $( vec2 vUv )
+		{
+			vec4 texel = $$( vUv );
+
+			float l = luminance( texel.rgb );
+
+			return mix( texel, vec4( l, l, l, texel.w ), opacity_$ );
+		}`
+};
+
+
+
+
 
 const SHADERS = {
 		DefaultShader: 				DefaultShader,
@@ -601,6 +622,7 @@ const SHADERS = {
 		ColorifyShader:				ColorifyShader,
 		TechnicolorShader:			TechnicolorShader,
 		HueSaturationShader:		HueSaturationShader,
+		LuminosityShader:			LuminosityShader,
 }
 
 
