@@ -58,14 +58,22 @@ class OOPSShader
 	
 	updateFragmentShader( )
 	{
+		var fragmentShaderHead = '';
 		this.fragmentShader = '';
 		
 		for( var i=0; i<this.passes.length; i++ )
 		{
+			var head = this.passes[i].shader.fragmentShaderHead || '';
+			if( fragmentShaderHead.indexOf(head) == -1 )
+			{
+				fragmentShaderHead += head;
+			}
 			this.fragmentShader += this.processShader( this.passes[i], i );
 		}
 
 		this.fragmentShader += this.processShader( {shader:SHADERS.DefaultShader}, i );
+		
+		this.fragmentShader = fragmentShaderHead + this.fragmentShader;
 				
 	} // OOPSShader.updateFragmentShader
 
@@ -75,6 +83,24 @@ class OOPSShader
 	{
 		var shader = SHADERS[name],
 			shaderPass = {shader: shader, values: values, uniforms:{}};
+		
+		if( shader === undefined )
+		{
+			throw new Error( `Shader named "${name}" is unknown or unsupported.\n\nKnown and supported shaders are: \n · ${Object.keys(SHADERS).sort().join('\n · ')}.\n` );
+			return null;
+		}
+		
+/*
+		for( var pass of this.passes )
+		{
+			var conflict = shader.conflicts[pass.shader.name];
+			if( conflict != undefined )
+			{
+				throw new Error( conflict );
+				return null;
+			}
+		}
+*/
 		
 		this.passes.push( shaderPass );
 		
@@ -141,6 +167,9 @@ class OOPSShader
 		if( value instanceof THREE.Vector3 )
 			return `#define ${name}_${n+1} vec3(${value.x},${value.y},${value.z})\n`;
 			
+		if( value instanceof THREE.Color )
+			return `#define ${name}_${n+1} vec3(${value.r},${value.g},${value.b})\n`;
+			
 		if( type == 'int' )
 			return `#define ${name}_${n+1} ${Math.round(value)}\n`;
 			
@@ -161,6 +190,9 @@ class OOPSShader
 			return str + `uniform vec2 ${name}_${n+1};\n`;
 		
 		if( value instanceof THREE.Vector3 )
+			return str + `uniform vec3 ${name}_${n+1};\n`;
+		
+		if( value instanceof THREE.Color )
 			return str + `uniform vec3 ${name}_${n+1};\n`;
 
 		if( type == 'int' )

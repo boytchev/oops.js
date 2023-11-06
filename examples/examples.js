@@ -66,6 +66,31 @@ function randomBallsAndCubes( n=100 )
 }
 
 
+function backgroundGrid( gridColor = 'white', backgroundColor = 'black' )
+{
+	const S = 64;
+	
+	var canvas = document.createElement( 'canvas' );
+		canvas.width = S;
+		canvas.height = S;
+
+	var context = canvas.getContext( '2d' );
+		context.fillStyle = backgroundColor;
+		context.fillRect( 0, 0, S, S );
+
+		context.strokeStyle = gridColor;
+		context.strokeRect( 0, 0, S, S );
+
+	var texture = new THREE.CanvasTexture(canvas);
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+		
+	scene.background = texture;
+	scene.background.repeat.set( innerWidth/100, innerHeight/100 );
+}
+
+
+
 var composer;
 
 function setAnimationLoop( comp )
@@ -83,4 +108,4 @@ function animate( t )
 
 renderer.setAnimationLoop( animate );
 
-export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, setAnimationLoop };
+export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, backgroundGrid, setAnimationLoop };

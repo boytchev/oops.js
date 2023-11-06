@@ -400,7 +400,7 @@ const VignetteShader = {
 	uniforms: {
 		radius: { value: 1 },
 		blur: { value: 1 },
-		color: { value: new THREE.Vector3(0,0,0) },
+		color: { value: new THREE.Color(0,0,0) },
 	},
 	fragmentShader: /* glsl */`
 		vec4 $( vec2 vUv )
@@ -599,6 +599,137 @@ const LuminosityShader = {
 
 
 
+const LuminosityHighPassShader = {
+	name: 'LuminosityHighPassShader',
+	uniforms: {
+		'color': { value: new THREE.Color( 0, 0, 0 ) },
+		'alpha': { value: 0.0 },
+		'threshold': { value: 0.25 },
+		'span': { value: 0.25 },
+	},
+	fragmentShader: /* glsl */`
+		vec4 $( vec2 vUv )
+		{
+			vec4 texel = $$( vUv );
+			
+			vec3 luma = vec3( 0.299, 0.587, 0.114 );
+
+			float v = dot( texel.xyz, luma );
+
+			vec4 outputColor = vec4( color_$.rgb, alpha_$ );
+
+			float alpha = smoothstep( threshold_$ - span_$, threshold_$ + span_$, v );
+
+			return mix( outputColor, texel, alpha );
+		}`
+};
+
+
+
+
+const HorizontalTiltShiftShader = {
+	name: 'HorizontalTiltShiftShader',
+	uniforms: {
+		position: { value: 0.5 },
+		span: { value: 0.1 },
+		amount: { value: 4.0 },
+	},
+	fragmentShader: /* glsl */`
+		vec4 $( vec2 vUv )
+		{
+			vec4 color = $$( vUv );
+			vec4 sum = vec4( 0.0 );
+
+			float hh = abs( vUv.y - position_$ ) ;//;
+			hh = 0.003 * smoothstep( 0.0, 1.0, amount_$*(hh-span_$) );
+			
+			sum += $$( vec2( vUv.x - 4.0 * hh, vUv.y ) ) * 0.051;
+			sum += $$( vec2( vUv.x - 3.0 * hh, vUv.y ) ) * 0.0918;
+			sum += $$( vec2( vUv.x - 2.0 * hh, vUv.y ) ) * 0.12245;
+			sum += $$( vec2( vUv.x - 1.0 * hh, vUv.y ) ) * 0.1531;
+			sum += color * 0.1633;
+			sum += $$( vec2( vUv.x + 1.0 * hh, vUv.y ) ) * 0.1531;
+			sum += $$( vec2( vUv.x + 2.0 * hh, vUv.y ) ) * 0.12245;
+			sum += $$( vec2( vUv.x + 3.0 * hh, vUv.y ) ) * 0.0918;
+			sum += $$( vec2( vUv.x + 4.0 * hh, vUv.y ) ) * 0.051;
+
+			return sum;
+		}`
+};
+
+
+
+
+const VerticalTiltShiftShader = {
+	name: 'VerticalTiltShiftShader',
+	uniforms: {
+		position: { value: 0.5 },
+		span: { value: 0.1 },
+		amount: { value: 4.0 },
+	},
+	fragmentShader: /* glsl */`
+		vec4 $( vec2 vUv )
+		{
+			vec4 color = $$( vUv );
+			vec4 sum = vec4( 0.0 );
+
+			float vv = abs( vUv.x - position_$ ) ;//;
+			vv = 0.003 * smoothstep( 0.0, 1.0, amount_$*(vv-span_$) );
+			
+			sum += $$( vec2( vUv.x, vUv.y - 4.0 * vv ) ) * 0.051;
+			sum += $$( vec2( vUv.x, vUv.y - 3.0 * vv ) ) * 0.0918;
+			sum += $$( vec2( vUv.x, vUv.y - 2.0 * vv ) ) * 0.12245;
+			sum += $$( vec2( vUv.x, vUv.y - 1.0 * vv ) ) * 0.1531;
+			sum += color * 0.1633;
+			sum += $$( vec2( vUv.x, vUv.y + 1.0 * vv ) ) * 0.1531;
+			sum += $$( vec2( vUv.x, vUv.y + 2.0 * vv ) ) * 0.12245;
+			sum += $$( vec2( vUv.x, vUv.y + 3.0 * vv ) ) * 0.0918;
+			sum += $$( vec2( vUv.x, vUv.y + 4.0 * vv ) ) * 0.051;
+
+			return sum;
+		}`
+};
+
+
+
+
+const TriangleBlurShader = {
+	name: 'TriangleBlurShader',
+	uniforms: {
+		amount: { value: new THREE.Vector2( 0, 0 ) },
+	},
+	fragmentShaderHead: /* glsl */`
+		#include <common>
+	`,
+	fragmentShader: /* glsl */`
+		#define ITERATIONS_$ 7.0
+		
+		vec4 $( vec2 vUv )
+		{
+			vec4 color = vec4( 0.0 );
+
+			float total = 0.0;
+
+			// randomize the lookup values to hide the fixed number of samples
+			float offset = rand( vUv );
+
+			for ( float t = -ITERATIONS_$; t <= ITERATIONS_$; t ++ )
+			{
+				float percent = ( t + offset - 0.5 ) / ITERATIONS_$;
+				float weight = 1.0 - abs( percent );
+
+				color += $$( vUv + amount_$ * percent ) * weight;
+				
+				total += weight;
+			}
+
+			return color / total;
+		}`
+};
+
+
+
+
 
 const SHADERS = {
 		DefaultShader: 				DefaultShader,
@@ -623,6 +754,10 @@ const SHADERS = {
 		TechnicolorShader:			TechnicolorShader,
 		HueSaturationShader:		HueSaturationShader,
 		LuminosityShader:			LuminosityShader,
+		LuminosityHighPassShader:	LuminosityHighPassShader,
+		HorizontalTiltShiftShader:	HorizontalTiltShiftShader,
+		VerticalTiltShiftShader:	VerticalTiltShiftShader,
+		TriangleBlurShader:			TriangleBlurShader,
 }
 
 

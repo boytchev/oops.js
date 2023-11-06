@@ -15,10 +15,9 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [LuminosityShader](#luminosityshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
+* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [LuminosityShader](#luminosityshader), [LuminosityHighPassShader](#luminosityhighpassshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
 
-* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader),
-[VerticalBlurShader](#verticalblurshader)
+* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [HorizontalTiltShiftShader](#horizontaltiltshiftshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader), [TriangleBlurShader](#triangleblurshader), [VerticalBlurShader](#verticalblurshader), [VerticalTiltShiftShader](#verticaltiltshiftshader)
 
 
 
@@ -74,7 +73,7 @@ Example: [ColorCorrectionShader.html](examples/ColorCorrectionShader.html)
 
 A shader that converts the colors of the frame into specific color. Shader weight is 1 sweight.
 	
-* **`color`** – target color (vector, default value THREE.Vector3(1,1,1) for white color) 
+* **`color`** – target color (color, default value THREE.Color(1,1,1) for white color) 
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
 Example: [ColorifyShader.html](examples/ColorifyShader.html)
@@ -184,6 +183,23 @@ it is not 1/*width* and has another default value; (2) **amount** is added.</spa
 
 
 
+## HorizontalTiltShiftShader
+
+A shader that fakes a horizontal tilt-shift effect, i.e. the areas above and below a horizontal area are blured. Shader weight is 9 sweights.
+	
+* **`position`** – vertical position of the horizontal area (float, in NDC space units from 0 to 1, default value 0.5)
+* **`span`** – the vertical size of the horizontal area (float, in NDC space units from 0 to 0.5, default value 0.1)
+* **`amount`** – amount of blur effect (float, from 0 to 10, default value 1.0) 
+
+Example: [HorizontalTiltShiftShader.html](examples/HorizontalTiltShiftShader.html)
+		
+[<img src="examples/HorizontalTiltShiftShader.jpg">](examples/HorizontalTiltShiftShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) entirely different parameters; (2) entirely different calculation of blurred areas.</span>*
+
+
+
+
 ## HueSaturationShader
 
 A shader that changes the [hue](https://en.wikipedia.org/wiki/Hue) (the colorness of colors, like *red*, *green* or *yellow*) and the [saturation](https://en.wikipedia.org/wiki/Colorfulness#Saturation) (the colorfulness or strength of colors, line *gray* or *colorful*) of a frame.
@@ -211,6 +227,24 @@ Example: [LuminosityShader.html](examples/LuminosityShader.html)
 [<img src="examples/LuminosityShader.jpg">](examples/LuminosityShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
+
+
+
+
+## LuminosityHighPassShader
+
+A shader that changes a frame by blending colors based on their luminocity. In contrast to the [LuminosityShader](#luminosityshader), this shader calculates the luminocity as &approx;30% (red), &approx;59% (green) and &approx;11%(blue). Shader weight is 1 sweight.
+	
+* **`color`** – default color to blend to (color, default value THREE.Color(0,0,0)) 
+* **`alpha`** – alpha component of the default color (float, from 0 to 1, default value 0) 
+* **`threshold`** – minimal luminocity for blending (float, from -1 to 1, default value 0.25) 
+* **`span`** – blending span, i.e. it is applied for luminocities from *threshold+span* to *threshold+span* (float, from -1 to 1, default value 0.25) 
+
+Example: [LuminosityHighPassShader.html](examples/LuminosityHighPassShader.html)
+		
+[<img src="examples/LuminosityHighPassShader.jpg">](examples/LuminosityHighPassShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) renamed **defaultColor** to **color**; (2) renamed **defaultOpacity** to **alpha**; (3) renamed **luminosityThreshold** to **threshold** and changed its default value; (4) renamed **smoothWidth** to **span** and changed its default value.</span>*
 		
 
 
@@ -311,6 +345,27 @@ Example: [TechnicolorShader.html](examples/TechnicolorShader.html)
 
 
 
+## TriangleBlurShader
+
+A shader that blurs the frame using randomized weighted samples. The blur is biased
+along a direction. Shader weight is 15 sweights.
+	
+* **`amount`** – amount of shader effect in both directions (vector, components in NDC space units from 0 to 1, default value THREE.Vector2(0,0)) 
+
+To use this shader for a non-biased blur, it must be applied twice:
+a horizontal blur in one shader (e.g. *amount*=(0.1,0)) and a vertical
+blur in another shader (e.g. *amount*=(0,0.1)). Combining both in a single
+shader results in a significantly slower performance with combined sweight of
+over 200.
+
+Example: [TriangleBlurShader.html](examples/TriangleBlurShader.html)
+		
+[<img src="examples/TriangleBlurShader.jpg">](examples/TriangleBlurShader.html)
+
+
+
+
+
 ## VerticalBlurShader
 
 A shader that blurs the frame vertically with a Gaussian blur filter. Shader weight is 9 sweights.
@@ -328,13 +383,29 @@ it is not 1/*height* and has another default value; (2) **amount** is added.</sp
 
 
 
+## VerticalTiltShiftShader
+
+A shader that fakes a vertical tilt-shift effect, i.e. the areas to the left and right of a vertical area are blured. Shader weight is 9 sweights.
+	
+* **`position`** – horizontal position of the vertical area (float, in NDC space units from 0 to 1, default value 0.5)
+* **`span`** – the horizontal size of the vertical area (float, in NDC space units from 0 to 0.5, default value 0.1)
+* **`amount`** – amount of blur effect (float, from 0 to 10, default value 1.0) 
+
+Example: [VerticalTiltShiftShader.html](examples/VerticalTiltShiftShader.html)
+		
+[<img src="examples/VerticalTiltShiftShader.jpg">](examples/VerticalTiltShiftShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) entirely different parameters; (2) entirely different calculation of blurred areas.</span>*
+
+
+
 ## VignetteShader
 
 A shader that adds a vignette effect on the frame. Shader weight is 1 sweight.
 	
 * **`radius`** – internal vignette radius (float, in NDC space units, default value 1.0)
 * **`blur`** – amount of blur effect on vignette border (float, 0 for no blur, default value 1.0) 
-* **`color`** – vignette color (vector, default value THREE.Vector3(0,0,0) for black color) 
+* **`color`** – vignette color (color, default value THREE.Color(0,0,0) for black color) 
 
 Example: [VignetteShader.html](examples/VignetteShader.html)
 		
@@ -374,10 +445,10 @@ and is unrelated with the Three.js VignetteShader.</span>*
  GodRaysShader
  HalftoneShader
  <b style="background:palegreen; color: black; padding:0.3em;">HorizontalBlurShader</b>
- HorizontalTiltShiftShader
+ <b style="background:palegreen; color: black; padding:0.3em;">HorizontalTiltShiftShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">HueSaturationShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">KaleidoShader</b>
- LuminosityHighPassShader
+ <b style="background:palegreen; color: black; padding:0.3em;">LuminosityHighPassShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">LuminosityShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">MirrorShader</b>
  MMDToonShader
@@ -393,11 +464,11 @@ and is unrelated with the Three.js VignetteShader.</span>*
  SubsurfaceScatteringShader
  <b style="background:palegreen; color: black; padding:0.3em;">TechnicolorShader</b>
  ToonShader
- TriangleBlurShader
+ <b style="background:palegreen; color: black; padding:0.3em;">TriangleBlurShader</b>
  UnpackDepthRGBAShader
  VelocityShader
  <b style="background:palegreen; color: black; padding:0.3em;">VerticalBlurShader</b>
- VerticalTiltShiftShader
+ <b style="background:palegreen; color: black; padding:0.3em;">VerticalTiltShiftShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">VignetteShader</b>
  VolumeShader
  WaterRefractionShader
