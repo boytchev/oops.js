@@ -170,6 +170,12 @@ class OOPSShader
 		if( value instanceof THREE.Color )
 			return `#define ${name}_${n+1} vec3(${value.r},${value.g},${value.b})\n`;
 			
+		if( type === true )
+			return `#define ${name}_${n+1} true\n`;
+			
+		if( type === false )
+			return `#define ${name}_${n+1} false\n`;
+			
 		if( type == 'int' )
 			return `#define ${name}_${n+1} ${Math.round(value)}\n`;
 			
@@ -184,6 +190,7 @@ class OOPSShader
 
 	processUniform( name, alias, value, n, type )
 	{
+//console.log(name, alias, value, n, type )
 		var str = `#define ${name}_${n+1} ${alias}\n`;
 		
 		if( value instanceof THREE.Vector2 )
@@ -194,6 +201,9 @@ class OOPSShader
 		
 		if( value instanceof THREE.Color )
 			return str + `uniform vec3 ${name}_${n+1};\n`;
+
+		if( type == 'bool' || type == 'boolean' || typeof value == 'boolean' )
+			return str + `uniform bool ${name}_${n+1};\n`;
 
 		if( type == 'int' )
 			return str + `uniform int ${name}_${n+1};\n`;

@@ -730,6 +730,54 @@ const TriangleBlurShader = {
 
 
 
+const BasicShader = {
+	name: 'BasicShader',
+	uniforms: {
+		color: { value: new THREE.Color(1,0,0) },
+	},
+	fragmentShader: /* glsl */`
+		vec4 $( vec2 vUv )
+		{
+			return vec4( color_$, vUv.y );
+		}`
+};
+
+
+
+
+const FilmShader = {
+	name: 'FilmShader',
+	uniforms: {
+		time: { value: 0.0 },
+		intensity: { value: 0.5 },
+		grayscale: { value: false },
+	},
+	fragmentShaderHead: /* glsl */`
+		#include <common>
+	`,
+	fragmentShader: /* glsl */`
+		vec4 $( vec2 vUv )
+		{
+			vec4 base = $$( vUv );
+
+			float noise = rand( vUv + fract(time_$) ) + 1.0;
+
+			vec3 color = base.rgb * noise * (1.0 - intensity_$/10.0);
+
+			color = mix( base.rgb, color, 5.0*intensity_$ );
+
+			if ( grayscale_$ ) 
+			{
+				color = vec3( luminance( color ) ); // assuming linear-srgb
+			}
+
+			return vec4( color, base.a );
+		}`
+};
+
+
+
+
 
 const SHADERS = {
 		DefaultShader: 				DefaultShader,
@@ -758,6 +806,8 @@ const SHADERS = {
 		HorizontalTiltShiftShader:	HorizontalTiltShiftShader,
 		VerticalTiltShiftShader:	VerticalTiltShiftShader,
 		TriangleBlurShader:			TriangleBlurShader,
+		BasicShader:				BasicShader,
+		FilmShader:					FilmShader,
 }
 
 

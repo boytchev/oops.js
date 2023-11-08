@@ -91,11 +91,12 @@ function backgroundGrid( gridColor = 'white', backgroundColor = 'black' )
 
 
 
-var composer;
+var composer, renderTick;
 
-function setAnimationLoop( comp )
+function setAnimationLoop( comp, tick )
 {
 	composer = comp;
+	renderTick = tick;
 }
 
 
@@ -103,6 +104,7 @@ function animate( t )
 {
 	controls.update( );
 	light.position.copy( camera.position );
+	if( renderTick ) renderTick( t );
 	composer?.render();
 }
 

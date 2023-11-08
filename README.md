@@ -15,10 +15,24 @@ example shows increased performance by 50%.
 
 # Supported shaders
 
-* **Shaders about colors:** [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [LuminosityShader](#luminosityshader), [LuminosityHighPassShader](#luminosityhighpassshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
+* **Shaders about colors:** [BasicShader](#basicshader), [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [LuminosityShader](#luminosityshader), [LuminosityHighPassShader](#luminosityhighpassshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
 
-* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [HorizontalTiltShiftShader](#horizontaltiltshiftshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader), [TriangleBlurShader](#triangleblurshader), [VerticalBlurShader](#verticalblurshader), [VerticalTiltShiftShader](#verticaltiltshiftshader)
+* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FilmShader](#filmshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [HorizontalTiltShiftShader](#horizontaltiltshiftshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader), [TriangleBlurShader](#triangleblurshader), [VerticalBlurShader](#verticalblurshader), [VerticalTiltShiftShader](#verticaltiltshiftshader)
 
+
+
+## BasicShader
+
+A basic and simple test shader that fills the frame with a gradient color. Shader weight is 0 sweight.
+	
+* **`color`** – fill color (color, default value THREE.Color(1,0,0) for red color) 
+
+Example: [BasicShader.html](examples/BasicShader.html)
+		
+[<img src="examples/BasicShader.jpg">](examples/BasicShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **color** is added.</span>*
+	
 
 
 ## BleachBypassShader
@@ -130,6 +144,27 @@ Example: [ExposureExpShader.html](examples/ExposureExpShader.html)
 [<img src="examples/ExposureExpShader.jpg">](examples/ExposureExpShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) this shader is new.</span>*
+
+
+
+
+## FilmShader
+
+A shader that adds graininess to the frame. The pattern of the grains is defined by
+the fracrional part of the *time* parameter -- if it is changed for every frame,
+the result will be noisy grains. Shader weight is 1 sweight.
+	
+* **`time`** – defines the grain pattern (float)
+* **`intensity`** – intensity of graininess (float, 0.0 to 3.0, default value 0.5) 
+* **`grayscale`** – a flag whether to convert the colors to grayscale (boolean, default value false) 
+
+Example: [FilmShader.html](examples/FilmShader.html)
+		
+[<img src="examples/FilmShader.jpg">](examples/FilmShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) the calculation of
+grains is modified to support stronger graininess; (2) **intensity** has
+a different range.</span>*
 
 
 
@@ -421,7 +456,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
 <span style="font-size: 0.75em; color: lightgray;">
  ACESFilmicToneMappingShader
  AfterimageShader
- BasicShader
+ <b style="background:palegreen; color: black; padding:0.3em;">BasicShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">BleachBypassShader</b>
  BlendShader
  BokehShader
@@ -437,7 +472,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  <b style="background:palegreen; color: black; padding:0.3em;">DotScreenShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">ExposureShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">ExposureExpShader</b>
- FilmShader
+ <b style="background:palegreen; color: black; padding:0.3em;">FilmShader</b>
  FocusShader
  <b style="background:palegreen; color: black; padding:0.3em;">FreiChenShader</b>
  FXAAShader
