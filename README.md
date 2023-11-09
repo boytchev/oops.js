@@ -13,13 +13,6 @@ example shows increased performance by 50%.
 
 
 
-# Supported shaders
-
-* **Shaders about colors:** [BasicShader](#basicshader), [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrastshader), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [LuminosityShader](#luminosityshader), [LuminosityHighPassShader](#luminosityhighpassshader), [RGBShiftShader](#rgbshiftshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [VignetteShader](#vignetteshader)
-
-* **Shaders about shapes:** [DotScreenShader](#dotscreenshader), [FilmShader](#filmshader), [FreiChenShader](#freichenshader), [HorizontalBlurShader](#horizontalblurshader), [HorizontalTiltShiftShader](#horizontaltiltshiftshader), [KaleidoShader](#kaleidoshader), [MirrorShader](#mirrorshader), [SobelOperatorShader](#sobeloperatorshader), [TriangleBlurShader](#triangleblurshader), [VerticalBlurShader](#verticalblurshader), [VerticalTiltShiftShader](#verticaltiltshiftshader)
-
-
 
 ## BasicShader
 
@@ -165,6 +158,25 @@ Example: [FilmShader.html](examples/FilmShader.html)
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) the calculation of
 grains is modified to support stronger graininess; (2) **intensity** has
 a different range.</span>*
+
+
+
+
+## FocusShader
+
+A shader that blurs the frame by keeping the center more focused.
+Shader weight is 8 sweights.
+	
+* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
+* **`sampleDistance`** – non-linear component of the blur effect (float, 0.0 to 2.0, default value 0.94}
+* **`waveFactor`** – linear component of the blur effect (float, 0.0 to 2.0, default value 0.125)
+
+Example: [FocusShader.html](examples/FocusShader.html)
+		
+[<img src="examples/FocusShader.jpg">](examples/FocusShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **screenWidth** and **screenHeight** are combined in **resolution** and
+has another default value; (2) **waveFactor** is scaled by 100.</span>*
 
 
 
@@ -473,7 +485,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  <b style="background:palegreen; color: black; padding:0.3em;">ExposureShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">ExposureExpShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">FilmShader</b>
- FocusShader
+ <b style="background:palegreen; color: black; padding:0.3em;">FocusShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">FreiChenShader</b>
  FXAAShader
  <b style="background:palegreen; color: black; padding:0.3em;">GammaCorrectionShader</b>
