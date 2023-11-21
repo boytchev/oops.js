@@ -28,13 +28,17 @@ var controls = new OrbitControls( camera, renderer.domElement );
 	controls.enableDamping = true;
 
 			
-function randomBalls( n=100 )
+function randomBalls( n=100, defaultMaterial=null )
 {
 	var geometry = new THREE.SphereGeometry( 1 );
+	var material;
 
 	for( var i=0; i<n; i++ )
 	{
-		var material = new THREE.MeshLambertMaterial( { color: new THREE.Color().setHSL(Math.random(),1,0.5) } );
+		if( defaultMaterial )
+			material = defaultMaterial;
+		else
+			material = new THREE.MeshLambertMaterial( { color: new THREE.Color().setHSL(Math.random(),1,0.5) } );
 
 		var mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( Math.random()-0.5, Math.random()-0.5, Math.random()-0.5 ).normalize();
@@ -46,14 +50,18 @@ function randomBalls( n=100 )
 }
 
 
-function randomBallsAndCubes( n=100 )
+function randomBallsAndCubes( n=100, defaultMaterial=null )
 {
 	var geometry1 = new THREE.SphereGeometry( 1 );
 	var geometry2 = new THREE.BoxGeometry( 2, 2, 2 );
+	var material;
 
 	for( var i=0; i<n; i++ )
 	{
-		var material = new THREE.MeshLambertMaterial( { color: new THREE.Color().setHSL(Math.random(),1,0.5) } );
+		if( defaultMaterial )
+			material = defaultMaterial;
+		else
+			material = new THREE.MeshLambertMaterial( { color: new THREE.Color().setHSL(Math.random(),1,0.5) } );
 
 		var mesh = new THREE.Mesh( Math.random()>0.5?geometry1:geometry2, material );
 			mesh.position.set( Math.random()-0.5, Math.random()-0.5, Math.random()-0.5 ).normalize();

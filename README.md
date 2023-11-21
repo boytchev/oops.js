@@ -11,12 +11,49 @@ so they are not completely the same as their Three.js counterparts.
 A very preliminary test with the [webgl_postprocessing](https://threejs.org/examples/?q=post#webgl_postprocessing)
 example shows increased performance by 50%.
 
+## Shader characteristics
+
+All shaders have two important characteristics:
+
+* **shader weight** defines how many samplings are done per pixel.
+Higher weight indicates slower shader. 
+
+* **shader type**, like blood type, indicates shader compatibility.
+Compatible shaders can be merged in a single shader pass. Incompatible
+shaders should be splint into different passes
+
+The table below classifies shaders according to their type (base character) and weight (supscript index):
+
+| Type | Weight | Description |
+| :--: | :--: | :-- |
+| **O** | | These shaders use only the colors in a frame. An O-shader may follow any other shader. |
+| | **O<sup>0</sup>** | Basic  |
+| | **O<sup>1</sup>** | ACESFilmicToneMapping, BleachBypass, BrightnessContrast, ColorCorrection, Colorify, Copy, DotScreen, Exposure, ExposureExp, Film, GammaCorrection, HueSaturation, Luminosity, LuminosityHighPass, Kaleido, Mirror, Sepia, Technicolor, UnpackDepthRGBA, Vignette |
+| | **O<sup>3</sup>** | RGBShift |
+| | **O<sup>8</sup>** | Focus |
+| | **O<sup>9</sup>** | HorizontalBlur, HorizontalTiltShift, SobelOperator, VerticalBlur, VerticalTiltShift |
+| | **O<sup>10</sup>** | FreiChen |
+| | **O<sup>15</sup>** | TriangleBlur |
 
 
+## ACESFilmicToneMappingShader [O<sup>1</sup>]
 
-## BasicShader
+A shader that applies filmic tonemap to the frame as defined
+by the Academy Color Encoding System.
+	
+* **`exposure`** – exposure factor (float, from 0 to 2, default value 1.0) 
 
-A basic and simple test shader that fills the frame with a gradient color. Shader weight is 0 sweight.
+Example: [ACESFilmicToneMappingShader.html](examples/ACESFilmicToneMappingShader.html)
+		
+[<img src="examples/ACESFilmicToneMappingShader.jpg">](examples/ACESFilmicToneMappingShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **exposure** range is expanded.</span>*
+	
+
+
+## BasicShader [O<sup>0</sup>]
+
+A basic and simple test shader that fills the frame with a gradient color.
 	
 * **`color`** – fill color (color, default value THREE.Color(1,0,0) for red color) 
 
@@ -28,10 +65,10 @@ Example: [BasicShader.html](examples/BasicShader.html)
 	
 
 
-## BleachBypassShader
+## BleachBypassShader [O<sup>1</sup>]
 
 A shader that applies the [bleach bypass](https://en.wikipedia.org/wiki/Bleach_bypass)
-effect in photography. Shader weight is 1 sweight.
+effect in photography.
 	
 * **`amount`** – amount of effect intensity (float, default value 3}
 
@@ -44,10 +81,9 @@ Example: [BleachBypassShader.html](examples/BleachBypassShader.html)
 
 
 
-## BrightnessContrastShader
+## BrightnessContrastShader [O<sup>1</sup>]
 
 A shader that changes the brightness and the contract of a frame.
-Shader weight is 1 sweight.
 	
 * **`brightness`** – amount of color brightness (float, from -1 to 1, default value 0}
 * **`contrast`** – amount of color contrast (float, from -1 to 1, default value 0}
@@ -59,11 +95,10 @@ Example: [BrightnessContrastShader.html](examples/BrightnessContrastShader.html)
 
 
 
-## ColorCorrectionShader
+## ColorCorrectionShader [O<sup>1</sup>]
 
 A shader that transforms the colors in a frame by *m*&times;(*color* + *a*)<sup>*p*</sup>.
 Each color component is transformed by its own factors *m*, *a* and *p*.
-Shader weight is 1 sweight.
 	
 * **`mulRGB`** – scaling factor *m* (vector, default value THREE.Vector3(1,1,1)}
 * **`addRGB`** – offset factor *a* (vector, default value THREE.Vector3(0,0,0)}
@@ -76,9 +111,9 @@ Example: [ColorCorrectionShader.html](examples/ColorCorrectionShader.html)
 
 
 
-## ColorifyShader
+## ColorifyShader [O<sup>1</sup>]
 
-A shader that converts the colors of the frame into specific color. Shader weight is 1 sweight.
+A shader that converts the colors of the frame into specific color.
 	
 * **`color`** – target color (color, default value THREE.Color(1,1,1) for white color) 
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
@@ -92,10 +127,22 @@ Example: [ColorifyShader.html](examples/ColorifyShader.html)
 
 
 
-## DotScreenShader
+## CopyShader [O<sup>1</sup>]
+
+A shader that just copies the frame multiplying each color with opacity factor.
+	
+* **`opacity`** – opacity factor (float, 0.0 to 1.0, default value 1.0) 
+
+Example: [CopyShader.html](examples/CopyShader.html)
+		
+[<img src="examples/CopyShader.jpg">](examples/CopyShader.html)
+
+
+
+
+## DotScreenShader [O<sup>1</sup>]
 
 A shader that converts the frame into regularly spread dots.
-Shader weight is 1 sweight.
 	
 * **`scale`** – size of the dots in the pattern (float, default value 1.5}
 * **`angle`** – angle of the pattern (float, default value 0)
@@ -113,9 +160,12 @@ has another default value; (2) **opacity** is added.</span>*
 
 
 
-## ExposureShader
+## ExposureShader [O<sup>1</sup>]
 
-A shader that changes the exposure of a frame by myltiplying colors by factor *f*. Exposure factor *f*&lt;1 makes the colors darker, while exposure *f*&gt;1 makes them brighter. Exposure is multiplicative, i.e. the black color does not change and the 'opposite' of *f*=2 is *f*=1/2. Shader weight is 1 sweight.
+A shader that changes the exposure of a frame by myltiplying colors by factor *f*.
+Exposure factor *f*&lt;1 makes the colors darker, while exposure *f*&gt;1 makes
+them brighter. Exposure is multiplicative, i.e. the black color does not change
+and the 'opposite' of *f*=2 is *f*=1/2.
 	
 * **`exposure`** – exposure factor (float, default value 1}
 
@@ -126,9 +176,13 @@ Example: [ExposureShader.html](examples/ExposureShader.html)
 
 
 
-## ExposureExpShader
+## ExposureExpShader [O<sup>1</sup>]
 
-A shader that changes the exposure of a frame by myltiplying colors by factor *e<sup>f</sup>*, where *e*&approx;2.718 is the [Euler's number](https://en.wikipedia.org/wiki/E_(mathematical_constant)). Exposure factor *f*&lt;0 makes the colors darker, while exposure *f*&gt;0 makes them brighter. Exposure is linear, i.e. the 'opposite' of *f*=2 is *f*=-2. Shader weight is 1 sweight.
+A shader that changes the exposure of a frame by myltiplying colors by factor
+*e<sup>f</sup>*, where *e*&approx;2.718 is the
+[Euler's number](https://en.wikipedia.org/wiki/E_(mathematical_constant)).
+Exposure factor *f*&lt;0 makes the colors darker, while exposure *f*&gt;0 makes
+them brighter. Exposure is linear, i.e. the 'opposite' of *f*=2 is *f*=-2.
 	
 * **`exposure`** – exposure factor (float, default value 0}
 
@@ -141,11 +195,11 @@ Example: [ExposureExpShader.html](examples/ExposureExpShader.html)
 
 
 
-## FilmShader
+## FilmShader [O<sup>1</sup>]
 
 A shader that adds graininess to the frame. The pattern of the grains is defined by
 the fracrional part of the *time* parameter -- if it is changed for every frame,
-the result will be noisy grains. Shader weight is 1 sweight.
+the result will be noisy grains.
 	
 * **`time`** – defines the grain pattern (float)
 * **`intensity`** – intensity of graininess (float, 0.0 to 3.0, default value 0.5) 
@@ -162,10 +216,9 @@ a different range.</span>*
 
 
 
-## FocusShader
+## FocusShader [O<sup>8</sup>]
 
 A shader that blurs the frame by keeping the center more focused.
-Shader weight is 8 sweights.
 	
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`sampleDistance`** – non-linear component of the blur effect (float, 0.0 to 2.0, default value 0.94}
@@ -181,10 +234,10 @@ has another default value; (2) **waveFactor** is scaled by 100.</span>*
 
 
 
-## FreiChenShader
+## FreiChenShader [O<sup>10</sup>]
 
 A shader that marks the edges of shapes based on the Frei-Chen edge detection
-algorithm. Shader weight is 10 sweights.
+algorithm.
 	
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
@@ -199,10 +252,10 @@ has another default value; (2) **opacity** is added; (3) a syntax bug in the sha
 
 
 
-## GammaCorrectionShader
+## GammaCorrectionShader [O<sup>1</sup>]
 
 A shader that applies sRGB electro-optical transfer function (EOTF), which is
-approximation of &gamma;=2.2. Shader weight is 1 sweight.
+approximation of &gamma;=2.2. 
 	
 * *no parameters*
 
@@ -213,9 +266,9 @@ Example: [GammaCorrectionShader.html](examples/GammaCorrectionShader.html)
 
 
 
-## HorizontalBlurShader
+## HorizontalBlurShader [O<sup>9</sup>]
 
-A shader that blurs the frame horizontally with a Gaussian blur filter. Shader weight is 9 sweights.
+A shader that blurs the frame horizontally with a Gaussian blur filter. 
 	
 * **`resolution`** – canvas width (float, default value innerWidth)
 * **`amount`** – amount of shader effect (float, default value 1.0) 
@@ -230,9 +283,9 @@ it is not 1/*width* and has another default value; (2) **amount** is added.</spa
 
 
 
-## HorizontalTiltShiftShader
+## HorizontalTiltShiftShader [O<sup>9</sup>]
 
-A shader that fakes a horizontal tilt-shift effect, i.e. the areas above and below a horizontal area are blured. Shader weight is 9 sweights.
+A shader that fakes a horizontal tilt-shift effect, i.e. the areas above and below a horizontal area are blured.
 	
 * **`position`** – vertical position of the horizontal area (float, in NDC space units from 0 to 1, default value 0.5)
 * **`span`** – the vertical size of the horizontal area (float, in NDC space units from 0 to 0.5, default value 0.1)
@@ -247,10 +300,12 @@ Example: [HorizontalTiltShiftShader.html](examples/HorizontalTiltShiftShader.htm
 
 
 
-## HueSaturationShader
+## HueSaturationShader [O<sup>1</sup>]
 
-A shader that changes the [hue](https://en.wikipedia.org/wiki/Hue) (the colorness of colors, like *red*, *green* or *yellow*) and the [saturation](https://en.wikipedia.org/wiki/Colorfulness#Saturation) (the colorfulness or strength of colors, line *gray* or *colorful*) of a frame.
-Shader weight is 1 sweight.
+A shader that changes the [hue](https://en.wikipedia.org/wiki/Hue) (the colorness
+of colors, like *red*, *green* or *yellow*) and the
+[saturation](https://en.wikipedia.org/wiki/Colorfulness#Saturation)
+(the colorfulness or strength of colors, line *gray* or *colorful*) of a frame.
 	
 * **`hue`** – relative change of hue (float, from -1 to 1, default value 0}
 * **`saturation`** – relative change of saturation (float, from -1 to 1, default value 0}
@@ -262,10 +317,11 @@ Example: [HueSaturationShader.html](examples/HueSaturationShader.html)
 
 
 
-## LuminosityShader
+## LuminosityShader [O<sup>1</sup>]
 
-A shader that converts colors of a frame to grayscale based on luminocity, i.e. color components contribute with their different factors: &approx;21% (red), &approx;72% (green) and &approx;7%(blue).
-Shader weight is 1 sweight.
+A shader that converts colors of a frame to grayscale based on luminocity, i.e.
+color components contribute with their different factors: &approx;21% (red),
+&approx;72% (green) and &approx;7%(blue).
 	
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
@@ -278,9 +334,11 @@ Example: [LuminosityShader.html](examples/LuminosityShader.html)
 
 
 
-## LuminosityHighPassShader
+## LuminosityHighPassShader [O<sup>1</sup>]
 
-A shader that changes a frame by blending colors based on their luminocity. In contrast to the [LuminosityShader](#luminosityshader), this shader calculates the luminocity as &approx;30% (red), &approx;59% (green) and &approx;11%(blue). Shader weight is 1 sweight.
+A shader that changes a frame by blending colors based on their luminocity.
+In contrast to the [LuminosityShader](#luminosityshader), this shader calculates
+the luminocity as &approx;30% (red), &approx;59% (green) and &approx;11%(blue).
 	
 * **`color`** – default color to blend to (color, default value THREE.Color(0,0,0)) 
 * **`alpha`** – alpha component of the default color (float, from 0 to 1, default value 0) 
@@ -296,9 +354,9 @@ Example: [LuminosityHighPassShader.html](examples/LuminosityHighPassShader.html)
 
 
 
-## KaleidoShader
+## KaleidoShader [O<sup>1</sup>]
 
-A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https://en.wikipedia.org/wiki/Kaleidoscope) image. Shader weight is 1 sweight.
+A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https://en.wikipedia.org/wiki/Kaleidoscope) image.
 	
 * **`sides`** – number of side of the kaleidoscope image (int, 3 or more, default value 6)
 * **`angle`** – rotation of the kaleidoscope image in radians (float, default value 0)
@@ -314,9 +372,9 @@ fixed aspect.</span>*
 
 
 
-## MirrorShader
+## MirrorShader [O<sup>1</sup>]
 
-A shader that mirrors half of the frame onto the other half. Shader weight is 1 sweight.
+A shader that mirrors half of the frame onto the other half.
 	
 * **`side`** – which half frame is the source of mirror (int, 0=left&rarr;right, 1=right&rarr;left, 2:top&rarr;bottom, 3:bottom&rarr;top, default value 1)
 
@@ -328,10 +386,9 @@ Example: [MirrorShader.html](examples/MirrorShader.html)
 
 
 
-## RGBShiftShader
+## RGBShiftShader [O<sup>3</sup>]
 
 A shader that splits the color components of the frame and shifts them apart.
-Shader weight is 3 sweights.
 
 * **`amount`** – amount of shift (float, in NDC space units, default value 0.005)
 * **`angle`** – angle of offset (float, in radians, default value 0.0)
@@ -346,9 +403,9 @@ Example: [RGBShiftShader.html](examples/RGBShiftShader.html)
 
 
 
-## SepiaShader
+## SepiaShader [O<sup>1</sup>]
 
-A shader that recolors the frame into sepia hue. Shader weight is 1 sweight.
+A shader that recolors the frame into sepia hue.
 
 * **`amount`** – amount of recoloring (float, from 0 to 1, default value 1)
 
@@ -359,10 +416,9 @@ Example: [SepiaShader.html](examples/SepiaShader.html)
 
 
 
-## SobelOperatorShader
+## SobelOperatorShader [O<sup>9</sup>]
 
 A shader that marks the edges of shapes based on the red color component in the frame.
-Shader weight is 9 sweights.
 	
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
@@ -377,9 +433,9 @@ has another default value; (2) **opacity** is added.</span>*
 
 
 
-## TechnicolorShader
+## TechnicolorShader [O<sup>1</sup>]
 
-A shader that converts the colors of the frame into Technicolor cyan-red hues. Shader weight is 1 sweight.
+A shader that converts the colors of the frame into Technicolor cyan-red hues.
 	
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
@@ -392,10 +448,10 @@ Example: [TechnicolorShader.html](examples/TechnicolorShader.html)
 
 
 
-## TriangleBlurShader
+## TriangleBlurShader [O<sup>15</sup>]
 
 A shader that blurs the frame using randomized weighted samples. The blur is biased
-along a direction. Shader weight is 15 sweights.
+along a direction.
 	
 * **`amount`** – amount of shader effect in both directions (vector, components in NDC space units from 0 to 1, default value THREE.Vector2(0,0)) 
 
@@ -413,9 +469,22 @@ Example: [TriangleBlurShader.html](examples/TriangleBlurShader.html)
 
 
 
-## VerticalBlurShader
+## UnpackDepthRGBAShader [O<sup>1</sup>]
 
-A shader that blurs the frame vertically with a Gaussian blur filter. Shader weight is 9 sweights.
+A shader that assumes the frame contains RGBA encoded depth data and unpacks it into grayscale colors.
+	
+* **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
+
+Example: [UnpackDepthRGBAShader.html](examples/UnpackDepthRGBAShader.html)
+		
+[<img src="examples/UnpackDepthRGBAShader.jpg">](examples/UnpackDepthRGBAShader.html)
+
+
+
+
+## VerticalBlurShader [O<sup>9</sup>]
+
+A shader that blurs the frame vertically with a Gaussian blur filter.
 	
 * **`resolution`** – canvas height (float, default value innerHeight)
 * **`amount`** – amount of shader effect (float, default value 1.0) 
@@ -430,9 +499,9 @@ it is not 1/*height* and has another default value; (2) **amount** is added.</sp
 
 
 
-## VerticalTiltShiftShader
+## VerticalTiltShiftShader [O<sup>9</sup>]
 
-A shader that fakes a vertical tilt-shift effect, i.e. the areas to the left and right of a vertical area are blured. Shader weight is 9 sweights.
+A shader that fakes a vertical tilt-shift effect, i.e. the areas to the left and right of a vertical area are blured.
 	
 * **`position`** – horizontal position of the vertical area (float, in NDC space units from 0 to 1, default value 0.5)
 * **`span`** – the horizontal size of the vertical area (float, in NDC space units from 0 to 0.5, default value 0.1)
@@ -446,9 +515,9 @@ Example: [VerticalTiltShiftShader.html](examples/VerticalTiltShiftShader.html)
 
 
 
-## VignetteShader
+## VignetteShader [O<sup>1</sup>]
 
-A shader that adds a vignette effect on the frame. Shader weight is 1 sweight.
+A shader that adds a vignette effect on the frame.
 	
 * **`radius`** – internal vignette radius (float, in NDC space units, default value 1.0)
 * **`blur`** – amount of blur effect on vignette border (float, 0 for no blur, default value 1.0) 
@@ -466,7 +535,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
 # To do
 
 <span style="font-size: 0.75em; color: lightgray;">
- ACESFilmicToneMappingShader
+ <b style="background:palegreen; color: black; padding:0.3em;">ACESFilmicToneMappingShader</b>
  AfterimageShader
  <b style="background:palegreen; color: black; padding:0.3em;">BasicShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">BleachBypassShader</b>
@@ -477,7 +546,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  <b style="background:palegreen; color: black; padding:0.3em;">ColorCorrectionShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">ColorifyShader</b>
  ConvolutionShader
- CopyShader
+ <b style="background:palegreen; color: black; padding:0.3em;">CopyShader</b>
  DepthLimitedBlurShader
  DigitalGlitch
  DOFMipMapShader
@@ -512,7 +581,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  <b style="background:palegreen; color: black; padding:0.3em;">TechnicolorShader</b>
  ToonShader
  <b style="background:palegreen; color: black; padding:0.3em;">TriangleBlurShader</b>
- UnpackDepthRGBAShader
+ <b style="background:palegreen; color: black; padding:0.3em;">UnpackDepthRGBAShader</b>
  VelocityShader
  <b style="background:palegreen; color: black; padding:0.3em;">VerticalBlurShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">VerticalTiltShiftShader</b>
