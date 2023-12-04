@@ -928,41 +928,33 @@ const UnpackDepthRGBAShader = {
 const HalftoneShader = {
 	name: 'HalftoneShader',
 	uniforms: {
-		'shape': { value: 1, type: 'int' },
-		'radius': { value: 4 },
-/**/		'rotateR': { value: Math.PI / 12 * 1 },
-/**/		'rotateG': { value: Math.PI / 12 * 2 },
-/**/		'rotateB': { value: Math.PI / 12 * 3 },
-		'scatter': { value: 0 },
-		'resolution': { value: new THREE.Vector2(innerWidth,innerHeight) },
-/**/		'blending': { value: 1 },
-/**/		'blendingMode': { value: 1, type: 'int' },
-		'grayscale': { value: false },
-		'disable': { value: false }
+		shape: { value: 1, type: 'int' },
+		radius: { value: 4 },
+		rotate: { value: new THREE.Vector3(1*Math.PI/12,2*Math.PI/12,3*Math.PI/12) },
+		scatter: { value: 0 },
+		resolution: { value: new THREE.Vector2(innerWidth,innerHeight) },
+		blending: { value: 1 },
+		blendingMode: { value: 1, type: 'int' },
+		grayscale: { value: false },
+		disable: { value: false }
 	},
-	
-// width and height merged into resolution
-// greyscale renamed to grayscale
-
-
+	fragmentShaderHead: /* glsl */`
+		#define SQRT2_MINUS_ONE 0.41421356
+		#define SQRT2_HALF_MINUS_ONE 0.20710678
+		#define PI2 6.28318531
+		#define SHAPE_DOT 1
+		#define SHAPE_ELLIPSE 2
+		#define SHAPE_LINE 3
+		#define SHAPE_SQUARE 4
+		#define BLENDING_LINEAR 1
+		#define BLENDING_MULTIPLY 2
+		#define BLENDING_ADD 3
+		#define BLENDING_LIGHTER 4
+		#define BLENDING_DARKER 5
+	`,
 	fragmentShader: /* glsl */`
-	
-	
 
-		#define SQRT2_MINUS_ONE_$ 0.41421356
-		#define SQRT2_HALF_MINUS_ONE_$ 0.20710678
-		#define PI2_$ 6.28318531
-		#define SHAPE_DOT_$ 1
-		#define SHAPE_ELLIPSE_$ 2
-		#define SHAPE_LINE_$ 3
-		#define SHAPE_SQUARE_$ 4
-		#define BLENDING_LINEAR_$ 1
-		#define BLENDING_MULTIPLY_$ 2
-		#define BLENDING_ADD_$ 3
-		#define BLENDING_LIGHTER_$ 4
-		#define BLENDING_DARKER_$ 5
-
-		const int samples_$ = 8;
+		const int samples_$ = 1; //8
 
 		float blend_$( float a, float b, float t ) {
 
@@ -991,26 +983,26 @@ const HalftoneShader = {
 			float dist = hypot_$( coord.x - p.x, coord.y - p.y );
 			float rad = channel;
 
-			if ( shape_$ == SHAPE_DOT_$ ) {
+			if ( shape_$ == SHAPE_DOT ) {
 
 				rad = pow( abs( rad ), 1.125 ) * rad_max;
 
-			} else if ( shape_$ == SHAPE_ELLIPSE_$ ) {
+			} else if ( shape_$ == SHAPE_ELLIPSE ) {
 
 				rad = pow( abs( rad ), 1.125 ) * rad_max;
 
 				if ( dist != 0.0 ) {
 					float dot_p = abs( ( p.x - coord.x ) / dist * normal.x + ( p.y - coord.y ) / dist * normal.y );
-					dist = ( dist * ( 1.0 - SQRT2_HALF_MINUS_ONE_$ ) ) + dot_p * dist * SQRT2_MINUS_ONE_$;
+					dist = ( dist * ( 1.0 - SQRT2_HALF_MINUS_ONE ) ) + dot_p * dist * SQRT2_MINUS_ONE;
 				}
 
-			} else if ( shape_$ == SHAPE_LINE_$ ) {
+			} else if ( shape_$ == SHAPE_LINE ) {
 
 				rad = pow( abs( rad ), 1.5) * rad_max;
 				float dot_p = ( p.x - coord.x ) * normal.x + ( p.y - coord.y ) * normal.y;
 				dist = hypot_$( normal.x * dot_p, normal.y * dot_p );
 
-			} else if ( shape_$ == SHAPE_SQUARE_$ ) {
+			} else if ( shape_$ == SHAPE_SQUARE ) {
 
 				float theta = atan( p.y - coord.y, p.x - coord.x ) - angle;
 				float sin_t = abs( sin( theta ) );
@@ -1043,8 +1035,8 @@ const HalftoneShader = {
 
 		// multi-sampled point
 			vec4 tex = $$( vec2( point.x / resolution_$.x, point.y / resolution_$.y ) );
-			float base = rand_$( vec2( floor( point.x ), floor( point.y ) ) ) * PI2_$;
-			float step = PI2_$ / float( samples_$ );
+			float base = rand_$( vec2( floor( point.x ), floor( point.y ) ) ) * PI2;
+			float step = PI2 / float( samples_$ );
 			float dist = radius_$ * 0.66;
 
 			for ( int i = 0; i < samples_$; ++i ) {
@@ -1129,7 +1121,7 @@ const HalftoneShader = {
 			if ( scatter_$ != 0.0 ) {
 
 				float off_mag = scatter_$ * threshold * 0.5;
-				float off_angle = rand_$( vec2( floor( c.p1.x ), floor( c.p1.y ) ) ) * PI2_$;
+				float off_angle = rand_$( vec2( floor( c.p1.x ), floor( c.p1.y ) ) ) * PI2;
 				c.p1.x += cos( off_angle ) * off_mag;
 				c.p1.y += sin( off_angle ) * off_mag;
 
@@ -1152,15 +1144,15 @@ const HalftoneShader = {
 		float blendColour_$( float a, float b, float t ) {
 
 		// blend colours
-			if ( blendingMode_$ == BLENDING_LINEAR_$ ) {
+			if ( blendingMode_$ == BLENDING_LINEAR ) {
 				return blend_$( a, b, 1.0 - t );
-			} else if ( blendingMode_$ == BLENDING_ADD_$ ) {
+			} else if ( blendingMode_$ == BLENDING_ADD ) {
 				return blend_$( a, min( 1.0, a + b ), t );
-			} else if ( blendingMode_$ == BLENDING_MULTIPLY_$ ) {
+			} else if ( blendingMode_$ == BLENDING_MULTIPLY ) {
 				return blend_$( a, max( 0.0, a * b ), t );
-			} else if ( blendingMode_$ == BLENDING_LIGHTER_$ ) {
+			} else if ( blendingMode_$ == BLENDING_LIGHTER ) {
 				return blend_$( a, max( a, b ), t );
-			} else if ( blendingMode_$ == BLENDING_DARKER_$ ) {
+			} else if ( blendingMode_$ == BLENDING_DARKER ) {
 				return blend_$( a, min( a, b ), t );
 			} else {
 				return blend_$( a, b, 1.0 - t );
@@ -1178,12 +1170,12 @@ const HalftoneShader = {
 				float aa = ( radius_$ < 2.5 ) ? radius_$ * 0.5 : 1.25;
 
 		// get channel samples
-				Cell_$ cell_r = getReferenceCell_$( p, origin, rotateR_$, radius_$ );
-				Cell_$ cell_g = getReferenceCell_$( p, origin, rotateG_$, radius_$ );
-				Cell_$ cell_b = getReferenceCell_$( p, origin, rotateB_$, radius_$ );
-				float r = getDotColour_$( cell_r, p, 0, rotateR_$, aa );
-				float g = getDotColour_$( cell_g, p, 1, rotateG_$, aa );
-				float b = getDotColour_$( cell_b, p, 2, rotateB_$, aa );
+				Cell_$ cell_r = getReferenceCell_$( p, origin, rotate_$.r, radius_$ );
+				Cell_$ cell_g = getReferenceCell_$( p, origin, rotate_$.g, radius_$ );
+				Cell_$ cell_b = getReferenceCell_$( p, origin, rotate_$.b, radius_$ );
+				float r = getDotColour_$( cell_r, p, 0, rotate_$.r, aa );
+				float g = getDotColour_$( cell_g, p, 1, rotate_$.g, aa );
+				float b = getDotColour_$( cell_b, p, 2, rotate_$.b, aa );
 
 		// blend with original
 				vec4 colour = $$( vUv );

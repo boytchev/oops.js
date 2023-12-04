@@ -34,6 +34,7 @@ The table below classifies shaders according to their type (base character) and 
 | | **O<sup>9</sup>** | HorizontalBlur, HorizontalTiltShift, SobelOperator, VerticalBlur, VerticalTiltShift |
 | | **O<sup>10</sup>** | FreiChen |
 | | **O<sup>15</sup>** | TriangleBlur |
+| | **O<sup>109</sup>** | Halftone |
 
 
 ## ACESFilmicToneMappingShader [O<sup>1</sup>]
@@ -262,6 +263,29 @@ approximation of &gamma;=2.2.
 Example: [GammaCorrectionShader.html](examples/GammaCorrectionShader.html)
 		
 [<img src="examples/GammaCorrectionShader.jpg">](examples/GammaCorrectionShader.html)
+
+
+
+
+## HalftoneShader [O<sup>109</sup>]
+
+A shader that converts the colors in the frame into [overlapping single-color patterns](https://en.wikipedia.org/wiki/Halftone) of shapes. 
+
+* **`shape`** – pattern shape: *dot*=1, *ellipse*=2, *line*=3 and *square*=4  (int, from 1 to 4, default value 1 for dot)
+* **`radius`** – size of the pattern shapes (float, from 1 to 20, default value 4)
+* **`scatter`** – amount of pattern distortion (float, from 0 to 10, default value 0),
+* **`rotate`** – rotation-vector of the patterns in radians, the *x*, *y* and *z* components define the rotation of red, green and blue patterns (vector, each component is from 0 to 2&pi;, default value THREE.Vector3(&pi;/12,2&pi;/12,3&pi;/12) which correponds to 15&deg;, 30&deg; and 45&deg;)
+* **`blending`** – blending strength/opacity (float, from 0.0 to 1.0, default value 1.0)
+* **`blendingMode`** – defines how the halftone image is blended with the original frame: *linear*=1, *multiply*=2, *add*=3, *lighter*=4 and *darker*=5 (int, from 1 to 5, default value 1 for linear)
+* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
+* **`grayscale`** - flag for grayscale effect (boolean, default value *false*)
+* **`disable`** - flag for disabling the shader (boolean, default value *false*)
+
+Example: [HalftoneShader.html](examples/HalftoneShader.html)
+		
+[<img src="examples/HalftoneShader.jpg">](examples/HalftoneShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **rotateR**, **rotateG** and **rotateB** merged into vector **rotate**; (2) **greyscale** is renamed to **grayscale**; (3) **width** and **height** merged into **resolution**.</span>*
 
 
 
@@ -559,7 +583,7 @@ and is unrelated with the Three.js VignetteShader.</span>*
  FXAAShader
  <b style="background:palegreen; color: black; padding:0.3em;">GammaCorrectionShader</b>
  GodRaysShader
- HalftoneShader
+ <b style="background:palegreen; color: black; padding:0.3em;">HalftoneShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">HorizontalBlurShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">HorizontalTiltShiftShader</b>
  <b style="background:palegreen; color: black; padding:0.3em;">HueSaturationShader</b>
