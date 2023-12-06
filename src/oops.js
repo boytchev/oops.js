@@ -27,6 +27,14 @@ class OOPSShader
 	
 	
 	
+	getFragmentShader( )
+	{
+		return this.fragmentShader;
+		
+	} // OOPSShader.getFragmentShader
+	
+	
+
 	updateShaders( )
 	{
 		this.updateUniforms( );
@@ -75,6 +83,19 @@ class OOPSShader
 		
 		this.fragmentShader = fragmentShaderHead + this.fragmentShader;
 				
+		// scan all uniforms and copy userValue->value if there is userValue
+		for( var uniform of Object.values(this.uniforms) )
+		{
+			if( typeof uniform.userValue !== 'undefined' )
+			{
+				uniform.value = uniform.userValue;
+				delete uniform.userValue;
+			}
+		}
+
+//console.log( this )				
+//		console.log(this.fragmentShader);
+		
 	} // OOPSShader.updateFragmentShader
 
 
@@ -112,46 +133,41 @@ class OOPSShader
 
 
 
-	addUniform( name, alias, value )
+	addUniform( name, alias, userValue )
 	{
+//		console.log('############### add',name,alias,userValue);
+		
 		// (1) addUniform( name )					string
 		// (2) addUniform( name, alias )			string string
-		// (3) addUniform( name, alias, value )		string string value
+		// (3) addUniform( name, alias, userValue )	string string userValue
 		// (4) addUniform( name, value )			string value
-//console.log('addUniform', name, alias, value )
+//console.log('addUniform', name, alias, userValue )
 
 		if( typeof alias === 'undefined' )
 		{	// (1) -> (2)
 			alias = name;
-//console.log('(1) -> (2)', name, alias, value )
+//console.log('(1) -> (2)', name, alias, userValue )
 		} else
 		if( typeof alias !== 'string' )
 		{
 			// (4) -> (3)
-			value = alias;
+			userValue = alias;
 			alias = name;
 //console.log('(4) -> (3)', name, alias, value )
 		}
-		
-		// (2) -> (3)
-		if( typeof value === 'undefined' )
-		{
-			value = this.passes[this.passes.length-1].shader.uniforms[name].value;
-//console.log('(2) -> (3)', name, alias, value )
-		}
-		
-		// (3)
+				
+		// (2), (3)
 		// searches backwards
 //console.log('       (3)', name, alias, value )
 		for( var i=this.passes.length-1; i>=0; i-- )
 		{
 			if( this.passes[i].shader.uniforms[name] )
 			{
-				this.passes[i].uniforms[name] = {alias:alias, value:value};
+				this.passes[i].uniforms[name] = {alias:alias, userValue:userValue, value:this.passes[this.passes.length-1].shader.uniforms[name].value};
 				break;
 			}
 		}
-		
+//console.log(this)		
 		this.updateShaders( );
 		
 		return this;		
@@ -193,6 +209,11 @@ class OOPSShader
 //console.log(name, alias, value, n, type )
 		var str = `#define ${name}_${n+1} ${alias}\n`;
 		
+		if( this.uniforms[alias] )
+		{
+			return str;
+		}
+
 		if( value instanceof THREE.Vector2 )
 			return str + `uniform vec2 ${name}_${n+1};\n`;
 		
@@ -235,24 +256,49 @@ class OOPSShader
 
 		glsl += `\n`;
 
-		// process uniforms
+		// process all uniforms from shader's definition
 		if( shader.uniforms )
 		{
+//console.log('>>>processing shader',shader.name);
+//console.log('\t',shaderPass.uniforms);
+
 			for( var name of Object.keys(shader.uniforms) )
 			{
 				var type = shader.uniforms[name].type;
 				
+				// does a uniform exists as a shaderpass uniform (i.e. addUniform has been used)?
 				if( shaderPass.uniforms[name] )
 				{
-					var value = shaderPass.uniforms[name].value!==undefined ? shaderPass.uniforms[name].value : shader.uniforms[name].value,
-						alias = shaderPass.uniforms[name].alias;
+					// yes, it does exist as a pass uniform
+					
+					var alias = shaderPass.uniforms[name].alias;
+					
+//					console.log('values','oops=',shaderPass.uniforms[name].value,'default',shader.uniforms[name].value);
+					var userValue = shaderPass.uniforms[name].userValue,
+						value = shaderPass.uniforms[name].value;
+						
 
-					glsl = this.processUniform( name, alias, value, n, type ) + glsl;
-					this.uniforms[alias] = {value: value};
+					glsl = this.processUniform( name, alias, typeof userValue !== 'undefined'?userValue:value, n, type ) + glsl;
+
+					if( typeof this.uniforms[alias] === 'undefined' )
+						this.uniforms[alias] = {};
+					
+					if( typeof userValue !== 'undefined' )
+						this.uniforms[alias].userValue = userValue;
+					
+					if( typeof value !== 'undefined' )
+						this.uniforms[alias].value = value;
+//					console.log('>>>',alias,'=',value);
 				}
 				else
 				{
-					var value = shaderPass.values[name]!==undefined ? shaderPass.values[name] : shader.uniforms[name].value;
+					// no, it does not exist as a pass uniform
+					// so, this uniform should be baked as a define
+					
+					var value = shaderPass.values[name]; // user defined static value
+
+					if( value === undefined )
+						value = shader.uniforms[name].value; // default uniform value from shader source
 					
 					glsl = this.processDefine( name, value, n, type ) + glsl;
 					
