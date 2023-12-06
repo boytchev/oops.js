@@ -4,8 +4,8 @@ This page lists short online demos for supported shaders.<br>
 They can be used to play with the shaders' parameters.
 
 ## Contents
-<span style="font-size:60%; font-weight:300;">
-&middot; [ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
+<span style="font-size:80%; font-weight:300;">
+[ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
 &middot; AfterimageShader
 &middot; [BasicShader](#basicshader)
 &middot; [BleachBypassShader](#bleachbypassshader)
@@ -62,7 +62,8 @@ They can be used to play with the shaders' parameters.
 
 
 
-## ACESFilmicToneMappingShader [O<sup>1</sup>]
+## ACESFilmicToneMappingShader
+[O<sup>1</sup>]
 
 A shader that applies filmic tonemap to the frame as defined
 by the Academy Color Encoding System.
