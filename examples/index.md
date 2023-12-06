@@ -3,63 +3,62 @@
 This page lists short online demos for supported shaders.<br>
 They can be used to play with the shaders' parameters.
 
-### Contents
-
-
-[ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
-AfterimageShader
-[BasicShader.html](BasicShader.html)
-[BleachBypassShader.html](BleachBypassShader.html)
-BlendShader
-BokehShader
-BokehShader2
-[BrightnessContrastShader.html](BrightnessContrastShader.html)
-[ColorCorrectionShader.html](ColorCorrectionShader.html)
-[ColorifyShader.html](ColorifyShader.html)
-ConvolutionShader
-[CopyShader.html](CopyShader.html)
-DepthLimitedBlurShader
-DigitalGlitch
-DOFMipMapShader
-[DotScreenShader.html](DotScreenShader.html)
-[ExposureShader.html](ExposureShader.html)
-[ExposureExpShader.html](ExposureExpShader.html)
-[FilmShader.html](FilmShader.html)
-[FocusShader.html](FocusShader.html)
-[FreiChenShader.html](FreiChenShader.html)
-FXAAShader
-[GammaCorrectionShader.html](GammaCorrectionShader.html)
-GodRaysShader
-[HalftoneShader.html](HalftoneShader.html)
-[HorizontalBlurShader.html](HorizontalBlurShader.html)
-[HorizontalTiltShiftShader.html](HorizontalTiltShiftShader.html)
-[HueSaturationShader.html](HueSaturationShader.html)
-[KaleidoShader.html](KaleidoShader.html)
-[LuminosityHighPassShader.html](LuminosityHighPassShader.html)
-[LuminosityShader.html](LuminosityShader.html)
-[MirrorShader.html](MirrorShader.html)
-MMDToonShader
-NormalMapShader
-OutputShader
-[RGBShiftShader.html](RGBShiftShader.html)
-SAOShader
-[SepiaShader.html](SepiaShader.html)
-SMAAShader
-[SobelOperatorShader.html](SobelOperatorShader.html)
-SSAOShader
-SSRShader
-SubsurfaceScatteringShader
-[TechnicolorShader.html](TechnicolorShader.html)
-ToonShader
-[TriangleBlurShader.html](TriangleBlurShader.html)
-[UnpackDepthRGBAShader.html](UnpackDepthRGBAShader.html)
-VelocityShader
-[VerticalBlurShader.html](VerticalBlurShader.html)
-[VerticalTiltShiftShader.html](VerticalTiltShiftShader.html)
-[VignetteShader.html](VignetteShader.html)
-VolumeShader
-WaterRefractionShader
-
+## Contents
+<span style="font-size:60%; font-weight:300;">
+&middot; [ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
+&middot; AfterimageShader
+&middot; [BasicShader](#basicshader)
+&middot; [BleachBypassShader](#bleachbypassshader)
+&middot; BlendShader
+&middot; BokehShader
+&middot; BokehShader2
+&middot; [BrightnessContrastShader](#brightnesscontrastshader)
+&middot; [ColorCorrectionShader](#colorcorrectionshader)
+&middot; [ColorifyShader](#colorifyshader)
+&middot; ConvolutionShader
+&middot; [CopyShader](#copyshader)
+&middot; DepthLimitedBlurShader
+&middot; DigitalGlitch
+&middot; DOFMipMapShader
+&middot; [DotScreenShader](#dotscreenshader)
+&middot; [ExposureShader](#exposureshader)
+&middot; [ExposureExpShader](#exposureexpshader)
+&middot; [FilmShader](#filmshader)
+&middot; [FocusShader](#focusshader)
+&middot; [FreiChenShader](#freichenshader)
+&middot; FXAAShader
+&middot; [GammaCorrectionShader](#gammacorrectionshader)
+&middot; GodRaysShader
+&middot; [HalftoneShader](#halftoneshader)
+&middot; [HorizontalBlurShader](#horizontalblurshader)
+&middot; [HorizontalTiltShiftShader](#horizontaltiltshiftshader)
+&middot; [HueSaturationShader](#huesaturationshader)
+&middot; [KaleidoShader](#kaleidoshader)
+&middot; [LuminosityHighPassShader](#luminosityhighpassshader)
+&middot; [LuminosityShader](#luminosityshader)
+&middot; [MirrorShader](#mirrorshader)
+&middot; MMDToonShader
+&middot; NormalMapShader
+&middot; OutputShader
+&middot; [RGBShiftShader](#rgbshiftshader)
+&middot; SAOShader
+&middot; [SepiaShader](#sepiashader)
+&middot; SMAAShader
+&middot; [SobelOperatorShader](#sobeloperatorshader)
+&middot; SSAOShader
+&middot; SSRShader
+&middot; SubsurfaceScatteringShader
+&middot; [TechnicolorShader](#technicolorshader)
+&middot; ToonShader
+&middot; [TriangleBlurShader](#triangleblurshader)
+&middot; [UnpackDepthRGBAShader](#unpackdepthrgbashader)
+&middot; VelocityShader
+&middot; [VerticalBlurShader](#verticalblurshader)
+&middot; [VerticalTiltShiftShader](#verticaltiltshiftshader)
+&middot; [VignetteShader](#vignetteshader)
+&middot; VolumeShader
+&middot; WaterRefractionShader
+</span>
 
 
 
