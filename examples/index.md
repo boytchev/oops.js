@@ -1,4 +1,4 @@
-# Shader Examples<div style="font-size:65%; font-weight:300;">Only One-pass Shader (oops.js)</div>
+# Shader Examples<br><span style="font-size:65%; font-weight:300;">Only One-pass Shader (oops.js)</span>
 
 This page lists short online demos for supported shaders.<br>
 They can be used to play with the shaders' parameters.
@@ -66,7 +66,6 @@ They can be used to play with the shaders' parameters.
 
 
 
-**Oops.js** is a library which attempts to squeeze hi
 
 ## ACESFilmicToneMappingShader [O<sup>1</sup>]
 
@@ -75,9 +74,9 @@ by the Academy Color Encoding System.
 	
 * **`exposure`** – exposure factor (float, from 0 to 2, default value 1.0) 
 
-Example: [ACESFilmicToneMappingShader.html](examples/ACESFilmicToneMappingShader.html)
+Example: [ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
 		
-[<img src="ACESFilmicToneMappingShader.jpg">](examples/ACESFilmicToneMappingShader.html)
+[<img src="ACESFilmicToneMappingShader.jpg">](ACESFilmicToneMappingShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **exposure** range is expanded.</span>*
 	
@@ -89,9 +88,9 @@ A basic and simple test shader that fills the frame with a gradient color.
 	
 * **`color`** – fill color (color, default value THREE.Color(1,0,0) for red color) 
 
-Example: [BasicShader.html](examples/BasicShader.html)
+Example: [BasicShader.html](BasicShader.html)
 		
-[<img src="BasicShader.jpg">](examples/BasicShader.html)
+[<img src="BasicShader.jpg">](BasicShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **color** is added.</span>*
 	
@@ -104,9 +103,9 @@ effect in photography.
 	
 * **`amount`** – amount of effect intensity (float, default value 3}
 
-Example: [BleachBypassShader.html](examples/BleachBypassShader.html)
+Example: [BleachBypassShader.html](BleachBypassShader.html)
 		
-[<img src="BleachBypassShader.jpg">](examples/BleachBypassShader.html)
+[<img src="BleachBypassShader.jpg">](BleachBypassShader.html)
 		
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is renamed to **amount** and has another default value.</span>*
 
@@ -120,9 +119,9 @@ A shader that changes the brightness and the contract of a frame.
 * **`brightness`** – amount of color brightness (float, from -1 to 1, default value 0}
 * **`contrast`** – amount of color contrast (float, from -1 to 1, default value 0}
 
-Example: [BrightnessContrastShader.html](examples/BrightnessContrastShader.html)
+Example: [BrightnessContrastShader.html](BrightnessContrastShader.html)
 		
-[<img src="BrightnessContrastShader.jpg">](examples/BrightnessContrastShader.html)
+[<img src="BrightnessContrastShader.jpg">](BrightnessContrastShader.html)
 		
 
 
@@ -136,9 +135,9 @@ Each color component is transformed by its own factors *m*, *a* and *p*.
 * **`addRGB`** – offset factor *a* (vector, default value THREE.Vector3(0,0,0)}
 * **`powRGB`** – power factor *p* (vector, default value THREE.Vector3(2,2,2)}
 
-Example: [ColorCorrectionShader.html](examples/ColorCorrectionShader.html)
+Example: [ColorCorrectionShader.html](ColorCorrectionShader.html)
 		
-[<img src="ColorCorrectionShader.jpg">](examples/ColorCorrectionShader.html)
+[<img src="ColorCorrectionShader.jpg">](ColorCorrectionShader.html)
 
 
 
@@ -150,9 +149,9 @@ A shader that converts the colors of the frame into specific color.
 * **`color`** – target color (color, default value THREE.Color(1,1,1) for white color) 
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [ColorifyShader.html](examples/ColorifyShader.html)
+Example: [ColorifyShader.html](ColorifyShader.html)
 		
-[<img src="ColorifyShader.jpg">](examples/ColorifyShader.html)
+[<img src="ColorifyShader.jpg">](ColorifyShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 	
@@ -165,9 +164,9 @@ A shader that just copies the frame multiplying each color with opacity factor.
 	
 * **`opacity`** – opacity factor (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [CopyShader.html](examples/CopyShader.html)
+Example: [CopyShader.html](CopyShader.html)
 		
-[<img src="CopyShader.jpg">](examples/CopyShader.html)
+[<img src="CopyShader.jpg">](CopyShader.html)
 
 
 
@@ -182,9 +181,9 @@ A shader that converts the frame into regularly spread dots.
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [DotScreenShader.html](examples/DotScreenShader.html)
+Example: [DotScreenShader.html](DotScreenShader.html)
 		
-[<img src="DotScreenShader.jpg">](examples/DotScreenShader.html)
+[<img src="DotScreenShader.jpg">](DotScreenShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **tSize** is renamed to **resolution** and
 has another default value; (2) **opacity** is added.</span>*
@@ -201,9 +200,9 @@ and the 'opposite' of *f*=2 is *f*=1/2.
 	
 * **`exposure`** – exposure factor (float, default value 1}
 
-Example: [ExposureShader.html](examples/ExposureShader.html)
+Example: [ExposureShader.html](ExposureShader.html)
 		
-[<img src="ExposureShader.jpg">](examples/ExposureShader.html)
+[<img src="ExposureShader.jpg">](ExposureShader.html)
 
 
 
@@ -218,9 +217,9 @@ them brighter. Exposure is linear, i.e. the 'opposite' of *f*=2 is *f*=-2.
 	
 * **`exposure`** – exposure factor (float, default value 0}
 
-Example: [ExposureExpShader.html](examples/ExposureExpShader.html)
+Example: [ExposureExpShader.html](ExposureExpShader.html)
 		
-[<img src="ExposureExpShader.jpg">](examples/ExposureExpShader.html)
+[<img src="ExposureExpShader.jpg">](ExposureExpShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) this shader is new.</span>*
 
@@ -237,9 +236,9 @@ the result will be noisy grains.
 * **`intensity`** – intensity of graininess (float, 0.0 to 3.0, default value 0.5) 
 * **`grayscale`** – a flag whether to convert the colors to grayscale (boolean, default value false) 
 
-Example: [FilmShader.html](examples/FilmShader.html)
+Example: [FilmShader.html](FilmShader.html)
 		
-[<img src="FilmShader.jpg">](examples/FilmShader.html)
+[<img src="FilmShader.jpg">](FilmShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) the calculation of
 grains is modified to support stronger graininess; (2) **intensity** has
@@ -256,9 +255,9 @@ A shader that blurs the frame by keeping the center more focused.
 * **`sampleDistance`** – non-linear component of the blur effect (float, 0.0 to 2.0, default value 0.94}
 * **`waveFactor`** – linear component of the blur effect (float, 0.0 to 2.0, default value 0.125)
 
-Example: [FocusShader.html](examples/FocusShader.html)
+Example: [FocusShader.html](FocusShader.html)
 		
-[<img src="FocusShader.jpg">](examples/FocusShader.html)
+[<img src="FocusShader.jpg">](FocusShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **screenWidth** and **screenHeight** are combined in **resolution** and
 has another default value; (2) **waveFactor** is scaled by 100.</span>*
@@ -274,9 +273,9 @@ algorithm.
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [FreiChenShader.html](examples/FreiChenShader.html)
+Example: [FreiChenShader.html](FreiChenShader.html)
 		
-[<img src="FreiChenShader.jpg">](examples/FreiChenShader.html)
+[<img src="FreiChenShader.jpg">](FreiChenShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **aspect** is renamed to **resolution** and
 has another default value; (2) **opacity** is added; (3) a syntax bug in the shader is fixed.</span>*
@@ -291,9 +290,9 @@ approximation of &gamma;=2.2.
 	
 * *no parameters*
 
-Example: [GammaCorrectionShader.html](examples/GammaCorrectionShader.html)
+Example: [GammaCorrectionShader.html](GammaCorrectionShader.html)
 		
-[<img src="GammaCorrectionShader.jpg">](examples/GammaCorrectionShader.html)
+[<img src="GammaCorrectionShader.jpg">](GammaCorrectionShader.html)
 
 
 
@@ -312,9 +311,9 @@ A shader that converts the colors in the frame into [overlapping single-color pa
 * **`grayscale`** - flag for grayscale effect (boolean, default value *false*)
 * **`disable`** - flag for disabling the shader (boolean, default value *false*)
 
-Example: [HalftoneShader.html](examples/HalftoneShader.html)
+Example: [HalftoneShader.html](HalftoneShader.html)
 		
-[<img src="HalftoneShader.jpg">](examples/HalftoneShader.html)
+[<img src="HalftoneShader.jpg">](HalftoneShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **rotateR**, **rotateG** and **rotateB** merged into vector **rotate**; (2) **greyscale** is renamed to **grayscale**; (3) **width** and **height** merged into **resolution**.</span>*
 
@@ -328,9 +327,9 @@ A shader that blurs the frame horizontally with a Gaussian blur filter.
 * **`resolution`** – canvas width (float, default value innerWidth)
 * **`amount`** – amount of shader effect (float, default value 1.0) 
 
-Example: [HorizontalBlurShader.html](examples/HorizontalBlurShader.html)
+Example: [HorizontalBlurShader.html](HorizontalBlurShader.html)
 		
-[<img src="HorizontalBlurShader.jpg">](examples/HorizontalBlurShader.html)
+[<img src="HorizontalBlurShader.jpg">](HorizontalBlurShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **h** is renamed to **resolution**,
 it is not 1/*width* and has another default value; (2) **amount** is added.</span>*
@@ -346,9 +345,9 @@ A shader that fakes a horizontal tilt-shift effect, i.e. the areas above and bel
 * **`span`** – the vertical size of the horizontal area (float, in NDC space units from 0 to 0.5, default value 0.1)
 * **`amount`** – amount of blur effect (float, from 0 to 10, default value 1.0) 
 
-Example: [HorizontalTiltShiftShader.html](examples/HorizontalTiltShiftShader.html)
+Example: [HorizontalTiltShiftShader.html](HorizontalTiltShiftShader.html)
 		
-[<img src="HorizontalTiltShiftShader.jpg">](examples/HorizontalTiltShiftShader.html)
+[<img src="HorizontalTiltShiftShader.jpg">](HorizontalTiltShiftShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) entirely different parameters; (2) entirely different calculation of blurred areas.</span>*
 
@@ -365,9 +364,9 @@ of colors, like *red*, *green* or *yellow*) and the
 * **`hue`** – relative change of hue (float, from -1 to 1, default value 0}
 * **`saturation`** – relative change of saturation (float, from -1 to 1, default value 0}
 
-Example: [HueSaturationShader.html](examples/HueSaturationShader.html)
+Example: [HueSaturationShader.html](HueSaturationShader.html)
 		
-[<img src="HueSaturationShader.jpg">](examples/HueSaturationShader.html)
+[<img src="HueSaturationShader.jpg">](HueSaturationShader.html)
 
 
 
@@ -380,9 +379,9 @@ color components contribute with their different factors: &approx;21% (red),
 	
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [LuminosityShader.html](examples/LuminosityShader.html)
+Example: [LuminosityShader.html](LuminosityShader.html)
 		
-[<img src="LuminosityShader.jpg">](examples/LuminosityShader.html)
+[<img src="LuminosityShader.jpg">](LuminosityShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 
@@ -400,9 +399,9 @@ the luminocity as &approx;30% (red), &approx;59% (green) and &approx;11%(blue).
 * **`threshold`** – minimal luminocity for blending (float, from -1 to 1, default value 0.25) 
 * **`span`** – blending span, i.e. it is applied for luminocities from *threshold+span* to *threshold+span* (float, from -1 to 1, default value 0.25) 
 
-Example: [LuminosityHighPassShader.html](examples/LuminosityHighPassShader.html)
+Example: [LuminosityHighPassShader.html](LuminosityHighPassShader.html)
 		
-[<img src="LuminosityHighPassShader.jpg">](examples/LuminosityHighPassShader.html)
+[<img src="LuminosityHighPassShader.jpg">](LuminosityHighPassShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) renamed **defaultColor** to **color**; (2) renamed **defaultOpacity** to **alpha**; (3) renamed **luminosityThreshold** to **threshold** and changed its default value; (4) renamed **smoothWidth** to **span** and changed its default value.</span>*
 		
@@ -417,9 +416,9 @@ A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https:/
 * **`angle`** – rotation of the kaleidoscope image in radians (float, default value 0)
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 
-Example: [KaleidoShader.html](examples/KaleidoShader.html)
+Example: [KaleidoShader.html](KaleidoShader.html)
 		
-[<img src="KaleidoShader.jpg">](examples/KaleidoShader.html)
+[<img src="KaleidoShader.jpg">](KaleidoShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) added **resolution** and
 fixed aspect.</span>*
@@ -433,9 +432,9 @@ A shader that mirrors half of the frame onto the other half.
 	
 * **`side`** – which half frame is the source of mirror (int, 0=left&rarr;right, 1=right&rarr;left, 2:top&rarr;bottom, 3:bottom&rarr;top, default value 1)
 
-Example: [MirrorShader.html](examples/MirrorShader.html)
+Example: [MirrorShader.html](MirrorShader.html)
 		
-[<img src="MirrorShader.jpg">](examples/MirrorShader.html)
+[<img src="MirrorShader.jpg">](MirrorShader.html)
 
 		
 
@@ -449,9 +448,9 @@ A shader that splits the color components of the frame and shifts them apart.
 * **`angle`** – angle of offset (float, in radians, default value 0.0)
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [RGBShiftShader.html](examples/RGBShiftShader.html)
+Example: [RGBShiftShader.html](RGBShiftShader.html)
 		
-[<img src="RGBShiftShader.jpg">](examples/RGBShiftShader.html)
+[<img src="RGBShiftShader.jpg">](RGBShiftShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 
@@ -464,9 +463,9 @@ A shader that recolors the frame into sepia hue.
 
 * **`amount`** – amount of recoloring (float, from 0 to 1, default value 1)
 
-Example: [SepiaShader.html](examples/SepiaShader.html)
+Example: [SepiaShader.html](SepiaShader.html)
 		
-[<img src="SepiaShader.jpg">](examples/SepiaShader.html)
+[<img src="SepiaShader.jpg">](SepiaShader.html)
 		
 
 
@@ -478,9 +477,9 @@ A shader that marks the edges of shapes based on the red color component in the 
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [SobelOperatorShader.html](examples/SobelOperatorShader.html)
+Example: [SobelOperatorShader.html](SobelOperatorShader.html)
 		
-[<img src="SobelOperatorShader.jpg">](examples/SobelOperatorShader.html)
+[<img src="SobelOperatorShader.jpg">](SobelOperatorShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **resolution** 
 has another default value; (2) **opacity** is added.</span>*
@@ -494,9 +493,9 @@ A shader that converts the colors of the frame into Technicolor cyan-red hues.
 	
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [TechnicolorShader.html](examples/TechnicolorShader.html)
+Example: [TechnicolorShader.html](TechnicolorShader.html)
 		
-[<img src="TechnicolorShader.jpg">](examples/TechnicolorShader.html)
+[<img src="TechnicolorShader.jpg">](TechnicolorShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 
@@ -516,9 +515,9 @@ blur in another shader (e.g. *amount*=(0,0.1)). Combining both in a single
 shader results in a significantly slower performance with combined sweight of
 over 200.
 
-Example: [TriangleBlurShader.html](examples/TriangleBlurShader.html)
+Example: [TriangleBlurShader.html](TriangleBlurShader.html)
 		
-[<img src="TriangleBlurShader.jpg">](examples/TriangleBlurShader.html)
+[<img src="TriangleBlurShader.jpg">](TriangleBlurShader.html)
 
 
 
@@ -530,9 +529,9 @@ A shader that assumes the frame contains RGBA encoded depth data and unpacks it 
 	
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [UnpackDepthRGBAShader.html](examples/UnpackDepthRGBAShader.html)
+Example: [UnpackDepthRGBAShader.html](UnpackDepthRGBAShader.html)
 		
-[<img src="UnpackDepthRGBAShader.jpg">](examples/UnpackDepthRGBAShader.html)
+[<img src="UnpackDepthRGBAShader.jpg">](UnpackDepthRGBAShader.html)
 
 
 
@@ -544,9 +543,9 @@ A shader that blurs the frame vertically with a Gaussian blur filter.
 * **`resolution`** – canvas height (float, default value innerHeight)
 * **`amount`** – amount of shader effect (float, default value 1.0) 
 
-Example: [VerticalBlurShader.html](examples/VerticalBlurShader.html)
+Example: [VerticalBlurShader.html](VerticalBlurShader.html)
 		
-[<img src="VerticalBlurShader.jpg">](examples/VerticalBlurShader.html)
+[<img src="VerticalBlurShader.jpg">](VerticalBlurShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **h** is renamed to **resolution**,
 it is not 1/*height* and has another default value; (2) **amount** is added.</span>*
@@ -562,9 +561,9 @@ A shader that fakes a vertical tilt-shift effect, i.e. the areas to the left and
 * **`span`** – the horizontal size of the vertical area (float, in NDC space units from 0 to 0.5, default value 0.1)
 * **`amount`** – amount of blur effect (float, from 0 to 10, default value 1.0) 
 
-Example: [VerticalTiltShiftShader.html](examples/VerticalTiltShiftShader.html)
+Example: [VerticalTiltShiftShader.html](VerticalTiltShiftShader.html)
 		
-[<img src="VerticalTiltShiftShader.jpg">](examples/VerticalTiltShiftShader.html)
+[<img src="VerticalTiltShiftShader.jpg">](VerticalTiltShiftShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) entirely different parameters; (2) entirely different calculation of blurred areas.</span>*
 
@@ -578,9 +577,9 @@ A shader that adds a vignette effect on the frame.
 * **`blur`** – amount of blur effect on vignette border (float, 0 for no blur, default value 1.0) 
 * **`color`** – vignette color (color, default value THREE.Color(0,0,0) for black color) 
 
-Example: [VignetteShader.html](examples/VignetteShader.html)
+Example: [VignetteShader.html](VignetteShader.html)
 		
-[<img src="VignetteShader.jpg">](examples/VignetteShader.html)
+[<img src="VignetteShader.jpg">](VignetteShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) the shader is written from scratch
 and is unrelated with the Three.js VignetteShader.</span>*
