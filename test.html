@@ -28,7 +28,7 @@
 
 			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-			import { OOPSShader } from './oops.js';
+			import { OOPSShader } from './src/oops.js';
 
 			
 
@@ -90,7 +90,7 @@ if( 1 )
 						//.addShader( 'DotScreenShader', {scale: 2} )
 						//.addShader( 'RGBShiftShader', {amount:0.02} )
 						//.addUniform( 'angle', 'a', 1.57 )
-console.log(oops.fragmentShader);
+
 				var effect = new ShaderPass( oops );
 				composer.addPass( effect );
 }
