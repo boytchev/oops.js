@@ -1,68 +1,64 @@
-# Shader Examples<br><span style="font-size:65%; font-weight:300;">Only One-pass Shader (oops.js)</span>
+# Shaders Examples<br><span style="font-size:60%; font-weight:300;">Only One-pass Shader (oops.js)</span>
 
 This page lists short online demos for supported shaders.<br>
 They can be used to play with the shaders' parameters.
 
 ### Contents
 
-	
 
-
-# To do
-
- <b style="background:palegreen; color: black; padding:0.3em;">ACESFilmicToneMappingShader</b>
- AfterimageShader
- <b style="background:palegreen; color: black; padding:0.3em;">BasicShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">BleachBypassShader</b>
- BlendShader
- BokehShader
- BokehShader2
- <b style="background:palegreen; color: black; padding:0.3em;">BrightnessContrastShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">ColorCorrectionShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">ColorifyShader</b>
- ConvolutionShader
- <b style="background:palegreen; color: black; padding:0.3em;">CopyShader</b>
- DepthLimitedBlurShader
- DigitalGlitch
- DOFMipMapShader
- <b style="background:palegreen; color: black; padding:0.3em;">DotScreenShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">ExposureShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">ExposureExpShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">FilmShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">FocusShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">FreiChenShader</b>
- FXAAShader
- <b style="background:palegreen; color: black; padding:0.3em;">GammaCorrectionShader</b>
- GodRaysShader
- <b style="background:palegreen; color: black; padding:0.3em;">HalftoneShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">HorizontalBlurShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">HorizontalTiltShiftShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">HueSaturationShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">KaleidoShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">LuminosityHighPassShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">LuminosityShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">MirrorShader</b>
- MMDToonShader
- NormalMapShader
- OutputShader
- <b style="background:palegreen; color: black; padding:0.3em;">RGBShiftShader</b>
- SAOShader
- <b style="background:palegreen; color: black; padding:0.3em;">SepiaShader</b>
- SMAAShader
- <b style="background:palegreen; color: black; padding:0.3em;">SobelOperatorShader</b>
- SSAOShader
- SSRShader
- SubsurfaceScatteringShader
- <b style="background:palegreen; color: black; padding:0.3em;">TechnicolorShader</b>
- ToonShader
- <b style="background:palegreen; color: black; padding:0.3em;">TriangleBlurShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">UnpackDepthRGBAShader</b>
- VelocityShader
- <b style="background:palegreen; color: black; padding:0.3em;">VerticalBlurShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">VerticalTiltShiftShader</b>
- <b style="background:palegreen; color: black; padding:0.3em;">VignetteShader</b>
- VolumeShader
- WaterRefractionShader
+[ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
+AfterimageShader
+[BasicShader.html](BasicShader.html)
+[BleachBypassShader.html](BleachBypassShader.html)
+BlendShader
+BokehShader
+BokehShader2
+[BrightnessContrastShader.html](BrightnessContrastShader.html)
+[ColorCorrectionShader.html](ColorCorrectionShader.html)
+[ColorifyShader.html](ColorifyShader.html)
+ConvolutionShader
+[CopyShader.html](CopyShader.html)
+DepthLimitedBlurShader
+DigitalGlitch
+DOFMipMapShader
+[DotScreenShader.html](DotScreenShader.html)
+[ExposureShader.html](ExposureShader.html)
+[ExposureExpShader.html](ExposureExpShader.html)
+[FilmShader.html](FilmShader.html)
+[FocusShader.html](FocusShader.html)
+[FreiChenShader.html](FreiChenShader.html)
+FXAAShader
+[GammaCorrectionShader.html](GammaCorrectionShader.html)
+GodRaysShader
+[HalftoneShader.html](HalftoneShader.html)
+[HorizontalBlurShader.html](HorizontalBlurShader.html)
+[HorizontalTiltShiftShader.html](HorizontalTiltShiftShader.html)
+[HueSaturationShader.html](HueSaturationShader.html)
+[KaleidoShader.html](KaleidoShader.html)
+[LuminosityHighPassShader.html](LuminosityHighPassShader.html)
+[LuminosityShader.html](LuminosityShader.html)
+[MirrorShader.html](MirrorShader.html)
+MMDToonShader
+NormalMapShader
+OutputShader
+[RGBShiftShader.html](RGBShiftShader.html)
+SAOShader
+[SepiaShader.html](SepiaShader.html)
+SMAAShader
+[SobelOperatorShader.html](SobelOperatorShader.html)
+SSAOShader
+SSRShader
+SubsurfaceScatteringShader
+[TechnicolorShader.html](TechnicolorShader.html)
+ToonShader
+[TriangleBlurShader.html](TriangleBlurShader.html)
+[UnpackDepthRGBAShader.html](UnpackDepthRGBAShader.html)
+VelocityShader
+[VerticalBlurShader.html](VerticalBlurShader.html)
+[VerticalTiltShiftShader.html](VerticalTiltShiftShader.html)
+[VignetteShader.html](VignetteShader.html)
+VolumeShader
+WaterRefractionShader
 
 
 
@@ -371,19 +367,20 @@ Example: [HueSaturationShader.html](HueSaturationShader.html)
 
 
 
-## LuminosityShader [O<sup>1</sup>]
+## KaleidoShader [O<sup>1</sup>]
 
-A shader that converts colors of a frame to grayscale based on luminocity, i.e.
-color components contribute with their different factors: &approx;21% (red),
-&approx;72% (green) and &approx;7%(blue).
+A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https://en.wikipedia.org/wiki/Kaleidoscope) image.
 	
-* **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
+* **`sides`** – number of side of the kaleidoscope image (int, 3 or more, default value 6)
+* **`angle`** – rotation of the kaleidoscope image in radians (float, default value 0)
+* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 
-Example: [LuminosityShader.html](LuminosityShader.html)
+Example: [KaleidoShader.html](KaleidoShader.html)
 		
-[<img src="LuminosityShader.jpg">](LuminosityShader.html)
+[<img src="KaleidoShader.jpg">](KaleidoShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) added **resolution** and
+fixed aspect.</span>*
 
 
 
@@ -408,20 +405,19 @@ Example: [LuminosityHighPassShader.html](LuminosityHighPassShader.html)
 
 
 
-## KaleidoShader [O<sup>1</sup>]
+## LuminosityShader [O<sup>1</sup>]
 
-A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https://en.wikipedia.org/wiki/Kaleidoscope) image.
+A shader that converts colors of a frame to grayscale based on luminocity, i.e.
+color components contribute with their different factors: &approx;21% (red),
+&approx;72% (green) and &approx;7%(blue).
 	
-* **`sides`** – number of side of the kaleidoscope image (int, 3 or more, default value 6)
-* **`angle`** – rotation of the kaleidoscope image in radians (float, default value 0)
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
+* **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
-Example: [KaleidoShader.html](KaleidoShader.html)
+Example: [LuminosityShader.html](LuminosityShader.html)
 		
-[<img src="KaleidoShader.jpg">](KaleidoShader.html)
+[<img src="LuminosityShader.jpg">](LuminosityShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) added **resolution** and
-fixed aspect.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 
 
 
