@@ -63,7 +63,7 @@ They can be used to play with the shaders' parameters.
 
 
 ## ACESFilmicToneMappingShader
-[O<sup>1</sup>]
+<span style="float: right; font-size:90%; position: relative; top: -3em; font-weight:300;">Type: O<sup>1</sup></span></sup>
 
 A shader that applies filmic tonemap to the frame as defined
 by the Academy Color Encoding System.
