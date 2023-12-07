@@ -78,7 +78,8 @@ Example: [ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
 	
 
 
-## BasicShader [O<sup>0</sup>]
+## BasicShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>0</sup> ]</span>
 
 A basic and simple test shader that fills the frame with a gradient color.
 	
@@ -92,7 +93,8 @@ Example: [BasicShader.html](BasicShader.html)
 	
 
 
-## BleachBypassShader [O<sup>1</sup>]
+## BleachBypassShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that applies the [bleach bypass](https://en.wikipedia.org/wiki/Bleach_bypass)
 effect in photography.
@@ -108,7 +110,8 @@ Example: [BleachBypassShader.html](BleachBypassShader.html)
 
 
 
-## BrightnessContrastShader [O<sup>1</sup>]
+## BrightnessContrastShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that changes the brightness and the contract of a frame.
 	
@@ -122,7 +125,8 @@ Example: [BrightnessContrastShader.html](BrightnessContrastShader.html)
 
 
 
-## ColorCorrectionShader [O<sup>1</sup>]
+## ColorCorrectionShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that transforms the colors in a frame by *m*&times;(*color* + *a*)<sup>*p*</sup>.
 Each color component is transformed by its own factors *m*, *a* and *p*.
@@ -138,7 +142,8 @@ Example: [ColorCorrectionShader.html](ColorCorrectionShader.html)
 
 
 
-## ColorifyShader [O<sup>1</sup>]
+## ColorifyShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that converts the colors of the frame into specific color.
 	
@@ -154,7 +159,8 @@ Example: [ColorifyShader.html](ColorifyShader.html)
 
 
 
-## CopyShader [O<sup>1</sup>]
+## CopyShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that just copies the frame multiplying each color with opacity factor.
 	
@@ -167,7 +173,8 @@ Example: [CopyShader.html](CopyShader.html)
 
 
 
-## DotScreenShader [O<sup>1</sup>]
+## DotScreenShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that converts the frame into regularly spread dots.
 	
@@ -187,7 +194,8 @@ has another default value; (2) **opacity** is added.</span>*
 
 
 
-## ExposureShader [O<sup>1</sup>]
+## ExposureShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that changes the exposure of a frame by myltiplying colors by factor *f*.
 Exposure factor *f*&lt;1 makes the colors darker, while exposure *f*&gt;1 makes
@@ -203,7 +211,8 @@ Example: [ExposureShader.html](ExposureShader.html)
 
 
 
-## ExposureExpShader [O<sup>1</sup>]
+## ExposureExpShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that changes the exposure of a frame by myltiplying colors by factor
 *e<sup>f</sup>*, where *e*&approx;2.718 is the
@@ -222,7 +231,8 @@ Example: [ExposureExpShader.html](ExposureExpShader.html)
 
 
 
-## FilmShader [O<sup>1</sup>]
+## FilmShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that adds graininess to the frame. The pattern of the grains is defined by
 the fracrional part of the *time* parameter -- if it is changed for every frame,
@@ -243,7 +253,8 @@ a different range.</span>*
 
 
 
-## FocusShader [O<sup>8</sup>]
+## FocusShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>8</sup> ]</span>
 
 A shader that blurs the frame by keeping the center more focused.
 	
@@ -261,7 +272,8 @@ has another default value; (2) **waveFactor** is scaled by 100.</span>*
 
 
 
-## FreiChenShader [O<sup>10</sup>]
+## FreiChenShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>10</sup> ]</span>
 
 A shader that marks the edges of shapes based on the Frei-Chen edge detection
 algorithm.
@@ -279,7 +291,8 @@ has another default value; (2) **opacity** is added; (3) a syntax bug in the sha
 
 
 
-## GammaCorrectionShader [O<sup>1</sup>]
+## GammaCorrectionShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that applies sRGB electro-optical transfer function (EOTF), which is
 approximation of &gamma;=2.2. 
@@ -293,7 +306,8 @@ Example: [GammaCorrectionShader.html](GammaCorrectionShader.html)
 
 
 
-## HalftoneShader [O<sup>109</sup>]
+## HalftoneShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>109</sup> ]</span>
 
 A shader that converts the colors in the frame into [overlapping single-color patterns](https://en.wikipedia.org/wiki/Halftone) of shapes. 
 
@@ -316,7 +330,8 @@ Example: [HalftoneShader.html](HalftoneShader.html)
 
 
 
-## HorizontalBlurShader [O<sup>9</sup>]
+## HorizontalBlurShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>9</sup> ]</span>
 
 A shader that blurs the frame horizontally with a Gaussian blur filter. 
 	
@@ -333,7 +348,8 @@ it is not 1/*width* and has another default value; (2) **amount** is added.</spa
 
 
 
-## HorizontalTiltShiftShader [O<sup>9</sup>]
+## HorizontalTiltShiftShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>9</sup> ]</span>
 
 A shader that fakes a horizontal tilt-shift effect, i.e. the areas above and below a horizontal area are blured.
 	
@@ -350,7 +366,8 @@ Example: [HorizontalTiltShiftShader.html](HorizontalTiltShiftShader.html)
 
 
 
-## HueSaturationShader [O<sup>1</sup>]
+## HueSaturationShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that changes the [hue](https://en.wikipedia.org/wiki/Hue) (the colorness
 of colors, like *red*, *green* or *yellow*) and the
@@ -367,7 +384,8 @@ Example: [HueSaturationShader.html](HueSaturationShader.html)
 
 
 
-## KaleidoShader [O<sup>1</sup>]
+## KaleidoShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https://en.wikipedia.org/wiki/Kaleidoscope) image.
 	
@@ -385,7 +403,8 @@ fixed aspect.</span>*
 
 
 
-## LuminosityHighPassShader [O<sup>1</sup>]
+## LuminosityHighPassShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that changes a frame by blending colors based on their luminocity.
 In contrast to the [LuminosityShader](#luminosityshader), this shader calculates
@@ -405,7 +424,8 @@ Example: [LuminosityHighPassShader.html](LuminosityHighPassShader.html)
 
 
 
-## LuminosityShader [O<sup>1</sup>]
+## LuminosityShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that converts colors of a frame to grayscale based on luminocity, i.e.
 color components contribute with their different factors: &approx;21% (red),
@@ -422,7 +442,8 @@ Example: [LuminosityShader.html](LuminosityShader.html)
 
 
 
-## MirrorShader [O<sup>1</sup>]
+## MirrorShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that mirrors half of the frame onto the other half.
 	
@@ -436,7 +457,8 @@ Example: [MirrorShader.html](MirrorShader.html)
 
 
 
-## RGBShiftShader [O<sup>3</sup>]
+## RGBShiftShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>3</sup> ]</span>
 
 A shader that splits the color components of the frame and shifts them apart.
 
@@ -453,7 +475,8 @@ Example: [RGBShiftShader.html](RGBShiftShader.html)
 
 
 
-## SepiaShader [O<sup>1</sup>]
+## SepiaShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that recolors the frame into sepia hue.
 
@@ -466,7 +489,8 @@ Example: [SepiaShader.html](SepiaShader.html)
 
 
 
-## SobelOperatorShader [O<sup>9</sup>]
+## SobelOperatorShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>9</sup> ]</span>
 
 A shader that marks the edges of shapes based on the red color component in the frame.
 	
@@ -483,7 +507,8 @@ has another default value; (2) **opacity** is added.</span>*
 
 
 
-## TechnicolorShader [O<sup>1</sup>]
+## TechnicolorShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that converts the colors of the frame into Technicolor cyan-red hues.
 	
@@ -498,7 +523,8 @@ Example: [TechnicolorShader.html](TechnicolorShader.html)
 
 
 
-## TriangleBlurShader [O<sup>15</sup>]
+## TriangleBlurShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>15</sup> ]</span>
 
 A shader that blurs the frame using randomized weighted samples. The blur is biased
 along a direction.
@@ -519,7 +545,8 @@ Example: [TriangleBlurShader.html](TriangleBlurShader.html)
 
 
 
-## UnpackDepthRGBAShader [O<sup>1</sup>]
+## UnpackDepthRGBAShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that assumes the frame contains RGBA encoded depth data and unpacks it into grayscale colors.
 	
@@ -532,7 +559,8 @@ Example: [UnpackDepthRGBAShader.html](UnpackDepthRGBAShader.html)
 
 
 
-## VerticalBlurShader [O<sup>9</sup>]
+## VerticalBlurShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>9</sup> ]</span>
 
 A shader that blurs the frame vertically with a Gaussian blur filter.
 	
@@ -549,7 +577,8 @@ it is not 1/*height* and has another default value; (2) **amount** is added.</sp
 
 
 
-## VerticalTiltShiftShader [O<sup>9</sup>]
+## VerticalTiltShiftShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>9</sup> ]</span>
 
 A shader that fakes a vertical tilt-shift effect, i.e. the areas to the left and right of a vertical area are blured.
 	
@@ -565,7 +594,8 @@ Example: [VerticalTiltShiftShader.html](VerticalTiltShiftShader.html)
 
 
 
-## VignetteShader [O<sup>1</sup>]
+## VignetteShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
 A shader that adds a vignette effect on the frame.
 	
