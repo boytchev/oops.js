@@ -15,9 +15,8 @@ example shows increased performance by 50%.
 ## More information
 
 * [Shaders Types](examples/types.md) &ndash; general classification of shader
-types and their compatibilities
-* [Shaders Examples](examples/) &ndash; a list of supported shaders and 
-examples of their parameters
+types
+* [Shaders Examples](examples/) &ndash; supported shaders and their parameters
 
 
 ## Current status

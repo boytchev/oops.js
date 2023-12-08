@@ -99,7 +99,7 @@ Example: [BasicShader.html](BasicShader.html)
 A shader that applies the [bleach bypass](https://en.wikipedia.org/wiki/Bleach_bypass)
 effect in photography.
 	
-* **`amount`** – amount of effect intensity (float, default value 3}
+* **`amount`** – amount of effect intensity (float, default value 3)
 
 Example: [BleachBypassShader.html](BleachBypassShader.html)
 		
@@ -115,8 +115,8 @@ Example: [BleachBypassShader.html](BleachBypassShader.html)
 
 A shader that changes the brightness and the contract of a frame.
 	
-* **`brightness`** – amount of color brightness (float, from -1 to 1, default value 0}
-* **`contrast`** – amount of color contrast (float, from -1 to 1, default value 0}
+* **`brightness`** – amount of color brightness (float, from -1 to 1, default value 0)
+* **`contrast`** – amount of color contrast (float, from -1 to 1, default value 0)
 
 Example: [BrightnessContrastShader.html](BrightnessContrastShader.html)
 		
@@ -131,9 +131,9 @@ Example: [BrightnessContrastShader.html](BrightnessContrastShader.html)
 A shader that transforms the colors in a frame by *m*&times;(*color* + *a*)<sup>*p*</sup>.
 Each color component is transformed by its own factors *m*, *a* and *p*.
 	
-* **`mulRGB`** – scaling factor *m* (vector, default value THREE.Vector3(1,1,1)}
-* **`addRGB`** – offset factor *a* (vector, default value THREE.Vector3(0,0,0)}
-* **`powRGB`** – power factor *p* (vector, default value THREE.Vector3(2,2,2)}
+* **`mulRGB`** – scaling factor *m* (vector, default value THREE.Vector3(1,1,1))
+* **`addRGB`** – offset factor *a* (vector, default value THREE.Vector3(0,0,0))
+* **`powRGB`** – power factor *p* (vector, default value THREE.Vector3(2,2,2))
 
 Example: [ColorCorrectionShader.html](ColorCorrectionShader.html)
 		
@@ -178,7 +178,7 @@ Example: [CopyShader.html](CopyShader.html)
 
 A shader that converts the frame into regularly spread dots.
 	
-* **`scale`** – size of the dots in the pattern (float, default value 1.5}
+* **`scale`** – size of the dots in the pattern (float, default value 1.5)
 * **`angle`** – angle of the pattern (float, default value 0)
 * **`center`** – center of the pattern (vector, default value THREE.Vector2(0,0))
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
@@ -202,7 +202,7 @@ Exposure factor *f*&lt;1 makes the colors darker, while exposure *f*&gt;1 makes
 them brighter. Exposure is multiplicative, i.e. the black color does not change
 and the 'opposite' of *f*=2 is *f*=1/2.
 	
-* **`exposure`** – exposure factor (float, default value 1}
+* **`exposure`** – exposure factor (float, default value 1)
 
 Example: [ExposureShader.html](ExposureShader.html)
 		
@@ -220,7 +220,7 @@ A shader that changes the exposure of a frame by myltiplying colors by factor
 Exposure factor *f*&lt;0 makes the colors darker, while exposure *f*&gt;0 makes
 them brighter. Exposure is linear, i.e. the 'opposite' of *f*=2 is *f*=-2.
 	
-* **`exposure`** – exposure factor (float, default value 0}
+* **`exposure`** – exposure factor (float, default value 0)
 
 Example: [ExposureExpShader.html](ExposureExpShader.html)
 		
@@ -259,7 +259,7 @@ a different range.</span>*
 A shader that blurs the frame by keeping the center more focused.
 	
 * **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
-* **`sampleDistance`** – non-linear component of the blur effect (float, 0.0 to 2.0, default value 0.94}
+* **`sampleDistance`** – non-linear component of the blur effect (float, 0.0 to 2.0, default value 0.94)
 * **`waveFactor`** – linear component of the blur effect (float, 0.0 to 2.0, default value 0.125)
 
 Example: [FocusShader.html](FocusShader.html)
@@ -374,8 +374,8 @@ of colors, like *red*, *green* or *yellow*) and the
 [saturation](https://en.wikipedia.org/wiki/Colorfulness#Saturation)
 (the colorfulness or strength of colors, line *gray* or *colorful*) of a frame.
 	
-* **`hue`** – relative change of hue (float, from -1 to 1, default value 0}
-* **`saturation`** – relative change of saturation (float, from -1 to 1, default value 0}
+* **`hue`** – relative change of hue (float, from -1 to 1, default value 0)
+* **`saturation`** – relative change of saturation (float, from -1 to 1, default value 0)
 
 Example: [HueSaturationShader.html](HueSaturationShader.html)
 		

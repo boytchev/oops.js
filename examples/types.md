@@ -11,14 +11,15 @@ shaders should be splint into different passes.
 
 The table classifies shaders according to their type (base character) and weight (supscript index):
 
-| Type | Weight | Description |
-| :--: | :--: | :-- |
-| **O** | | These shaders use only the colors in a frame. An O-shader may follow any other shader. |
-| | **O<sup>0</sup>** | Basic  |
-| | **O<sup>1</sup>** | ACESFilmicToneMapping, BleachBypass, BrightnessContrast, ColorCorrection, Colorify, Copy, DotScreen, Exposure, ExposureExp, Film, GammaCorrection, HueSaturation, Luminosity, LuminosityHighPass, Kaleido, Mirror, Sepia, Technicolor, UnpackDepthRGBA, Vignette |
-| | **O<sup>3</sup>** | RGBShift |
-| | **O<sup>8</sup>** | Focus |
-| | **O<sup>9</sup>** | HorizontalBlur, HorizontalTiltShift, SobelOperator, VerticalBlur, VerticalTiltShift |
-| | **O<sup>10</sup>** | FreiChen |
-| | **O<sup>15</sup>** | TriangleBlur |
-| | **O<sup>109</sup>** | Halftone |
+| Type | Description |
+| :--: | :-- |
+| **O** | **These shaders use only the colors in a frame. An O-shader may follow any other shader.** |
+| **O<sup>0</sup>** | [BasicShader](#basicshader)  |
+| **O<sup>1</sup>** | [ACESFilmicToneMappingShader](#acesfilmictonemappingshader), [BleachBypassShader](#bleachbypassshader), [BrightnessContrastShader](#brightnesscontrast), [ColorCorrectionShader](#colorcorrectionshader), [ColorifyShader](#colorifyshader), [CopyShader](#copyshader), [DotScreenShader](#dotscreenshader), [ExposureShader](#exposureshader), [ExposureExpShader](#exposureexpshader), [FilmShader](#filmshader), [GammaCorrectionShader](#gammacorrectionshader), [HueSaturationShader](#huesaturationshader), [KaleidoShader](#kaleidoshader), [LuminosityHighPassShader](#luminosityhighpassshader), [LuminosityShader](#luminosityshader), [MirrorShader](#mirrorshader), [SepiaShader](#sepiashader), [TechnicolorShader](#technicolorshader), [UnpackDepthRGBAShader](#unpackdepthrgbashader), [VignetteShader](#vignetteshader) |
+| **O<sup>3</sup>** | [RGBShiftShader](#rgbshiftshader) |
+| **O<sup>8</sup>** | [FocusShader](#focusshader) |
+| **O<sup>9</sup>** | [HorizontalBlurShader](#horizontalblurshader), [HorizontalTiltShiftShader](#horizontaltiltshiftshader), [SobelOperatorShader](#sobeloperatorshader), [VerticalBlurShader](#verticalblurshader), [VerticalTiltShiftShader](#verticaltiltshiftshader) |
+| **O<sup>10</sup>** | [FreiChenShader](#freichenshader) |
+| **O<sup>15</sup>** | [TriangleBlurShader](#triangleblurshader) |
+| **O<sup>109</sup>** | [HalftoneShader](#halftoneshader) |
+| | (to be continued) |
