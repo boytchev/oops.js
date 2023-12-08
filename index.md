@@ -23,7 +23,6 @@ types
 
 The work is split in several phases:
 
-* <span style="display:inline-block; background:aquamarine; padding: 0.1em 0.5em; width:6em; text-align: center;">ONGOING</span> Adjusting Three.js shaders' code to be mergeable.
-Currently 31 shaders are processed.
-* <span style="display:inline-block; background:pink; padding: 0.1em 0.5em; width:6em; text-align: center;">PENDING</span> Implementing an effect composer that build passes depending on included shaders.
-* <span style="display:inline-block; background:pink; padding: 0.1em 0.5em; width:6em; text-align: center;">PENDING</span> Providing the library for direct include via CDNs, in a package, as a Three.js PR (help needed).
+* <span style="display:inline-block; background:aquamarine; padding: 0.1em 0.5em; width:6em; text-align: center;">ONGOING</span> Three.js shaders that can be merged.
+* <span style="display:inline-block; background:pink; padding: 0.1em 0.5em; width:6em; text-align: center;">PENDING</span> Effect composer with automatic passes.
+* <span style="display:inline-block; background:pink; padding: 0.1em 0.5em; width:6em; text-align: center;">PENDING</span> Dissemination, CDN, package, Three.js PR (help needed).
