@@ -1,4 +1,4 @@
-# Shaders Examples<br><span style="font-size:60%; font-weight:300;">Only One-pass Shader (oops.js)</span>
+# Shaders Examples
 
 This page lists short online demos for supported shaders.<br>
 They can be used to play with the shaders' parameters.
