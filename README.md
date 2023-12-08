@@ -11,5 +11,6 @@ More information and online demos are available at:
 
 ## [https://boytchev.github.io/oops.js/](https://boytchev.github.io/oops.js/)
 
-<span style="font-weight:300">Licenced under CC0-1.0. May be used in any software,
-with/without modifications. Crediting is not required, but appreciated.</span>
+<span style="font-weight:300">Oops.js is licenced under CC0-1.0. It may be used
+in any type of software, with or without modifications. Crediting is not required,
+but is appreciated.</span>
