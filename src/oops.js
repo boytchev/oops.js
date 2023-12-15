@@ -183,9 +183,9 @@ class OOPSShader
 		var value = uniform.value,
 			type = uniform.type;
 		
-		if( value === null )
-			return `#define ${name}_$ ${uniform.publicName}\n` +
-				   `uniform sampler2D ${name}_$;\n`;
+		// if( value === null )
+			// return `#define ${name}_$ ${uniform.publicName}\n` +
+				   // `uniform sampler2D ${name}_$;\n`;
 
 		if( value instanceof THREE.Vector2 )
 			return `#define ${name}_$ vec2(${value.x},${value.y})\n`;
@@ -227,8 +227,8 @@ class OOPSShader
 			// return str;
 		// }
 
-		if( value === null )
-			return define +	`uniform sampler2D ${name}_$;\n`;
+		// if( value === null )
+			// return define +	`uniform sampler2D ${name}_$;\n`;
 		
 		if( value instanceof THREE.Vector2 )
 			return define +	`uniform vec2 ${name}_$;\n`;
