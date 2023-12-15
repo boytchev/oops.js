@@ -4,8 +4,31 @@
 
 
 
-const DefaultShader = {
-	name: 'DefaultShader',
+const HeaderShader = {
+	name: 'HeaderShader',
+	uniforms: {
+		tDiffuse:  { value: null },
+	},
+	vertexShader: /* glsl */`
+		vec3 $( vec3 position )
+		{
+			return position;
+		}`,
+	fragmentShader: /* glsl */`
+//..//		uniform sampler2D tDiffuse;
+		varying vec2 vUv;
+
+		vec4 $( vec2 vUv )
+		{
+			return texture2D( tDiffuse_$, vUv );
+		}`
+};
+
+
+
+
+const FooterShader = {
+	name: 'FooterShader',
 	uniforms: {
 	},
 	vertexShader: /* glsl */`
@@ -13,28 +36,11 @@ const DefaultShader = {
 
 		void main() {
 			vUv = uv;
-			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( $$(position), 1.0 );
 		}`,
 	fragmentShader: /* glsl */`
 		void main() {
 			gl_FragColor = $$( vUv );
-		}`
-};
-
-
-
-
-const HeaderShader = {
-	name: 'HeaderShader',
-	uniforms: {
-	},
-	fragmentShader: /* glsl */`
-		uniform sampler2D tDiffuse;
-		varying vec2 vUv;
-
-		vec4 $( vec2 vUv )
-		{
-			return texture2D( tDiffuse, vUv );
 		}`
 };
 
@@ -1200,10 +1206,78 @@ const HalftoneShader = {
 
 
 
+const ConvolutionShader = {
+	name: 'ConvolutionShader',
+	uniforms: {
+		uImageIncrement: { value: new THREE.Vector2( 0, 0 ) },
+		cKernel: { value: [], type: 'floatarray', size: 'KERNEL_SIZE_INT_$' },
+	},
+	onLoad: function ( shader )
+	{
+		function gauss( x, sigma )
+		{
+			return Math.exp( - ( x * x ) / ( 2.0 * sigma * sigma ) );
+		}
+
+
+		var sigma = 4;
+		const kMaxKernelSize = 25;
+		var kernelSize = 2 * Math.ceil( sigma * 3.0 ) + 1;
+
+		if ( kernelSize > kMaxKernelSize ) kernelSize = kMaxKernelSize;
+
+		var halfWidth = ( kernelSize - 1 ) * 0.5;
+
+		var values = shader.uniforms.cKernel.value,
+			sum = 0.0;
+			
+		for( var i = 0; i < kernelSize; ++ i )
+		{
+			values[i] = gauss( i - halfWidth, sigma );
+			sum += values[i];
+		}
+
+		for( var i = 0; i < kernelSize; ++ i ) values[i] /= sum;
+	},
+	vertexShaderHead: /* glsl */`
+		#define KERNEL_SIZE_FLOAT_$ 25.0
+		#define KERNEL_SIZE_INT_$ 25
+	`,
+	vertexShader: /* glsl */`
+		varying vec2 vImageCoord_$;
+
+		vec3 $(vec3 position)
+		{
+			vImageCoord_$ = uv - ( ( KERNEL_SIZE_FLOAT_$ - 1.0 ) / 2.0 ) * uImageIncrement_$;
+			return position;
+		}
+	`,
+	fragmentShaderHead: /* glsl */`
+		#define KERNEL_SIZE_INT_$ 25
+	`,
+	fragmentShader: /* glsl */`
+		varying vec2 vImageCoord_$;
+		
+		vec4 $( vec2 vUv )
+		{
+			vec2 imageCoord = vImageCoord_$;
+			vec4 sum = vec4( 0.0, 0.0, 0.0, 0.0 );
+
+			for( int i = 0; i < KERNEL_SIZE_INT_$; i ++ )
+			{
+				sum += $$( imageCoord ) * cKernel_$[ i ];
+				imageCoord += uImageIncrement_$;
+			}
+
+			return sum;
+		}`
+};
+
+
 
 
 const SHADERS = {
-		DefaultShader: 				DefaultShader,
+		FooterShader: 				FooterShader,
 		HeaderShader: 				HeaderShader,
 		RGBShiftShader:			 	RGBShiftShader,
 		DotScreenShader: 			DotScreenShader,
@@ -1236,6 +1310,7 @@ const SHADERS = {
 		CopyShader:					CopyShader,
 		UnpackDepthRGBAShader:		UnpackDepthRGBAShader,
 		HalftoneShader:				HalftoneShader,
+		ConvolutionShader:			ConvolutionShader,
 }
 
 

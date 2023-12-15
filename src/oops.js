@@ -12,6 +12,21 @@ console.log( `
 ` )
 
 // a THREE.ShaderPass-compatible shader, that merges other shaders
+//
+// class OOPSShader( )
+//	.fragmentShader
+//	.vertexShader
+//	.uniforms = {...}
+//	.shaders = [ shader, ... ]
+//	.addShader( shaderName, bakedValues )
+//	.addUniform( name, param1, param2 )
+//		ex: addUniform( name )
+//		ex: addUniform( name, publicName )
+//		ex:	addUniform( name, publicName, initialValue )
+//		ex: addUniform( name, initialValue )
+
+
+
 
 class OOPSShader
 {
@@ -19,113 +34,70 @@ class OOPSShader
 	constructor( )
 	{
 		this.name = 'OnlyOnePassShader';
+
+		this.uniforms = {};
+
+		this.fragmentShader = '';
+		this.vertexShader = '';
+
+		this.shaders = [
+			{...SHADERS.HeaderShader},
+			{...SHADERS.FooterShader},
+		];
 		
-		this.passes = [];
-		this.addShader( 'HeaderShader' );
+		this.compileShaders( );
 		
 	} // OOPSShader.constructor
 	
 	
-	
-	getFragmentShader( )
+
+	addShader( shaderName, bakedValues={} )
 	{
-		return this.fragmentShader;
-		
-	} // OOPSShader.getFragmentShader
-	
-	
+		var shader = SHADERS[shaderName];
 
-	updateShaders( )
-	{
-		this.updateUniforms( );
-		this.updateVertexShader( );
-		this.updateFragmentShader( );
-		
-	} // OOPSShader.updateShaders
-
-	
-	
-	updateUniforms( )
-	{
-		// default uniform (always exists)
-		this.uniforms = {
-			tDiffuse: { value: null },
-		};
-		
-	} // OOPSShader.updateUniforms
-
-	
-	
-	updateVertexShader( )
-	{
-		this.vertexShader = SHADERS.DefaultShader.vertexShader;
-		
-	} // OOPSShader.updateVertexShader
-
-	
-	
-	updateFragmentShader( )
-	{
-		var fragmentShaderHead = '';
-		this.fragmentShader = '';
-		
-		for( var i=0; i<this.passes.length; i++ )
-		{
-			var head = this.passes[i].shader.fragmentShaderHead || '';
-			if( fragmentShaderHead.indexOf(head) == -1 )
-			{
-				fragmentShaderHead += head;
-			}
-			this.fragmentShader += this.processShader( this.passes[i], i );
-		}
-
-		this.fragmentShader += this.processShader( {shader:SHADERS.DefaultShader}, i );
-		
-		this.fragmentShader = fragmentShaderHead + this.fragmentShader;
-				
-		// scan all uniforms and copy userValue->value if there is userValue
-		for( var uniform of Object.values(this.uniforms) )
-		{
-			if( typeof uniform.userValue !== 'undefined' )
-			{
-				uniform.value = uniform.userValue;
-				delete uniform.userValue;
-			}
-		}
-
-//console.log( this )				
-//		console.log(this.fragmentShader);
-		
-	} // OOPSShader.updateFragmentShader
-
-
-
-	addShader( name, values={} )
-	{
-		var shader = SHADERS[name],
-			shaderPass = {shader: shader, values: values, uniforms:{}};
-		
+		// shader exists?
 		if( shader === undefined )
 		{
-			throw new Error( `Shader named "${name}" is unknown or unsupported.\n\nKnown and supported shaders are: \n · ${Object.keys(SHADERS).sort().join('\n · ')}.\n` );
+			throw new Error( `Shader named "${shaderName}" is unknown or unsupported.\n\nKnown and supported shaders are: \n · ${Object.keys(SHADERS).sort().join('\n · ')}.\n` );
 			return null;
 		}
+
+		// deep copy
+		var shaderClone = {
+				name: shader.name || 'AnonymousShader',
+				vertexShader: shader.vertexShader || '',
+				vertexShaderHead: shader.vertexShaderHead || '',
+				fragmentShader: shader.fragmentShader || '',
+				fragmentShaderHead: shader.fragmentShaderHead || '',
+				uniforms: {},
+			};
 		
-/*
-		for( var pass of this.passes )
+		for( var name of Object.keys(shader.uniforms) )
 		{
-			var conflict = shader.conflicts[pass.shader.name];
-			if( conflict != undefined )
-			{
-				throw new Error( conflict );
-				return null;
-			}
+			var value = shader.uniforms[name].value;
+			if( value.clone )
+				value =  value.clone();
+			else
+				value = JSON.parse(JSON.stringify(value));
+
+			shaderClone.uniforms[name] = {
+					value: value,
+					type: shader.uniforms[name].type,
+					size: shader.uniforms[name].size,
+					glsl: this.bakedUniformGLSL( name, shader.uniforms[name] )
+				};
 		}
-*/
 		
-		this.passes.push( shaderPass );
+		if( shader.onLoad )
+		{
+			shader.onLoad( shaderClone );
+		}
 		
-		this.updateShaders( );
+		// insert the shader before the last shader (i.e. FooterShader)
+		this.shaders.splice( this.shaders.length-1, 0, shaderClone );
+
+
+		this.compileShaders( );
 		
 		return this;
 		
@@ -133,192 +105,247 @@ class OOPSShader
 
 
 
-	addUniform( name, alias, userValue )
+	addUniform( name, param1, param2 )
 	{
-//		console.log('############### add',name,alias,userValue);
+		var shadersCount = this.shaders.length;
 		
-		// (1) addUniform( name )					string
-		// (2) addUniform( name, alias )			string string
-		// (3) addUniform( name, alias, userValue )	string string userValue
-		// (4) addUniform( name, value )			string value
-//console.log('addUniform', name, alias, userValue )
-
-		if( typeof alias === 'undefined' )
-		{	// (1) -> (2)
-			alias = name;
-//console.log('(1) -> (2)', name, alias, userValue )
-		} else
-		if( typeof alias !== 'string' )
+		// check entry data 
+		
+		if( shadersCount<=2 )
 		{
-			// (4) -> (3)
-			userValue = alias;
-			alias = name;
-//console.log('(4) -> (3)', name, alias, value )
+			throw new Error( `Uniforms can be added only after adding a shader. First add a shader, then add a uniform.\n` );
+			return;
 		}
+		
+		var shader = this.shaders[ shadersCount-2 ];
+		
+		if( !name )
+		{
+			throw new Error( `Missing name of a uniform for ${shader.name}. Use a valid and existing name. Available names are: "${Object.keys(shader.uniforms).sort().join('", "')}".\n` );
 				
-		// (2), (3)
-		// searches backwards
-//console.log('       (3)', name, alias, value )
-		for( var i=this.passes.length-1; i>=0; i-- )
-		{
-			if( this.passes[i].shader.uniforms[name] )
-			{
-				this.passes[i].uniforms[name] = {alias:alias, userValue:userValue, value:this.passes[this.passes.length-1].shader.uniforms[name].value};
-				break;
-			}
+			return null;
 		}
-//console.log(this)		
-		this.updateShaders( );
+
+		var uniform = shader.uniforms[name];
+		
+		if( !uniform )
+		{
+			throw new Error( `There is no uniform named "${name}" for ${shader.name}. Use a valid and existing name. Available names are: "${Object.keys(shader.uniforms).sort().join('", "')}".\n` );
+				
+			return null;
+		}
+
+		// addUniform(...) can be used in four styles:
+		//
+		// (1) addUniform( name )								string
+		// (2) addUniform( name, publicName )					string string
+		// (3) addUniform( name, publicName, customValue )		string string !string
+		// (4) addUniform( name, customValue )					string !string
+
+		// case (1) -> (2)
+		if( typeof param1 === 'undefined' )
+		{
+			param1 = name;
+		}
+		
+		// case (4) -> (3)
+		if( typeof param1 !== 'string' )
+		{
+			param2 = param1;
+			param1 = name;
+		}
+						
+		// cases (2) and (3)
+		uniform.publicName = param1;
+		if( typeof param2 !== 'undefined' ) uniform.value = param2;
+		uniform.glsl = this.uniformGLSL( name, uniform );
+
+		this.compileShaders( );
 		
 		return this;		
+		
 	} // OOPSShader.addUniform
-	
-	
-	
-	processDefine( name, value, n, type )
+
+
+
+	compileShaders( )
 	{
+		this.compileShader( 'vertexShader',   'vertexShaderHead'   );
+		this.compileShader( 'fragmentShader', 'fragmentShaderHead' );	
+		this.updateUniforms( );
+		
+	} // OOPSShader.compileShaders
+
+
+
+	bakedUniformGLSL( name, uniform )
+	{
+		var value = uniform.value,
+			type = uniform.type;
+		
+		if( value === null )
+			return `#define ${name}_$ ${uniform.publicName}\n` +
+				   `uniform sampler2D ${name}_$;\n`;
+
 		if( value instanceof THREE.Vector2 )
-			return `#define ${name}_${n+1} vec2(${value.x},${value.y})\n`;
+			return `#define ${name}_$ vec2(${value.x},${value.y})\n`;
 			
 		if( value instanceof THREE.Vector3 )
-			return `#define ${name}_${n+1} vec3(${value.x},${value.y},${value.z})\n`;
+			return `#define ${name}_$ vec3(${value.x},${value.y},${value.z})\n`;
 			
 		if( value instanceof THREE.Color )
-			return `#define ${name}_${n+1} vec3(${value.r},${value.g},${value.b})\n`;
+			return `#define ${name}_$ vec3(${value.r},${value.g},${value.b})\n`;
 			
 		if( type === true )
-			return `#define ${name}_${n+1} true\n`;
+			return `#define ${name}_$ true\n`;
 			
 		if( type === false )
-			return `#define ${name}_${n+1} false\n`;
+			return `#define ${name}_$ false\n`;
 			
 		if( type == 'int' )
-			return `#define ${name}_${n+1} ${Math.round(value)}\n`;
+			return `#define ${name}_$ ${Math.round(value)}\n`;
 			
 		if( Number.isInteger(value) )
-			return `#define ${name}_${n+1} ${value.toFixed(1)}\n`;
+			return `#define ${name}_$ ${value.toFixed(1)}\n`;
 			
-		return `#define ${name}_${n+1} ${value}\n`;
+		return `#define ${name}_$ ${value}\n`;
 		
-	} // OOPSShader.processDefine
+	} // OOPSShader.bakedUniformGLSL
 
 
 
-	processUniform( name, alias, value, n, type )
+	uniformGLSL( name, uniform )
 	{
-//console.log(name, alias, value, n, type )
-		var str = `#define ${name}_${n+1} ${alias}\n`;
-		
-		if( this.uniforms[alias] )
-		{
-			return str;
-		}
+		var value = uniform.value,
+			type = uniform.type;
 
+		var define = `#define ${name}_$ ${uniform.publicName}\n`;
+
+// why is this?
+		// if( this.uniforms[publicName] )
+		// {
+			// return str;
+		// }
+
+		if( value === null )
+			return define +	`uniform sampler2D ${name}_$;\n`;
+		
 		if( value instanceof THREE.Vector2 )
-			return str + `uniform vec2 ${name}_${n+1};\n`;
+			return define +	`uniform vec2 ${name}_$;\n`;
 		
 		if( value instanceof THREE.Vector3 )
-			return str + `uniform vec3 ${name}_${n+1};\n`;
+			return define + `uniform vec3 ${name}_$;\n`;
 		
 		if( value instanceof THREE.Color )
-			return str + `uniform vec3 ${name}_${n+1};\n`;
+			return define + `uniform vec3 ${name}_$;\n`;
 
 		if( type == 'bool' || type == 'boolean' || typeof value == 'boolean' )
-			return str + `uniform bool ${name}_${n+1};\n`;
+			return define + `uniform bool ${name}_$;\n`;
 
 		if( type == 'int' )
-			return str + `uniform int ${name}_${n+1};\n`;
+			return define + `uniform int ${name}_$;\n`;
+
+		if( type == 'floatarray' )
+			return define + `uniform float ${name}_$[${uniform.size}];\n`;
 		
-		return str + `uniform float ${name}_${n+1};\n`;
+		return define + `uniform float ${name}_$;\n`;
 		
-	} // OOPSShader.processUniform
+	} // OOPSShader.uniformGLSL
 
 
 
-	processShader( shaderPass, n )
+
+	compileShader( shaderName, shaderHeadName )
 	{
-		var shader = shaderPass.shader,
-			glsl = shader.fragmentShader;
+		var glsl = '',
+			j = 0;
 		
-		// process shader code
-		
-		// $$ -> main_|n|
-		glsl = glsl.replaceAll( '$$', `main_${n}` );
-		
-		// _$ -> _|n+1|
-		glsl = glsl.replaceAll( '_$', `_${n+1}` );
-		
-		// $( -> main_|n+1|
-		glsl = glsl.replaceAll( '$', `main_${n+1}` );
-
-		// shilft left two tabs
-		glsl = glsl.replaceAll( '\n\t\t', '\n' );
-
-		glsl += `\n`;
-
-		// process all uniforms from shader's definition
-		if( shader.uniforms )
+		// process user-added shaders
+		for( var shader of this.shaders )
 		{
-//console.log('>>>processing shader',shader.name);
-//console.log('\t',shaderPass.uniforms);
-
-			for( var name of Object.keys(shader.uniforms) )
+			var head = shader[shaderHeadName] || '',
+				body = shader[shaderName] || '';
+			
+			if( head )
 			{
-				var type = shader.uniforms[name].type;
-				
-				// does a uniform exists as a shaderpass uniform (i.e. addUniform has been used)?
-				if( shaderPass.uniforms[name] )
+				head = head.replaceAll( '$', j+1 );
+				head = head.split('\n').map(e=>e.trim()).filter(e=>e).join('\n')+'\n';
+					
+				if( glsl.indexOf(head) == -1 )
 				{
-					// yes, it does exist as a pass uniform
-					
-					var alias = shaderPass.uniforms[name].alias;
-					
-//					console.log('values','oops=',shaderPass.uniforms[name].value,'default',shader.uniforms[name].value);
-					var userValue = shaderPass.uniforms[name].userValue,
-						value = shaderPass.uniforms[name].value;
-						
-
-					glsl = this.processUniform( name, alias, typeof userValue !== 'undefined'?userValue:value, n, type ) + glsl;
-
-					if( typeof this.uniforms[alias] === 'undefined' )
-						this.uniforms[alias] = {};
-					
-					if( typeof userValue !== 'undefined' )
-						this.uniforms[alias].userValue = userValue;
-					
-					if( typeof value !== 'undefined' )
-						this.uniforms[alias].value = value;
-//					console.log('>>>',alias,'=',value);
+					glsl = head + glsl;
 				}
-				else
-				{
-					// no, it does not exist as a pass uniform
-					// so, this uniform should be baked as a define
-					
-					var value = shaderPass.values[name]; // user defined static value
-
-					if( value === undefined )
-						value = shader.uniforms[name].value; // default uniform value from shader source
-					
-					glsl = this.processDefine( name, value, n, type ) + glsl;
-					
-				}
-			} // for name
-		} // if shader.uniforms
-		
-		glsl += `\n`;
-		
-		if( shader.name )
-		{
-			glsl = `\n// ${shader.name} \n\n` + glsl;
+			}
+			
+			if( body )
+			{	
+				glsl = glsl + this.processShader( shader, body, j );	
+				j++;
+			}
 		}
+		
+		this[shaderName] = glsl;
+		
+	} // OOPSShader.compileShader
+
+
+
+	processShader( shader, glsl, n )
+	{
+		glsl = (glsl || '');
+		
+		// process shader uniforms
+		for( var name of Object.keys(shader.uniforms) )
+			glsl = shader.uniforms[name].glsl + `\n` + glsl;
+
+		// process shader GLSL code
+		glsl = glsl
+				.replaceAll( '$$', `main_${n}` )	// $$ -> main_|n|
+				.replaceAll( '_$', `_${n+1}` )		// _$ -> _|n+1|
+				.replaceAll( '$', `main_${n+1}` )	// $ -> main_|n+1|
+				.replaceAll( '\n\t\t', '\n' )		// shilft left two tabs
+				+ `\n`;
+		
+		// add comment with shader name
+		glsl =  `\n\n// ====== ${shader.name||'shader'} ======\n` + glsl + `\n\n`;
 			
 		return glsl;
 		
 	} // OOPSShader.processShader
 	
+
+
+	updateUniforms( )
+	{				
+		this.uniforms = {
+			tDiffuse: { value: null },
+		};
+
+		// scan user-added shaders
+		for( var shader of this.shaders )
+			for( var name of Object.keys(shader.uniforms) )
+			{
+				var uniform = shader.uniforms[name],
+					name = uniform.publicName;
+				
+				if( name )
+				{
+					if( typeof this.uniforms[name] === 'undefined' )
+						this.uniforms[name] = {};
+					
+					this.uniforms[name].value = uniform.value;
+				}
+			} // for name
+		// for shader
+
+	} // OOPSShader.updateUniforms
+
 	
 	
+
+
+
+
 } // OOPSShader
 			
 
