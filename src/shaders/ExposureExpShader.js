@@ -1,0 +1,36 @@
+﻿/**
+ *
+ * Ported from examples/jsm/shaders/ExposureExpShader.js
+ *
+ */
+ 
+ 
+import {Vector2} from 'three';
+
+
+const ExposureExpShader = {
+
+	name: 'ExposureExpShader',
+
+	uniforms: {
+		
+		exposure: { value: 0.0 },
+		
+	},
+
+	fragmentShader: /* glsl */`
+	
+		vec4 $( vec2 vUv ) {
+			
+			vec4 color = $$( vUv );
+			
+			color.rgb *= exp(exposure_$);
+			
+			return color;
+			
+		}`
+		
+};
+
+
+export { ExposureExpShader };
