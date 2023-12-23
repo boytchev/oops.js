@@ -5,7 +5,7 @@
  */
  
  
- const RGBShiftShader = {
+const RGBShiftShader = {
 
 	name: 'RGBShiftShader',
 

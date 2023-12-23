@@ -5,10 +5,10 @@
  */
  
  
- import {Vector2} from 'three';
+import {Vector2} from 'three';
 
 
- const DotScreenShader = {
+const DotScreenShader = {
 
 	name: 'DotScreenShader',
 

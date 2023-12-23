@@ -74,6 +74,7 @@ class OOPSShader
 				uniforms: {},
 			};
 		
+		if( shader.uniforms )
 		for( var name of Object.keys(shader.uniforms) )
 		{
 			var value = shader.uniforms[name].value;
