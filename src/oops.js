@@ -297,6 +297,7 @@ class OOPSShader
 		glsl = (glsl || '');
 		
 		// process shader uniforms
+		if( shader.uniforms )
 		for( var name of Object.keys(shader.uniforms) )
 			glsl = shader.uniforms[name].glsl + `\n` + glsl;
 
@@ -324,7 +325,7 @@ class OOPSShader
 		};
 
 		// scan user-added shaders
-		for( var shader of this.shaders )
+		for( var shader of this.shaders ) if( shader.uniforms )
 			for( var name of Object.keys(shader.uniforms) )
 			{
 				var uniform = shader.uniforms[name],
