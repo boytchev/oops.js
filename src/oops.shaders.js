@@ -1232,14 +1232,14 @@ const ConvolutionShader = {
 			
 		for( var i = 0; i < kernelSize; ++ i )
 		{
-			values[i] = gauss( i - halfWidth, sigma );
+			var x = i - halfWidth;
+			values[i] = gauss( x, sigma );
 			sum += values[i];
 		}
 
 		for( var i = 0; i < kernelSize; ++ i ) values[i] /= sum;
 	},
 	vertexShaderHead: /* glsl */`
-		#define KERNEL_SIZE_FLOAT_$ 25.0
 		#define KERNEL_SIZE_INT_$ 25
 	`,
 	vertexShader: /* glsl */`
@@ -1247,7 +1247,7 @@ const ConvolutionShader = {
 
 		vec3 $(vec3 position)
 		{
-			vImageCoord_$ = uv - ( ( KERNEL_SIZE_FLOAT_$ - 1.0 ) / 2.0 ) * uImageIncrement_$;
+			vImageCoord_$ = uv - ( ( float(KERNEL_SIZE_INT_$) - 1.0 ) / 2.0 ) * uImageIncrement_$;
 			return position;
 		}
 	`,

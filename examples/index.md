@@ -15,7 +15,7 @@ They can be used to play with the shaders' parameters.
 &middot; [BrightnessContrastShader](#brightnesscontrastshader)
 &middot; [ColorCorrectionShader](#colorcorrectionshader)
 &middot; [ColorifyShader](#colorifyshader)
-&middot; ConvolutionShader
+&middot; [ConvolutionShader](#convolutionshader)
 &middot; [CopyShader](#copyshader)
 &middot; DepthLimitedBlurShader
 &middot; DigitalGlitch
@@ -155,6 +155,25 @@ Example: [ColorifyShader.html](ColorifyShader.html)
 [<img src="ColorifyShader.jpg">](ColorifyShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
+
+
+
+
+## ConvolutionShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>25</sup> ]</span>
+
+A shader that applies 1D convolution to the colors of the frame. Convolution is
+used to apply blur, sharpen, edge detection and other filters, based on a kernel. The
+[kernel](https://en.wikipedia.org/wiki/Kernel_(image_processing)) is an array of
+25 floats.
+	
+* **`uImageIncrement`** – sampling points increment (vector, default value THREE.Vector2(0,0)) 
+* **`cKernel`** – convolution kernel (array float[25], default values Gauss blur) 
+
+Example: [ConvolutionShader.html](ConvolutionShader.html)
+		
+[<img src="ConvolutionShader.jpg">](ConvolutionShader.html)
+
 	
 
 

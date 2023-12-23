@@ -48,11 +48,11 @@
 			//oops.updateShaders();
 			
 				
-		console.log( '---- VERTEX SHADER ----' );
-		console.log( oops.vertexShader );
+		//console.log( '---- VERTEX SHADER ----' );
+		//console.log( oops.vertexShader );
 		
-		console.log( '---- FRAGMENT SHADER ----' );
-		console.log( oops.fragmentShader );
+		//console.log( '---- FRAGMENT SHADER ----' );
+		//console.log( oops.fragmentShader );
 		
 		var effect = new ShaderPass( oops );
 
@@ -81,13 +81,63 @@
 		}
 
 
+		function kernelRandom( )
+		{
+				
 
+		}
+		
+		function changeKernel( value )
+		{
+			var kernelSize = 25,
+				halfWidth = (kernelSize - 1)/2,
+				values = effect.uniforms.cKernel.value,
+				sum = 0;
+				
+			for( var i=0; i<kernelSize; i++ )
+			{
+				var x = i-halfWidth;
+				switch( value )
+				{
+					case 'Random': 
+							values[i] = Math.random() - 0.5;
+							break;
+						
+					case 'Over sharpen': 
+							values[i] = (x==0) ? 25 : -1;
+							break;
+
+					case 'Astigmatism': 
+							values[i] = Math.exp(1+Math.cos( 0.5*x ));
+							break;
+							
+					case 'Double vision': 
+							values[i] = i%(kernelSize-1)?0:1;
+							break;
+														
+					case 'Double silhouette': 
+							values[i] = (x<-10 || x>10) ? 10 : -1;
+							break;
+
+					default: 
+							values[i] = Math.exp( -x*x/32 );
+				}
+				sum += values[i];
+			}
+			
+			for( var i=0; i<kernelSize; i++ )
+				values[i] /= sum;
+		}
+		
+		
 		// create control panel
+		var data = {filter:'Default'};
 		
 		var gui = new GUI( { title: '<big><em>ConvolutionShader</em></big>' } );
 
 			gui.add( effect.uniforms['uImageIncrement']['value'], 'x', 0, 25/innerWidth ).step( 0.0001 );
 			gui.add( effect.uniforms['uImageIncrement']['value'], 'y', 0, 25/innerHeight ).step( 0.0001 );
+			gui.add( data, 'filter', ['Blur (default)', 'Random', 'Over sharpen', 'Astigmatism', 'Double vision', 'Double silhouette'] ).onChange( changeKernel );
 
 		// animation loop
 		

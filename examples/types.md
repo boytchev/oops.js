@@ -21,5 +21,6 @@ The table classifies shaders according to their type (base character) and weight
 | **O<sup>9</sup>** | [HorizontalBlurShader](#horizontalblurshader), [HorizontalTiltShiftShader](#horizontaltiltshiftshader), [SobelOperatorShader](#sobeloperatorshader), [VerticalBlurShader](#verticalblurshader), [VerticalTiltShiftShader](#verticaltiltshiftshader) |
 | **O<sup>10</sup>** | [FreiChenShader](#freichenshader) |
 | **O<sup>15</sup>** | [TriangleBlurShader](#triangleblurshader) |
+| **O<sup>25</sup>** | [ConvolutionShader](#convolutionshader) |
 | **O<sup>109</sup>** | [HalftoneShader](#halftoneshader) |
 | | (to be continued) |
