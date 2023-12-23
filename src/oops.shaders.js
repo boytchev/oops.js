@@ -7,7 +7,7 @@
 const HeaderShader = {
 	name: 'HeaderShader',
 	uniforms: {
-		//tDiffuse:  { value: null },
+		tDiffuse:  { value: null },
 	},
 	vertexShader: /* glsl */`
 		vec3 $( vec3 position )
@@ -15,12 +15,11 @@ const HeaderShader = {
 			return position;
 		}`,
 	fragmentShader: /* glsl */`
-		uniform sampler2D tDiffuse;
 		varying vec2 vUv;
 
 		vec4 $( vec2 vUv )
 		{
-			return texture2D( tDiffuse, vUv );
+			return texture2D( tDiffuse_$, vUv );
 		}`
 };
 

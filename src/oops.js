@@ -45,6 +45,8 @@ class OOPSShader
 			{...SHADERS.FooterShader},
 		];
 		
+		this.addUniform( 'tDiffuse' );
+		
 		this.compileShaders( );
 		
 	} // OOPSShader.constructor
@@ -111,11 +113,11 @@ class OOPSShader
 		
 		// check entry data 
 		
-		if( shadersCount<=2 )
-		{
-			throw new Error( `Uniforms can be added only after adding a shader. First add a shader, then add a uniform.\n` );
-			return;
-		}
+		// if( shadersCount<=2 )
+		// {
+			// throw new Error( `Uniforms can be added only after adding a shader. First add a shader, then add a uniform.\n` );
+			// return;
+		// }
 		
 		var shader = this.shaders[ shadersCount-2 ];
 		
@@ -227,8 +229,8 @@ class OOPSShader
 			// return str;
 		// }
 
-		// if( value === null )
-			// return define +	`uniform sampler2D ${name}_$;\n`;
+		if( value === null )
+			return define +	`uniform sampler2D ${name}_$;\n`;
 		
 		if( value instanceof THREE.Vector2 )
 			return define +	`uniform vec2 ${name}_$;\n`;
