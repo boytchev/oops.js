@@ -1,5 +1,7 @@
 ﻿/**
  *
+ * Alternative implementation for examples/jsm/shaders/VignetteShader.js
+ *
  */
  
  
