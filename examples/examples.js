@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 
-var renderer = new THREE.WebGLRenderer( {antialias: true} );
+var renderer = new THREE.WebGLRenderer( EXAMPLE_RENDERER_OPTIONS||{antialias: true} );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( innerWidth, innerHeight );
 	document.body.appendChild( renderer.domElement );
@@ -74,7 +74,7 @@ function randomBallsAndCubes( n=100, defaultMaterial=null )
 }
 
 
-function backgroundGrid( gridColor = 'white', backgroundColor = 'black' )
+function backgroundGrid( gridColor = 'white', backgroundColor = 'black', factor=100 )
 {
 	const S = 64;
 	
@@ -94,7 +94,33 @@ function backgroundGrid( gridColor = 'white', backgroundColor = 'black' )
 		texture.wrapT = THREE.RepeatWrapping;
 		
 	scene.background = texture;
-	scene.background.repeat.set( innerWidth/100, innerHeight/100 );
+	scene.background.repeat.set( innerWidth/factor, innerHeight/factor );
+}
+
+
+function backgroundHatched( gridColor = 'white', backgroundColor = 'black', factor=8 )
+{
+	const S = 16;
+	
+	var canvas = document.createElement( 'canvas' );
+		canvas.width = S;
+		canvas.height = S;
+
+	var context = canvas.getContext( '2d' );
+		context.fillStyle = backgroundColor;
+		context.fillRect( 0, 0, S, S );
+
+		context.strokeStyle = gridColor;
+		context.moveTo( -10, -10 );
+		context.lineTo( S+10, S+10 );
+		context.stroke( );
+
+	var texture = new THREE.CanvasTexture(canvas);
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+		
+	scene.background = texture;
+	scene.background.repeat.set( innerWidth/factor, innerHeight/factor );
 }
 
 
@@ -118,4 +144,4 @@ function animate( t )
 
 renderer.setAnimationLoop( animate );
 
-export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, backgroundGrid, setAnimationLoop };
+export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, backgroundGrid, backgroundHatched, setAnimationLoop };

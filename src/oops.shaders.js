@@ -34,6 +34,7 @@ import {CopyShader} from './shaders/CopyShader.js';
 import {UnpackDepthRGBAShader} from './shaders/UnpackDepthRGBAShader.js';
 import {HalftoneShader} from './shaders/HalftoneShader.js';
 import {ConvolutionShader} from './shaders/ConvolutionShader.js';
+import {FXAAShader} from './shaders/FXAAShader.js';
 
 
 const SHADERS = {
@@ -71,6 +72,7 @@ const SHADERS = {
 		UnpackDepthRGBAShader:		UnpackDepthRGBAShader,
 		HalftoneShader:				HalftoneShader,
 		ConvolutionShader:			ConvolutionShader,
+		FXAAShader:					FXAAShader,
 }
 
 

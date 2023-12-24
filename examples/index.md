@@ -26,7 +26,7 @@ They can be used to play with the shaders' parameters.
 &middot; [FilmShader](#filmshader)
 &middot; [FocusShader](#focusshader)
 &middot; [FreiChenShader](#freichenshader)
-&middot; FXAAShader
+&middot; [FXAAShader](#fxaashader)
 &middot; [GammaCorrectionShader](#gammacorrectionshader)
 &middot; GodRaysShader
 &middot; [HalftoneShader](#halftoneshader)
@@ -306,6 +306,23 @@ Example: [FreiChenShader.html](FreiChenShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **aspect** is renamed to **resolution** and
 has another default value; (2) **opacity** is added; (3) a syntax bug in the shader is fixed.</span>*
+
+
+
+
+## FXAAShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>17</sup> ]</span>
+
+A shader that implements a variation of the [FXAA (Fast approximate anti-aliasing)](https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing) screen-space anti-aliasing.
+	
+* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
+* **`disable`** - flag for disabling the shader (boolean, default value *false*)
+
+Example: [FXAAShader.html](FXAAShader.html)
+		
+[<img src="FXAAShader.jpg">](FXAAShader.html)
+
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **resolution** uses size in pixels; (2) **disable** is added; (3) texture sampling is without bias.</span>*
 
 
 
