@@ -14,14 +14,14 @@ The table classifies shaders according to their type (base character) and weight
 | Type | Description |
 | :--: | :-- |
 | **O** | **These shaders use only the colors in a frame. An O-shader may follow any other shader.** |
-| **O<sup>0</sup>** | [BasicShader](BasicShader.html)  |
-| **O<sup>1</sup>** | [ACESFilmicToneMappingShader](ACESFilmicToneMappingShader.html), [BleachBypassShader](BleachBypassShader.html), [BrightnessContrastShader](BrightnessContrastShader.html), [ColorCorrectionShader](ColorCorrectionShader.html), [ColorifyShader](ColorifyShader.html), [CopyShader](CopyShader.html), [DotScreenShader](DotScreenShader.html), [ExposureShader](ExposureShader.html), [ExposureExpShader](ExposureExpShader.html), [FilmShader](FilmShader.html), [GammaCorrectionShader](GammaCorrectionShader.html), [HueSaturationShader](HueSaturationShader.html), [KaleidoShader](KaleidoShader.html), [LuminosityHighPassShader](LuminosityHighPassShader.html), [LuminosityShader](LuminosityShader.html), [MirrorShader](MirrorShader.html), [SepiaShader](SepiaShader.html), [TechnicolorShader](TechnicolorShader.html), [UnpackDepthRGBAShader](UnpackDepthRGBAShader.html), [VignetteShader](VignetteShader.html) |
-| **O<sup>3</sup>** | [RGBShiftShader](RGBShiftShader.html) |
-| **O<sup>8</sup>** | [FocusShader](FocusShader.html) |
-| **O<sup>9</sup>** | [HorizontalBlurShader](HorizontalBlurShader.html), [HorizontalTiltShiftShader](HorizontalTiltShiftShader.html), [SobelOperatorShader](SobelOperatorShader.html), [VerticalBlurShader](VerticalBlurShader.html), [VerticalTiltShiftShader](VerticalTiltShiftShader.html) |
-| **O<sup>10</sup>** | [FreiChenShader](FreiChenShader.html) |
-| **O<sup>15</sup>** | [TriangleBlurShader](TriangleBlurShader.html) |
-| **O<sup>17</sup>** | [FXAAShader](FXAAShader.html) |
-| **O<sup>25</sup>** | [ConvolutionShader](ConvolutionShader.html) |
-| **O<sup>109</sup>** | [HalftoneShader](HalftoneShader.html) |
+| **O<sup>0</sup>** | [BasicShader](index.md#basicshader)  |
+| **O<sup>1</sup>** | [ACESFilmicToneMappingShader](index.md#acesfilmictonemappingshader), [BleachBypassShader](index.md#bleachbypassshader), [BrightnessContrastShader](index.md#brightnesscontrast), [ColorCorrectionShader](index.md#colorcorrectionshader), [ColorifyShader](index.md#colorifyshader), [CopyShader](index.md#copyshader), [DotScreenShader](index.md#dotscreenshader), [ExposureShader](index.md#exposureshader), [ExposureExpShader](index.md#exposureexpshader), [FilmShader](index.md#filmshader), [GammaCorrectionShader](index.md#gammacorrectionshader), [HueSaturationShader](index.md#huesaturationshader), [KaleidoShader](index.md#kaleidoshader), [LuminosityHighPassShader](index.md#luminosityhighpassshader), [LuminosityShader](index.md#luminosityshader), [MirrorShader](index.md#mirrorshader), [SepiaShader](index.md#sepiashader), [TechnicolorShader](index.md#technicolorshader), [UnpackDepthRGBAShader](index.md#unpackdepthrgbashader), [VignetteShader](index.md#vignetteshader) |
+| **O<sup>3</sup>** | [RGBShiftShader](index.md#rgbshiftshader) |
+| **O<sup>8</sup>** | [FocusShader](index.md#focusshader) |
+| **O<sup>9</sup>** | [HorizontalBlurShader](index.md#horizontalblurshader), [HorizontalTiltShiftShader](index.md#horizontaltiltshiftshader), [SobelOperatorShader](index.md#sobeloperatorshader), [VerticalBlurShader](index.md#verticalblurshader), [VerticalTiltShiftShader](index.md#verticaltiltshiftshader) |
+| **O<sup>10</sup>** | [FreiChenShader](index.md#freichenshader) |
+| **O<sup>15</sup>** | [TriangleBlurShader](index.md#triangleblurshader) |
+| **O<sup>17</sup>** | [FXAAShader](index.md#fxaashader) |
+| **O<sup>25</sup>** | [ConvolutionShader](index.md#convolutionshader) |
+| **O<sup>109</sup>** | [HalftoneShader](index.md#halftoneshader) |
 | | (to be continued) |
