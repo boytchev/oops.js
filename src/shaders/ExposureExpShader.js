@@ -5,9 +5,6 @@
  */
  
  
-import {Vector2} from 'three';
-
-
 const ExposureExpShader = {
 
 	name: 'ExposureExpShader',

@@ -12,124 +12,12 @@ import {ColorCorrectionShader} from './shaders/ColorCorrectionShader.js';
 import {ExposureShader} from './shaders/ExposureShader.js';
 import {ExposureExpShader} from './shaders/ExposureExpShader.js';
 import {FreiChenShader} from './shaders/FreiChenShader.js';
+import {HorizontalBlurShader} from './shaders/HorizontalBlurShader.js';
+import {VerticalBlurShader} from './shaders/VerticalBlurShader.js';
+import {VignetteShader} from './shaders/VignetteShader.js';
+import {BleachBypassShader} from './shaders/BleachBypassShader.js';
 
-//1226-991 81%
-const HorizontalBlurShader = {
-	name: 'HorizontalBlurShader',
-	uniforms: {
-		resolution: { value: innerWidth },
-		amount: { value: 1 },
-	},
-	fragmentShader: /* glsl */`
-		vec4 $( vec2 vUv )
-		{
-			vec4 sum = vec4( 0.0 );
-
-			vec4 color = $$( vUv );
-			
-			sum += $$( vec2( vUv.x - 4.0 * amount_$ / resolution_$, vUv.y ) ) * 0.051;
-			sum += $$( vec2( vUv.x - 3.0 * amount_$ / resolution_$, vUv.y ) ) * 0.0918;
-			sum += $$( vec2( vUv.x - 2.0 * amount_$ / resolution_$, vUv.y ) ) * 0.12245;
-			sum += $$( vec2( vUv.x - 1.0 * amount_$ / resolution_$, vUv.y ) ) * 0.1531;
-			sum += color * 0.1633;
-			sum += $$( vec2( vUv.x + 1.0 * amount_$ / resolution_$, vUv.y ) ) * 0.1531;
-			sum += $$( vec2( vUv.x + 2.0 * amount_$ / resolution_$, vUv.y ) ) * 0.12245;
-			sum += $$( vec2( vUv.x + 3.0 * amount_$ / resolution_$, vUv.y ) ) * 0.0918;
-			sum += $$( vec2( vUv.x + 4.0 * amount_$ / resolution_$, vUv.y ) ) * 0.051;
-
-			return sum;
-		}`
-};
-
-
-
-
-const VerticalBlurShader = {
-	name: 'VerticalBlurShader',
-	uniforms: {
-		resolution: { value: innerHeight },
-		amount: { value: 1 },
-	},
-	fragmentShader: /* glsl */`
-		vec4 $( vec2 vUv )
-		{
-			vec4 sum = vec4( 0.0 );
-
-			vec4 color = $$( vUv );
-			
-			sum += $$( vec2( vUv.x, vUv.y - 4.0 * amount_$ / resolution_$ ) ) * 0.051;
-			sum += $$( vec2( vUv.x, vUv.y - 3.0 * amount_$ / resolution_$ ) ) * 0.0918;
-			sum += $$( vec2( vUv.x, vUv.y - 2.0 * amount_$ / resolution_$ ) ) * 0.12245;
-			sum += $$( vec2( vUv.x, vUv.y - 1.0 * amount_$ / resolution_$ ) ) * 0.1531;
-			sum += color * 0.1633;
-			sum += $$( vec2( vUv.x, vUv.y + 1.0 * amount_$ / resolution_$ ) ) * 0.1531;
-			sum += $$( vec2( vUv.x, vUv.y + 2.0 * amount_$ / resolution_$ ) ) * 0.12245;
-			sum += $$( vec2( vUv.x, vUv.y + 3.0 * amount_$ / resolution_$ ) ) * 0.0918;
-			sum += $$( vec2( vUv.x, vUv.y + 4.0 * amount_$ / resolution_$ ) ) * 0.051;
-
-			return sum;
-		}`
-};
-
-
-
-
-const VignetteShader = {
-	name: 'VignetteShader',
-	uniforms: {
-		radius: { value: 1 },
-		blur: { value: 1 },
-		color: { value: new THREE.Color(0,0,0) },
-	},
-	fragmentShader: /* glsl */`
-		vec4 $( vec2 vUv )
-		{
-			vec4 texel = $$( vUv );
-			float dist = 1.0 - length( 2.0*vUv - vec2(1) );
-			float k = smoothstep( 1.0-radius_$, 1.0-radius_$+blur_$, dist);
-			return vec4( mix( color_$, texel.rgb, k) , texel.a );
-				
-			//vec4 texel = $$( vUv );
-			//vec2 uv = ( vUv - vec2( 0.5 ) ) * vec2( offset_$ );
-			//return vec4( mix( texel.rgb, vec3( 1.0 - darkness_$ ), dot( uv, uv ) ), texel.a );
-		}`
-};
-
-
-
-
-const BleachBypassShader = {
-	name: 'BleachBypassShader',
-	uniforms: {
-		amount: { value: 3 },
-	},
-	fragmentShader: /* glsl */`
-		vec4 $( vec2 vUv )
-		{
-			vec4 base = $$( vUv );
-
-			vec3 lumCoeff = vec3( 0.25, 0.65, 0.1 );
-			float lum = dot( lumCoeff, base.rgb );
-			vec3 blend = vec3( lum );
-
-			float L = min( 1.0, max( 0.0, 10.0 * ( lum - 0.45 ) ) );
-
-			vec3 result1 = 2.0 * base.rgb * blend;
-			vec3 result2 = 1.0 - 2.0 * ( 1.0 - blend ) * ( 1.0 - base.rgb );
-
-			vec3 newColor = mix( result1, result2, L );
-
-			float A2 = amount_$ * base.a;
-			vec3 mixRGB = A2 * newColor.rgb;
-			mixRGB += ( ( 1.0 - A2 ) * base.rgb );
-
-			return vec4( mixRGB, base.a );
-		}`
-};
-
-
-
-
+//1226-879 76%
 const MirrorShader = {
 	name: 'MirrorShader',
 	uniforms: {

@@ -5,7 +5,7 @@
  */
  
  
-import {Vector3} from 'three';
+import { Vector3 } from 'three';
 
 
 const ColorCorrectionShader = {
