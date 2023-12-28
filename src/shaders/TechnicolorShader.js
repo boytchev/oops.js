@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const TechnicolorShader = {
 
-	name: 'TechnicolorShader',
-
 	uniforms: {
 		
 		opacity: { value: 1 },

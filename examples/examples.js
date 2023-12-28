@@ -5,7 +5,12 @@ import * as THREE from 'three';
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 
-var renderer = new THREE.WebGLRenderer( EXAMPLE_RENDERER_OPTIONS||{antialias: true} );
+if( typeof EXAMPLE_RENDERER_OPTIONS === 'undefined' )
+{
+	var EXAMPLE_RENDERER_OPTIONS = {antialias: true};
+}
+
+var renderer = new THREE.WebGLRenderer( EXAMPLE_RENDERER_OPTIONS );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( innerWidth, innerHeight );
 	document.body.appendChild( renderer.domElement );

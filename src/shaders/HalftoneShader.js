@@ -10,8 +10,6 @@ import { Vector2, Vector3 } from 'three';
 
 const HalftoneShader = {
 
-	name: 'HalftoneShader',
-
 	uniforms: {
 		
 		shape: { value: 1, type: 'int' },

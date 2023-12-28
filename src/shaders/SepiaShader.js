@@ -7,8 +7,6 @@
  
 const SepiaShader = {
 
-	name: 'SepiaShader',
-
 	uniforms: {
 		
 		amount: { value: 1.0 },

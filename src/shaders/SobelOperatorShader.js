@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const SobelOperatorShader = {
 
-	name: 'SobelOperatorShader',
-
 	uniforms: {
 		
 		resolution: { value: new Vector2(innerWidth,innerHeight) },

@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const KaleidoShader = {
 
-	name: 'KaleidoShader',
-
 	uniforms: {
 		
 		sides: { value: 6 },

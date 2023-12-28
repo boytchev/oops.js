@@ -7,8 +7,6 @@
  
 const MirrorShader = {
 
-	name: 'MirrorShader',
-
 	uniforms: {
 		
 		side: { value: 1, type: 'int' },

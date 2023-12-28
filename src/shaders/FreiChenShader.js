@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const FreiChenShader = {
 
-	name: 'FreiChenShader',
-
 	uniforms: {
 		
 		resolution: { value: new Vector2(innerWidth,innerHeight) },

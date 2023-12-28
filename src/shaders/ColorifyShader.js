@@ -10,8 +10,6 @@ import { Vector3 } from 'three';
 
 const ColorifyShader = {
 
-	name: 'ColorifyShader',
-
 	uniforms: {
 		
 		color: { value: new Vector3(1,1,1) },

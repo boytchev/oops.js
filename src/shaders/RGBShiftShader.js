@@ -7,8 +7,6 @@
  
 const RGBShiftShader = {
 
-	name: 'RGBShiftShader',
-
 	uniforms: {
 		
 		amount: { value: 0.005 },

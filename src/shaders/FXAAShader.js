@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const FXAAShader = {
 
-	name: 'FXAAShader',
-
 	uniforms: {
 
 		resolution: { value: new Vector2( innerWidth, innerHeight ) },

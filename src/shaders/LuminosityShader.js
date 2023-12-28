@@ -7,8 +7,6 @@
  
 const LuminosityShader = {
 
-	name: 'LuminosityShader',
-
 	uniforms: {
 		
 		opacity: { value: 1 },

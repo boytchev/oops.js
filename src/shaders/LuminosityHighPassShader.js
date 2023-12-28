@@ -10,8 +10,6 @@ import { Color } from 'three';
 
 const LuminosityHighPassShader = {
 
-	name: 'LuminosityHighPassShader',
-
 	uniforms: {
 		
 		color: { value: new Color( 0, 0, 0 ) },

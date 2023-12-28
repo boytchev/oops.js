@@ -7,8 +7,6 @@
  
 const VerticalTiltShiftShader = {
 
-	name: 'VerticalTiltShiftShader',
-
 	uniforms: {
 		
 		position: { value: 0.5 },

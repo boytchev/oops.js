@@ -7,8 +7,6 @@
  
 const UnpackDepthRGBAShader = {
 
-	name: 'UnpackDepthRGBAShader',
-
 	uniforms: {
 		
 		opacity: { value: 1.0 },

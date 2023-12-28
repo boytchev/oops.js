@@ -10,8 +10,6 @@ import { Color } from 'three';
 
 const FilmShader = {
 
-	name: 'FilmShader',
-
 	uniforms: {
 		
 		time: { value: 0.0 },

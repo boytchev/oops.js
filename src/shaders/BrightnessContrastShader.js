@@ -7,8 +7,6 @@
  
 const BrightnessContrastShader = {
 
-	name: 'BrightnessContrastShader',
-
 	uniforms: {
 		
 		brightness: { value: 0.0 },

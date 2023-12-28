@@ -10,8 +10,6 @@ import { Color } from 'three';
 
 const BasicShader = {
 
-	name: 'BasicShader',
-
 	uniforms: {
 		
 		color: { value: new Color(1,0,0) },

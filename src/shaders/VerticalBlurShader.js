@@ -7,8 +7,6 @@
  
 const VerticalBlurShader = {
 
-	name: 'VerticalBlurShader',
-
 	uniforms: {
 		
 		resolution: { value: innerHeight },

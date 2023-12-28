@@ -10,8 +10,6 @@ import { Color } from 'three';
 
 const VignetteShader = {
 
-	name: 'VignetteShader',
-
 	uniforms: {
 		
 		radius: { value: 1 },

@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const FocusShader = {
 
-	name: 'FocusShader',
-
 	uniforms: {
 		
 		resolution: { value: new Vector2(innerWidth,innerHeight) },

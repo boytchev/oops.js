@@ -5,8 +5,6 @@
 
 const HeaderShader = {
 
-	name: 'HeaderShader',
-
 	uniforms: {
 
 		tDiffuse:  { value: null },

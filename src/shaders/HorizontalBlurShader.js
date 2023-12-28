@@ -7,8 +7,6 @@
  
 const HorizontalBlurShader = {
 
-	name: 'HorizontalBlurShader',
-
 	uniforms: {
 		
 		resolution: { value: innerWidth },

@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const TriangleBlurShader = {
 
-	name: 'TriangleBlurShader',
-
 	uniforms: {
 		
 		amount: { value: new Vector2( 0, 0 ) },

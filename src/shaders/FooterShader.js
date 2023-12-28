@@ -5,8 +5,6 @@
 
 const FooterShader = {
 
-	name: 'FooterShader',
-
 	vertexShader: /* glsl */`
 	
 		varying vec2 vUv;

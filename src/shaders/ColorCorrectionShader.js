@@ -10,8 +10,6 @@ import { Vector3 } from 'three';
 
 const ColorCorrectionShader = {
 
-	name: 'ColorCorrectionShader',
-
 	uniforms: {
 		
 		powRGB:  { value: new Vector3( 2, 2, 2 ) },

@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const ACESFilmicToneMappingShader = {
 
-	name: 'ACESFilmicToneMappingShader',
-
 	uniforms: {
 		
 		exposure:  { value: 1.0 },

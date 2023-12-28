@@ -7,8 +7,6 @@
  
 const GammaCorrectionShader = {
 
-	name: 'GammaCorrectionShader',
-
 	fragmentShader: /* glsl */`
 	
 		vec4 $( vec2 vUv ) {

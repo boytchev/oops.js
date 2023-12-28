@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const HueSaturationShader = {
 
-	name: 'HueSaturationShader',
-
 	uniforms: {
 		
 		hue: { value: 0 },

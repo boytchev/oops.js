@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const ConvolutionShader = {
 
-	name: 'ConvolutionShader',
-
 	uniforms: {
 		
 		uImageIncrement: { value: new Vector2( 0, 0 ) },

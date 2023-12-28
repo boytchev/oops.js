@@ -7,8 +7,6 @@
  
 const HorizontalTiltShiftShader = {
 
-	name: 'HorizontalTiltShiftShader',
-
 	uniforms: {
 		
 		position: { value: 0.5 },

@@ -35,7 +35,9 @@ import {UnpackDepthRGBAShader} from './shaders/UnpackDepthRGBAShader.js';
 import {HalftoneShader} from './shaders/HalftoneShader.js';
 import {ConvolutionShader} from './shaders/ConvolutionShader.js';
 import {FXAAShader} from './shaders/FXAAShader.js';
+//import {OutputShader} from './shaders/OutputShader.js';
 
+console.log( window );
 
 const SHADERS = {
 		FooterShader: 				FooterShader,
@@ -73,7 +75,14 @@ const SHADERS = {
 		HalftoneShader:				HalftoneShader,
 		ConvolutionShader:			ConvolutionShader,
 		FXAAShader:					FXAAShader,
+//		OutputShader:				OutputShader,
 }
 
+
+// set names
+for( var name of Object.keys(SHADERS) )
+{
+	SHADERS[name].name = name;
+}
 
 export {SHADERS};

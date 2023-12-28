@@ -7,8 +7,6 @@
  
 const BleachBypassShader = {
 
-	name: 'BleachBypassShader',
-
 	uniforms: {
 		
 		amount: { value: 3 },

@@ -7,8 +7,6 @@
  
 const CopyShader = {
 
-	name: 'CopyShader',
-
 	uniforms: {
 		
 		opacity:  { value: 1.0 },

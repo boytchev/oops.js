@@ -10,8 +10,6 @@ import { Vector2 } from 'three';
 
 const DotScreenShader = {
 
-	name: 'DotScreenShader',
-
 	uniforms: {
 		
 		angle:  { value: 0.0 },

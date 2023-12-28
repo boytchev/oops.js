@@ -7,8 +7,6 @@
  
 const ExposureExpShader = {
 
-	name: 'ExposureExpShader',
-
 	uniforms: {
 		
 		exposure: { value: 0.0 },
