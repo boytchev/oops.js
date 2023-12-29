@@ -4,25 +4,27 @@
 
 * merging the source codes of several shaders
 * embedding static uniforms as shader constants
+* reducing the number of EffectComposer passes
 
-Additionally, the library makes small adjustment to the shaders properties,
+<!--Additionally, the library makes small adjustment to the shaders properties,
 so they are not completely the same as their Three.js counterparts.
   
 A very preliminary test with the [webgl_postprocessing](https://threejs.org/examples/?q=post#webgl_postprocessing)
 example shows increased performance by 50%.
-
+-->
 
 ## More information
 
-* [Shaders Types](examples/types.md) &ndash; general classification of shader
-types
+<!--* [Shaders Types](examples/types.md) &ndash; general classification of shader
+types-->
+* [Preliminary Tests](tests/) &ndash; some non-binding performance tests
 * [Shaders Examples](examples/) &ndash; supported shaders and their parameters
 
 
 ## Current status
 
-The work is split in several phases:
+The work is split into several phases:
 
-* <span style="display:inline-block; background:aquamarine; padding: 0.1em 0.5em; width:6em; text-align: center;">ONGOING</span> Three.js shaders that can be merged.
-* <span style="display:inline-block; background:pink; padding: 0.1em 0.5em; width:6em; text-align: center;">PENDING</span> Effect composer with automatic passes.
-* <span style="display:inline-block; background:pink; padding: 0.1em 0.5em; width:6em; text-align: center;">PENDING</span> Dissemination, CDN, package, Three.js PR (help needed).
+1. <span style="display:inline-block; background:aquamarine; padding: 0.1em 0.5em; width:4em; text-align: center; margin: 0.1em 0;">DONE</span> Proof-of-concept work on merging simple shaders and baking uniforms.
+2. <span style="display:inline-block; background:lemonchiffon; padding: 0.1em 0.5em; width:4em; text-align: center; margin: 0.1em 0;">NOW</span> Design a composer based on effects instead of passes or shaders.
+3. <span style="display:inline-block; background:pink; padding: 0.1em 0.5em; width:4em; text-align: center; margin: 0.1em 0;">TODO</span> Recreate all Three.js posprocessing effects and their examples.

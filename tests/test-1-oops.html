@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../examples/styles.css">
+		<script type="importmap">
+		  {
+			"imports": {
+			  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+			  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+			}
+		  }
+		</script>
+	</head>
+
+
+	<body>
+		<script type="module">
+
+			import * as THREE from 'three';
+
+			import * as Stats from './stats.js';
+			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+			
+			import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+			import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+			
+			import { OOPSShader } from '/src/oops.js';
+
+			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+
+			var renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animationLoop );
+				document.body.appendChild( renderer.domElement );
+				document.body.style = 'margin: 0; overflow: hidden;';
+				
+			var	camera = new THREE.PerspectiveCamera( 60, innerWidth / innerHeight, 0.1, 100 );
+				camera.position.z = 2;
+
+			var scene = new THREE.Scene();
+				scene.background = new THREE.Color( 'white' );
+
+			var object = new THREE.Mesh( 
+					new THREE.BoxGeometry( 1, 1, 1 ),
+					new THREE.MeshLambertMaterial( {color: 'gold'} )
+				);
+			
+			scene.add( object );
+
+			var light = new THREE.DirectionalLight( 'white', 3 );
+				light.position.set( 0, 0, 1 );
+				
+			scene.add( light );
+
+
+			// postprocessing
+
+			var oops = new OOPSShader( )
+				.addShader( 'RGBShiftShader', {'amount': 0.1} )
+				.addShader( 'VignetteShader' )
+				.addShader( 'SepiaShader', {'amount': 0.5} )
+			
+			var composer = new EffectComposer( renderer );
+				composer.addPass( new RenderPass( scene, camera ) );
+				composer.addPass( new ShaderPass( oops )  );
+				composer.addPass( new OutputPass() );
+
+
+			var params = {count: 128, fps: 'pending'};
+			
+			var gui = new GUI( { title: '<big><em>Test 1</em></big>' } );
+				//gui.add( params, 'count', [1,2,4,8,16,32,64,128,256,512,1024] ).name( 'Renders' );
+				gui.add( params, 'count', {
+					'1 per frame': 1,
+					'2 per frame': 2,
+					'4 per frame': 4,
+					'8 per frame': 8,
+					'16 per frame': 16,
+					'32 per frame': 32,
+					'64 per frame': 64,
+					'128 per frame': 128,
+					'256 per frame': 256,
+					'512 per frame': 512,
+					'1024 per frame': 1024,
+				} ).name( 'Renders' );
+				gui.add( params, 'fps' ).name( 'FPS / ms' ).$input.classList.add('bottom');;
+				
+				
+			//
+
+			window.addEventListener( 'resize', onWindowResize );
+
+			function onWindowResize( )
+			{
+
+				camera.aspect = innerWidth / innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( innerWidth, innerHeight );
+				composer.setSize( innerWidth, innerHeight );
+
+			}
+
+
+			function animationLoop( time )
+			{
+
+				object.rotation.set( time/1200, time/1300, time/1400 );
+
+				Stats.update( params, gui );
+				
+				for( var i=0; i<params.count; i++ )
+					composer.render( );
+				
+			}
+
+		</script>
+
+	</body>
+</html>
+
+

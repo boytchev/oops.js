@@ -77,7 +77,7 @@ class OOPSShader
 		if( shader.uniforms )
 		for( var name of Object.keys(shader.uniforms) )
 		{
-			var value = shader.uniforms[name].value;
+			var value = bakedValues[name] || shader.uniforms[name].value;
 			if( value.clone )
 				value =  value.clone();
 			else
@@ -87,9 +87,10 @@ class OOPSShader
 					value: value,
 					type: shader.uniforms[name].type,
 					size: shader.uniforms[name].size,
-					glsl: this.bakedUniformGLSL( name, shader.uniforms[name] )
+					glsl: this.bakedUniformGLSL( name, shader.uniforms[name].type, value )
 				};
 		}
+
 		
 		if( shader.onLoad )
 		{
@@ -181,11 +182,8 @@ class OOPSShader
 
 
 
-	bakedUniformGLSL( name, uniform )
+	bakedUniformGLSL( name, type, value )
 	{
-		var value = uniform.value,
-			type = uniform.type;
-		
 		// if( value === null )
 			// return `#define ${name}_$ ${uniform.publicName}\n` +
 				   // `uniform sampler2D ${name}_$;\n`;
