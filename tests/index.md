@@ -23,3 +23,5 @@ The tests are preliminary and not statistically sound.
 * RenderPass
 * OOPSPass with RGBShiftShader + VignetteShader + SepiaShader
 * OutputPass
+
+#### Result

@@ -15,10 +15,9 @@ example shows increased performance by 50%.
 
 ## More information
 
-<!--* [Shaders Types](examples/types.md) &ndash; general classification of shader
-types-->
 * [Preliminary Tests](tests/) &ndash; some non-binding performance tests
 * [Shaders Examples](examples/) &ndash; supported shaders and their parameters
+* [Shaders Types](examples/types.md) &ndash; general classification of shader types
 
 
 ## Current status
