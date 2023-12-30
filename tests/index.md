@@ -1,9 +1,10 @@
 # Preliminary Tests
 
 This page contains a few preliminary tests. They are used to measure and compare
-performance of the traditional use of postprocessing effects against the new
-approach. To isolate rendering time, each test allows to run 1, 2, 4, ... 1024
-renderings per frame.
+performance of the traditional use of postprocessing effects versus the new
+approach. To isolate rendering time, each test runs N renderings per frame, where
+N = 1, 2, 4, ... 1024. Reported values are the overall **FPS** for N renderings
+in a frame and the **time for a single rendering**, i.e. 1000/(FPS&times;N) ms.
 
 The tests are preliminary and not statistically sound.
 

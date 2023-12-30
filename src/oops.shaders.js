@@ -37,7 +37,6 @@ import {ConvolutionShader} from './shaders/ConvolutionShader.js';
 import {FXAAShader} from './shaders/FXAAShader.js';
 //import {OutputShader} from './shaders/OutputShader.js';
 
-console.log( window );
 
 const SHADERS = {
 		FooterShader: 				FooterShader,
