@@ -1,28 +1,27 @@
 # Preliminary Tests
 
-This page contains a few preliminary tests. They are used to measure and compare
-performance of the traditional use of postprocessing effects versus the new
-approach. To isolate rendering time, each test runs N renderings per frame, where
-N = 1, 2, 4, ... 1024. Reported values are the overall **FPS** for N renderings
-in a frame and the **time for a single rendering**, i.e. 1000/(FPS&times;N) ms.
+This page contains a few preliminary tests to measure and compare performance
+of the traditional use of postprocessing effects versus the new approach. To
+isolate rendering time, each test runs 1, 2, ... 1024 renderings per frame.
+A temporal average is calculated every second and the final results are
+collected after continuous full-screen running for 20 seconds.
 
 The tests are preliminary and not statistically sound.
 
 
-## Test 1 [RGBShift, Vignette, Sepia]
+## Test 1 [RGBShift + Vignette + Sepia]
 
-#### EffectComposer + 5 traditional passes
+This test applies 3 simple shaders &ndash;
+[RGBShiftShader](../examples/index.md#rgbshiftshader),
+[VignetteShader](../examples/index.md#vignetteshader) and
+[SepiaShader](../examples/index.md#sepiashader).
+In the traditional case each shader is wrapped in individual
+ShaderPass. In the new approach the shaders are merged into
+one shader which is wrapped in a single ShaderPass.
 
-* RenderPass
-* ShaderPass with RGBShiftShader
-* ShaderPass with VignetteShader
-* ShaderPass with SepiaShader
-* OutputPass
+* Run: [test-1.html](test-1.html)
+* Performance gain 40%-55%
+* [Detailed results](test-1-logs.md)
+		
+[<img src="test-1.jpg">](test-1.html)
 
-#### EffectComposer + 3 traditional passes + 1 oops pass
-
-* RenderPass
-* OOPSPass with RGBShiftShader + VignetteShader + SepiaShader
-* OutputPass
-
-#### Result
