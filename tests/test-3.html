@@ -28,6 +28,8 @@
 			
 			import { ColorifyShader } from 'three/addons/shaders/ColorifyShader.js';
 			import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
+			import { BleachBypassShader } from 'three/addons/shaders/BleachBypassShader.js';
+			import { FilmShader } from 'three/addons/shaders/FilmShader.js';
 
 			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
@@ -92,17 +94,26 @@
 			init( );
 			
 			
+			var film, oops;
+			
 			function traditionalPostprocessing( ) {
 
 				var rgbShift = new ShaderPass( RGBShiftShader );
 					rgbShift.uniforms['amount'].value = 0.02;
 				
 				var colorify = new ShaderPass( ColorifyShader );
-					colorify.uniforms['color'].value.set( 1, 2, 3 );
+					colorify.uniforms['color'].value.set( 2, 1, 0.5 );
+
+				var bleachBypass = new ShaderPass( BleachBypassShader );
+					bleachBypass.uniforms['opacity'].value = 2;
+
+				film = new ShaderPass( FilmShader );
 
 				var composer = new EffectComposer( renderer );
 					composer.addPass( new RenderPass( scene, camera ) );
 					composer.addPass( rgbShift  );
+					composer.addPass( film  );
+					composer.addPass( bleachBypass  );
 					composer.addPass( colorify  );
 					composer.addPass( new OutputPass() );
 					
@@ -114,9 +125,12 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var oops = new ShaderPass( new OOPSShader( )
+				oops = new ShaderPass( new OOPSShader( )
 					.addShader( 'RGBShiftShader', {amount: 0.02} )
-					.addShader( 'ColorifyShader', {color:new THREE.Color(1,2,3)} )
+					.addShader( 'FilmShader', {intensity: 0.12} )
+					.addUniform( 'time' )
+					.addShader( 'BleachBypassShader', {amount: 2} )
+					.addShader( 'ColorifyShader', {color:new THREE.Color(2,1,0.5)} )
 				);
 				
 				
@@ -140,6 +154,9 @@
 			function animationLoop( time ) {
 
 				Stats.update( );
+				
+				film.uniforms['time'].value = time % 1;
+				oops.uniforms['time'].value = time % 1;
 				
 				object.rotation.set( time/1200, time/1300, time/1400 );
 

@@ -2,20 +2,20 @@
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
 
-const AVERAGE_WAIT_COUNT = 20;
-const REPORT_TIME_MS = 1000; // in miliseconds
+const AVERAGE_WAIT_COUNT = 20; // default 20
+const REPORT_TIME_MS = 1000; // in miliseconds, default 1000
 
 
-var oldTime, counter, fps, avgfps, reports, gui;
+var oldTime, counter, fps, avgfps, reports, gui, guiButton, guiInfo, oldResult;
 
 var showGPU = true,
 	done = false;
 	
 var autoComposers = 0,
-	autoRun = false;
+	autoRun = false,
+	autoText;
 
-var params = {index: 0, count: 1, fps: 'pending', avgfps: 'pending', auto: autoTest, autoinfo: '' };
-
+var params = {index: 0, count: 1, fps: 'pending', avgfps: 'pending', auto: autoTestStart, autoInfo: '' };
 
 
 function init( composerNames )
@@ -45,13 +45,15 @@ function init( composerNames )
 		'1024 per frame': 1024,
 	} ).name( 'Renders' ).onChange( reset );
 		
-	var guiFPS = gui.addFolder( 'FPS / ms' );
+	var guiFPS = gui.addFolder( 'FPS' );
 		guiFPS.add( params, 'fps' ).name( '<right>Measured</right>' );
 		guiFPS.add( params, 'avgfps' ).name( '<right>Average</right>' );//.$input.classList.add('bottom');
 		
 	var guiAUTO = gui.addFolder( 'Full tests' );
-		guiAUTO.add( params, 'auto' ).name( 'Run all test cases' );//.$button.classList.add('bottom');
-		guiAUTO.add( params, 'autoinfo' ).name( '<right>Progress</right>' ).$input.classList.add('bottom');
+	guiButton = guiAUTO.add( params, 'auto' ).name( 'Run all' );//.$button.classList.add('bottom');
+	guiInfo = guiAUTO.add( params, 'autoInfo' ).name( '<right>Progress</right>' );
+	guiInfo.$input.classList.add('bottom');
+		
 }
 
 
@@ -67,10 +69,45 @@ function reset( )
 
 
 
-function autoTest( )
+function autoTestStop( )
 {
+	params.index = 0;
+	params.count = 1;
+	gui.controllers[0].updateDisplay( );
+	gui.controllers[1].updateDisplay( );
+
+	params.autoInfo = '';
+	autoRun = false;
+	guiInfo.updateDisplay( );
+	
+	console.groupEnd( );
+	prompt( 'Test results (also shown in the console):', autoText );
+	
+	reset( );
+	
+	guiButton.name( 'Run all' );
+	guiInfo.updateDisplay( );
+}
+
+
+function autoTestStart( )
+{
+	if( autoRun )
+	{
+		autoTestStop( );
+		return;
+	}
+	
+	oldResult = null;
+	autoText = '';
+	
+	guiButton.name( 'Stop all' );
+	
+	autoRun = true;
+	
 	console.group( 'Automatic tests' );
 	console.log( (new Date()).toLocaleString() );
+	if( autoRun ) autoText += (new Date()).toLocaleString();
 	showVideoCardInfo( );
 	
 	params.index = 0;
@@ -78,38 +115,32 @@ function autoTest( )
 	
 	gui.controllers[0].updateDisplay( );
 	gui.controllers[1].updateDisplay( );
+	guiInfo.updateDisplay( );
 
 	reset( );
 	
-	autoRun = true;
 }
 
 
 
 function autoTestNext( )
 {
-	params.count = 2*params.count;
-	
-	if( params.count > 1024 )
+	params.index++;
+	if( params.index >= autoComposers )
 	{
-		params.index++;
-		params.count = 1;
+		oldResult = null;
+		params.index = 0;
+		params.count = 2*params.count;
 		
-		if( params.index >= autoComposers )
+		if( params.count > 1024 )
 		{
-			params.index = 0;
-			params.count = 1;
-			gui.controllers[0].updateDisplay( );
-			gui.controllers[1].updateDisplay( );
-
-			autoRun = false;
-			console.groupEnd( );
-			
-			reset( );
-			
+			autoTestStop( );
 			return;
 		}
 	}
+	
+	params.autoInfo += '|'; 
+	guiInfo.updateDisplay( );
 	
 	gui.controllers[0].updateDisplay( );
 	gui.controllers[1].updateDisplay( );
@@ -141,7 +172,13 @@ function showVideoCardInfo( ) {
 
 	}
 
-	console.log( gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) );
+	var str = `
+Resolution ${innerWidth}x${innerHeight} (${devicePixelRatio*innerWidth}x${devicePixelRatio*innerHeight})
+${gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)}
+`;
+
+	console.log( str );
+	if( autoRun ) autoText += str;
 
 }
 
@@ -164,19 +201,39 @@ function update( )
 	else
 		avgfps = fps*0.3+0.7*avgfps;
 	
-	params.fps = fps.toFixed(2) + ' fps / ' + (1000/fps/params.count).toFixed(2)+' ms';
+	params.fps = fps.toFixed(2) + ' fps';
 	if( reports < AVERAGE_WAIT_COUNT )
 		params.avgfps = 'pending '+Math.round(100*reports/AVERAGE_WAIT_COUNT)+'%';
 	else
-		params.avgfps = avgfps.toFixed(2) + ' fps / ' + (1000/avgfps/params.count).toFixed(2)+' ms';
+		params.avgfps = avgfps.toFixed(2) + ' fps';
 		
 	oldTime = time;
 	counter = 0;
 	
 	if( reports == AVERAGE_WAIT_COUNT )
 	{
+		var avg;
+		
+		if( avgfps>=100 ) avg = avgfps.toFixed(0); else
+		if( avgfps>=10 ) avg = avgfps.toFixed(1); else
+		if( avgfps>=1 ) avg = avgfps.toFixed(2); else
+		avg = avgfps.toFixed(3);
+			
 		if( showGPU ) showVideoCardInfo( );	
-		console.log( params.index + '\t' + params.count + '\t' + avgfps.toFixed(3) + '\t' + (1000/avgfps/params.count).toFixed(3) );
+		if( oldResult == null )
+		{
+			console.log( `${params.index}\t${params.count}\t${avg}` );
+			if( autoRun ) autoText += `\n${params.count} ${avg}`;
+		}
+		else
+		{
+			var gain = Math.round(100*avgfps/oldResult-100);
+			if( gain >= 0 ) gain = '+' + gain;
+			console.log( `${params.index}\t${params.count}\t${avg} (${gain}%)` );
+			if( autoRun ) autoText += ` ${avg} (${gain}%)`;
+		}
+		
+		oldResult = avgfps;
 		
 		if( autoRun ) autoTestNext( );
 	}

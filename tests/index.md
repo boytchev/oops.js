@@ -2,26 +2,24 @@
 
 This page contains a few preliminary tests to measure and compare performance
 of the traditional use of postprocessing effects versus the new approach. To
-isolate rendering time, each test runs 1, 2, ... 1024 renderings per frame.
+isolate rendering time, each test runs N = 1, 2, ... 1024 renderings per frame.
 A temporal average is calculated every second and the final results are
 collected after continuous full-screen running for 20 seconds.
 
 The tests are preliminary and not statistically sound.
 
 
-## Test 1 [RGBShift + Vignette + Sepia]
+## Test 1<br><small><small>[RGBShift + Colorify]</small></small>
 
-This test applies 3 simple shaders &ndash;
-[RGBShiftShader](../examples/index.md#rgbshiftshader),
-[VignetteShader](../examples/index.md#vignetteshader) and
-[SepiaShader](../examples/index.md#sepiashader).
-In the traditional case each shader is wrapped in individual
-ShaderPass. In the new approach the shaders are merged into
-one shader which is wrapped in a single ShaderPass.
+This test merges 2 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader)
+and [ColorifyShader](../examples/index.md#colorifyshader))
+into one OOPS shader. The shader is used by a `ShaderPass` in an `EffectComposer`.
+Merging increases performance by 20%-40% ([details](test-1-details.md)).
 
-* Run: [test-1.html](test-1.html)
-* Performance gain 40%-55%
-* [Detailed results](test-1-logs.md)
-		
+* Case A: EffectComposer + 5 passes + 2 shaders
+* Case B: EffectComposer + 3 passes + 1 oops shader
+
+Run: [test-1.html](test-1.html)
+	
 [<img src="test-1.jpg">](test-1.html)
 
