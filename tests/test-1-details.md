@@ -50,3 +50,29 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 
 <small>*Note: Values in parentheses are unreliable, as at least
 one of the measured FPS is restricted by the browser animation loop.*</small>
+
+
+
+
+### Run №3
+
+* Intel HD Graphics 4000 + ANGLE(Direct3D11)
+* Resolution 1368x768 (1368x768)
+* 1/1/2024, 5:12:06 PM
+
+| Renderings | A fps | B fps | Gain |
+| :-: | :-: | :-: | :-: |
+| 1 | 40.0 | 40.0 | (+0%) |
+| 2 | 40.0 | 40.0 | (+0%) |
+| 4 | 38.6 | 40.0 | (+4%) |
+| 8 | 20.6 | 28.5 | +39% |
+| 16 | 10.6 | 14.4 | +36% |
+| 32 | 5.45 | 7.49 | +37% |
+| 64 | 2.71 | 3.73 | +37% |
+| 128 | 1.36 | 1.86 | +37% |
+| 256 | 0.637 | 0.957 | +50% |
+| 512 | 0.346 | 0.570 | +65% |
+| 1024 | 0.178 | 0.241 | +36% |
+
+<small>*Note: Values in parentheses are unreliable, as at least
+one of the measured FPS is restricted by the browser animation loop.*</small>
