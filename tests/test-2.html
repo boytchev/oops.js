@@ -28,6 +28,7 @@
 			
 			import { ColorifyShader } from 'three/addons/shaders/ColorifyShader.js';
 			import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
+			import { BrightnessContrastShader } from 'three/addons/shaders/BrightnessContrastShader.js';
 
 			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
@@ -63,7 +64,7 @@
 				scene.background = new THREE.Color( 'gray' );
 
 				object = new THREE.Mesh( 
-					new THREE.IcosahedronGeometry( 0.8 ),
+					new THREE.OctahedronGeometry( 0.8 ),
 					new THREE.MeshNormalMaterial( )
 				);
 				
@@ -98,12 +99,17 @@
 					rgbShift.uniforms['amount'].value = 0.02;
 				
 				var colorify = new ShaderPass( ColorifyShader );
-					colorify.uniforms['color'].value.set( 1, 2, 3 );
+					colorify.uniforms['color'].value.set( 2, 1, 0.5 );
+
+				var brightnessPass = new ShaderPass( BrightnessContrastShader );
+					brightnessPass.uniforms['brightness'].value = -0.2;
+					brightnessPass.uniforms['contrast'].value = 0.5;
 
 				var composer = new EffectComposer( renderer );
 					composer.addPass( new RenderPass( scene, camera ) );
 					composer.addPass( rgbShift  );
 					composer.addPass( colorify  );
+					composer.addPass( brightnessPass );
 					composer.addPass( new OutputPass() );
 					
 				return composer;
@@ -116,7 +122,8 @@
 	
 				var oops = new ShaderPass( new OOPSShader( )
 					.addShader( 'RGBShiftShader', {amount: 0.02} )
-					.addShader( 'ColorifyShader', {color:new THREE.Color(1,2,3)} )
+					.addShader( 'ColorifyShader', {color:new THREE.Color(2,1,0.5)} )
+					.addShader( 'BrightnessContrastShader', {brightness: -0.2, contrast: 0.5} )
 				);
 				
 				
@@ -133,7 +140,7 @@
 			
 			composers = [ traditionalPostprocessing(), oopsPostprocessing( ) ];
 			
-			Stats.init( 'Test 1', ['EffectComposer', 'EffectComposer + OOPS'] );
+			Stats.init( 'Test 2', ['EffectComposer', 'EffectComposer + OOPS'] );
 			
 			
 

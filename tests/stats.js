@@ -18,7 +18,7 @@ var autoComposers = 0,
 var params = {index: 0, count: 1, fps: 'pending', avgfps: 'pending', auto: autoTestStart, autoInfo: '' };
 
 
-function init( composerNames )
+function init( caption, composerNames )
 {
 	reset( );
 	
@@ -29,7 +29,7 @@ function init( composerNames )
 	for( var i in composerNames )
 		composers[composerNames[i]] = parseInt(i);
 	
-	gui = new GUI( { title: '<big><em>Test 1</em></big>' } );
+	gui = new GUI( { title: `<big><em>${caption}</em></big>` } );
 	gui.add( params, 'index', composers ).name( 'Composer' ).onChange( reset );
 	gui.add( params, 'count', {
 		'1 per frame': 1,
