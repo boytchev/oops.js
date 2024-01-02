@@ -45,7 +45,7 @@ This test merges 4 simple shaders ([RGBShiftShader](../examples/index.md#rgbshif
 ) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
 Merging increases performance by **70%-100%** ([details](test-2/details.md)).
 
-Run: [test-2.html](test-2/index.html)
+Run: [test-3.html](test-3/index.html)
 	
-[<img src="test-2/snapshot.jpg">](test-2/index.html)
+[<img src="test-3/snapshot.jpg">](test-3/index.html)
 
