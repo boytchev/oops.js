@@ -26,10 +26,10 @@
 			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 			import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 			
-			import { ColorifyShader } from 'three/addons/shaders/ColorifyShader.js';
 			import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
 			import { BleachBypassShader } from 'three/addons/shaders/BleachBypassShader.js';
 			import { FilmShader } from 'three/addons/shaders/FilmShader.js';
+			import { VignetteShader } from 'three/addons/shaders/VignetteShader.js';
 
 			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
@@ -62,10 +62,10 @@
 				camera.position.z = 2;
 
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 'gray' );
+				scene.background = new THREE.Color( 'tan' );
 
 				object = new THREE.Mesh( 
-					new THREE.IcosahedronGeometry( 0.8 ),
+					new THREE.TorusGeometry( 0.7, 0.15),
 					new THREE.MeshNormalMaterial( )
 				);
 				
@@ -99,10 +99,11 @@
 			function traditionalPostprocessing( ) {
 
 				var rgbShift = new ShaderPass( RGBShiftShader );
-					rgbShift.uniforms['amount'].value = 0.02;
+					rgbShift.uniforms['amount'].value = 0.2;
 				
-				var colorify = new ShaderPass( ColorifyShader );
-					colorify.uniforms['color'].value.set( 2, 1, 0.5 );
+				var vignette = new ShaderPass( VignetteShader );
+					vignette.uniforms['offset'].value = 1.2;
+					vignette.uniforms['darkness'].value = 1.2;
 
 				var bleachBypass = new ShaderPass( BleachBypassShader );
 					bleachBypass.uniforms['opacity'].value = 2;
@@ -113,8 +114,8 @@
 					composer.addPass( new RenderPass( scene, camera ) );
 					composer.addPass( rgbShift  );
 					composer.addPass( film  );
+					composer.addPass( vignette  );
 					composer.addPass( bleachBypass  );
-					composer.addPass( colorify  );
 					composer.addPass( new OutputPass() );
 					
 				return composer;
@@ -126,11 +127,11 @@
 			function oopsPostprocessing( ) {
 	
 				oops = new ShaderPass( new OOPSShader( )
-					.addShader( 'RGBShiftShader', {amount: 0.02} )
+					.addShader( 'RGBShiftShader', {amount: 0.2} )
 					.addShader( 'FilmShader', {intensity: 0.12} )
 					.addUniform( 'time' )
-					.addShader( 'BleachBypassShader', {amount: 2} )
-					.addShader( 'ColorifyShader', {color:new THREE.Color(2,1,0.5)} )
+					.addShader( 'VignetteShader', {radius: 1.65, blur: 1.3} )
+					.addShader( 'BleachBypassShader', {amount: 1.8} )
 				);
 				
 				
@@ -147,7 +148,7 @@
 			
 			composers = [ traditionalPostprocessing(), oopsPostprocessing( ) ];
 			
-			Stats.init( ['EffectComposer', 'EffectComposer + OOPS'] );
+			Stats.init( 'Test 3', ['EffectComposer', 'EffectComposer + OOPS'] );
 			
 			
 

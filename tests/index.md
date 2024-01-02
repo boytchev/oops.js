@@ -28,7 +28,7 @@ This test merges 3 simple shaders ([RGBShiftShader](../examples/index.md#rgbshif
 [ColorifyShader](../examples/index.md#colorifyshader) and
 [BrightnessContrastShader](../examples/index.md#brightnesscontrastshader)
 ) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
-Merging increases performance by **40%-55%** ([details](test-2-details.md)).
+Merging increases performance by **40%-70%** ([details](test-2-details.md)).
 
 Run: [test-2.html](test-2.html)
 	
