@@ -26,8 +26,7 @@ Run: [test-1.html](test-1/index.html)
 
 This test merges 3 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader),
 [ColorifyShader](../examples/index.md#colorifyshader) and
-[BrightnessContrastShader](../examples/index.md#brightnesscontrastshader)
-) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
+[BrightnessContrastShader](../examples/index.md#brightnesscontrastshader)) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
 Merging increases performance by **40%-70%** ([details](test-2/details.md)).
 
 Run: [test-2.html](test-2/index.html)
@@ -41,8 +40,7 @@ Run: [test-2.html](test-2/index.html)
 This test merges 4 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader),
 [FilmShader](../examples/index.md#filmshader),
 [VignetteShader](../examples/index.md#vignetteshader) and
-[BleachBypassShader](../examples/index.md#bleachbypassshader)
-) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
+[BleachBypassShader](../examples/index.md#bleachbypassshader)) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
 Merging increases performance by **70%-100%** ([details](test-3/details.md)).
 
 Run: [test-3.html](test-3/index.html)
