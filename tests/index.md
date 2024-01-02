@@ -43,7 +43,7 @@ This test merges 4 simple shaders ([RGBShiftShader](../examples/index.md#rgbshif
 [VignetteShader](../examples/index.md#vignetteshader) and
 [BleachBypassShader](../examples/index.md#bleachbypassshader)
 ) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
-Merging increases performance by **70%-100%** ([details](test-2/details.md)).
+Merging increases performance by **70%-100%** ([details](test-3/details.md)).
 
 Run: [test-3.html](test-3/index.html)
 	
