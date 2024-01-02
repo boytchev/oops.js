@@ -1,4 +1,4 @@
-# Test 1<br><small><small>[Merging 2 shaders in one]</small></small>
+# Test 1<br><small>[Merging 2 shaders in one]</small>
 
 <img src="test-1.png">
 
@@ -6,7 +6,7 @@
 
 * NVIDIA GeForce GTX 1660 Ti + ANGLE(Direct3D11)
 * Resolution 1536x864 (1920x1080)
-* 1/1/2024
+* Jan 1, 2024
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
@@ -32,7 +32,7 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 
 * Intel UHD Graphics 630 + ANGLE(Direct3D11)
 * Resolution 1536x864 (1920x1080)
-* 1/1/2024
+* Jan 1, 2024
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
@@ -58,7 +58,7 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 
 * Intel HD Graphics 4000 + ANGLE(Direct3D11)
 * Resolution 1368x768 (1368x768)
-* 1/1/2024
+* Jan 1, 2024
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |

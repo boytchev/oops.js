@@ -1,4 +1,4 @@
-# Test 2<br><small><small>[Merging 3 shaders in one]</small></small>
+# Test 2<br><small>[Merging 3 shaders in one]</small>
 
 <img src="test-2.png">
 
@@ -6,7 +6,7 @@
 
 * NVIDIA GeForce GTX 1660 Ti + ANGLE(Direct3D11)
 * Resolution 1536x864 (1920x1080)
-* 1/2/2024
+* Jan 2, 2024
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
@@ -32,7 +32,7 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 
 * Intel UHD Graphics 630 + ANGLE(Direct3D11)
 * Resolution 1536x864 (1920x1080)
-* 1/2/2024
+* Jan 2, 2024
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
@@ -51,3 +51,28 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 <small>*Note: Values in parentheses are unreliable, as at least
 one of the measured FPS is restricted by the browser animation loop.*</small>
 
+
+
+
+### Run №3
+
+* Intel HD Graphics 4000 + ANGLE(Direct3D11)
+* Resolution 1368x768 (1368x768)
+* Jan 2, 2024
+
+| Renderings | A fps | B fps | Gain |
+| :-: | :-: | :-: | :-: |
+| 1 | 40.3 | 39.1 (-3%) |
+| 2 | 29.9 | 33.8 | +13% |
+| 4 | 20.3 | 26.7 | +32% |
+| 8 | 12.0 | 15.5 | +29% |
+| 16 | 7.81 | 13.6 | +73% |
+| 32 | 4.16 | 7.05 | +70% |
+| 64 | 2.13 | 3.64 | +70% |
+| 128 | 1.08 | 1.86 | +72% |
+| 256 | 0.545 | 0.943 | +73% |
+| 512 | 0.273 | 0.474 | +73% |
+| 1024 | 0.137 | 0.238 | +73% |
+
+<small>*Note: Values in parentheses are unreliable, as at least
+one of the measured FPS is restricted by the browser animation loop.*</small>
