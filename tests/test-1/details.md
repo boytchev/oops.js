@@ -1,6 +1,8 @@
 # Test 1<br><small>[Merging 2 shaders in one]</small>
 
-<img src="test-1.png">
+<img src="diagram.png">
+
+
 
 ### Run №1
 
@@ -10,21 +12,17 @@
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
-| 1 | 144 | 144 | (+0%) |
-| 2 | 144 | 144 | (+0%) |
-| 4 | 144 | 144 | (+0%) |
-| 8 | 144 | 144 | (+0%) |
-| 16 | 107 | 144 | (+34%) |
+| 1 | 144 | 144 | +0% |
+| 2 | 144 | 144 | +0% |
+| 4 | 144 | 144 | +0% |
+| 8 | 144 | 144 | +0% |
+| 16 | 107 | 144 | +34% |
 | 32 | 55.2 | 75.9 | +37% |
 | 64 | 28.0 | 38.6 | +38% |
 | 128 | 14.1 | 19.5 | +38% |
 | 256 | 7.09 | 9.80 | +38% |
 | 512 | 3.56 | 4.91 | +38% |
 | 1024 | 1.80 | 2.67 | +49% |
-
-<small>*Note: Values in parentheses are unreliable, as at least
-one of the measured FPS is restricted by the browser animation loop.*</small>
-
 
 
 
@@ -36,7 +34,7 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
-| 1 | 141 | 144 | (+2%) |
+| 1 | 141 | 144 | +2% |
 | 2 | 88.7 | 106 | +19% |
 | 4 | 52.0 | 61.1 | +18% |
 | 8 | 29.0 | 35.3 | +22% |
@@ -48,10 +46,6 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 | 512 | 0.491 | 0.608 | +24% |
 | 1024 | 0.246 | 0.304 | +24% |
 
-<small>*Note: Values in parentheses are unreliable, as at least
-one of the measured FPS is restricted by the browser animation loop.*</small>
-
-
 
 
 ### Run №3
@@ -62,9 +56,9 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
-| 1 | 40.0 | 40.0 | (+0%) |
-| 2 | 40.0 | 40.0 | (+0%) |
-| 4 | 38.6 | 40.0 | (+4%) |
+| 1 | 40.0 | 40.0 | +0% |
+| 2 | 40.0 | 40.0 | +0% |
+| 4 | 38.6 | 40.0 | +4% |
 | 8 | 20.6 | 28.5 | +39% |
 | 16 | 10.6 | 14.4 | +36% |
 | 32 | 5.45 | 7.49 | +37% |
@@ -74,5 +68,3 @@ one of the measured FPS is restricted by the browser animation loop.*</small>
 | 512 | 0.346 | 0.570 | +65% |
 | 1024 | 0.178 | 0.241 | +36% |
 
-<small>*Note: Values in parentheses are unreliable, as at least
-one of the measured FPS is restricted by the browser animation loop.*</small>
