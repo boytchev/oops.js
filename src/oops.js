@@ -1,5 +1,6 @@
-﻿import {Vector2, Vector3, Color} from 'three';
-import {SHADERS} from './oops.shaders.js';
+﻿import { Vector2, Vector3, Color } from 'three';
+		
+import { SHADERS } from './oops.shaders.js';
 
 
 console.log( `
@@ -79,9 +80,14 @@ class OOPSShader
 		{
 			var value = bakedValues[name] || shader.uniforms[name].value;
 			if( value.clone )
-				value =  value.clone();
+				value = value.clone();
 			else
-				value = JSON.parse(JSON.stringify(value));
+			{
+				if ( Array.isArray( value ) )
+					value = value.slice();
+				else
+					value = value;
+			}
 
 			shaderClone.uniforms[name] = {
 					value: value,
