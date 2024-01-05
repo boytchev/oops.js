@@ -1,4 +1,4 @@
-﻿import * as THREE from 'three';
+﻿import {Vector2, Vector3, Color} from 'three';
 import {SHADERS} from './oops.shaders.js';
 
 
@@ -188,13 +188,13 @@ class OOPSShader
 			// return `#define ${name}_$ ${uniform.publicName}\n` +
 				   // `uniform sampler2D ${name}_$;\n`;
 
-		if( value instanceof THREE.Vector2 )
+		if( value instanceof Vector2 )
 			return `#define ${name}_$ vec2(${value.x},${value.y})\n`;
 			
-		if( value instanceof THREE.Vector3 )
+		if( value instanceof Vector3 )
 			return `#define ${name}_$ vec3(${value.x},${value.y},${value.z})\n`;
 			
-		if( value instanceof THREE.Color )
+		if( value instanceof Color )
 			return `#define ${name}_$ vec3(${value.r},${value.g},${value.b})\n`;
 			
 		if( type === true )
@@ -231,13 +231,13 @@ class OOPSShader
 		if( value === null )
 			return define +	`uniform sampler2D ${name}_$;\n`;
 		
-		if( value instanceof THREE.Vector2 )
+		if( value instanceof Vector2 )
 			return define +	`uniform vec2 ${name}_$;\n`;
 		
-		if( value instanceof THREE.Vector3 )
+		if( value instanceof Vector3 )
 			return define + `uniform vec3 ${name}_$;\n`;
 		
-		if( value instanceof THREE.Color )
+		if( value instanceof Color )
 			return define + `uniform vec3 ${name}_$;\n`;
 
 		if( type == 'bool' || type == 'boolean' || typeof value == 'boolean' )

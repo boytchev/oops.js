@@ -1,6 +1,4 @@
-﻿import * as THREE from 'three';
-
-import {HeaderShader} from './shaders/HeaderShader.js';
+﻿import {HeaderShader} from './shaders/HeaderShader.js';
 import {FooterShader} from './shaders/FooterShader.js';
 import {RGBShiftShader} from './shaders/RGBShiftShader.js';
 import {DotScreenShader} from './shaders/DotScreenShader.js';
