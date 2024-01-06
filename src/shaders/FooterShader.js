@@ -4,6 +4,10 @@
 
 
 const FooterShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	vertexShader: /* glsl */`
 	

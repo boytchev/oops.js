@@ -6,6 +6,10 @@
  
  
 const GammaCorrectionShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	fragmentShader: /* glsl */`
 	

@@ -6,6 +6,10 @@
  
  
 const MirrorShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

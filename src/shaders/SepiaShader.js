@@ -6,6 +6,10 @@
  
  
 const SepiaShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

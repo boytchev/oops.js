@@ -6,6 +6,10 @@
  
  
 const VerticalTiltShiftShader = {
+	
+	type: 'O',
+	
+	weight: 9,
 
 	uniforms: {
 		

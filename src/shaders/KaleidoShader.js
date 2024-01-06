@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const KaleidoShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

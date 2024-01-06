@@ -6,6 +6,10 @@
  
  
 const VerticalBlurShader = {
+	
+	type: 'O',
+	
+	weight: 9,
 
 	uniforms: {
 		

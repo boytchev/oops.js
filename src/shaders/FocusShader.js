@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const FocusShader = {
+	
+	type: 'O',
+	
+	weight: 8,
 
 	uniforms: {
 		

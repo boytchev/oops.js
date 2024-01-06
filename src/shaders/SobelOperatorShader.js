@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const SobelOperatorShader = {
+	
+	type: 'O',
+	
+	weight: 9,
 
 	uniforms: {
 		

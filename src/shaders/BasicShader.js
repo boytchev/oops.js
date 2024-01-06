@@ -9,6 +9,10 @@ import { Color } from 'three';
 
 
 const BasicShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

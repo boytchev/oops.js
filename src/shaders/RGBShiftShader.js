@@ -6,6 +6,10 @@
  
  
 const RGBShiftShader = {
+	
+	type: 'O',
+	
+	weight: 3,
 
 	uniforms: {
 		

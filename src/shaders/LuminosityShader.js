@@ -6,6 +6,10 @@
  
  
 const LuminosityShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

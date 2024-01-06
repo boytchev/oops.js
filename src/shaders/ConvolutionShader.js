@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const ConvolutionShader = {
+	
+	type: 'O',
+	
+	weight: 25,
 
 	uniforms: {
 		

@@ -6,6 +6,10 @@
  
  
 const HorizontalBlurShader = {
+	
+	type: 'O',
+	
+	weight: 9,
 
 	uniforms: {
 		

@@ -6,6 +6,10 @@
  
  
 const HorizontalTiltShiftShader = {
+	
+	type: 'O',
+	
+	weight: 9,
 
 	uniforms: {
 		

@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const FreiChenShader = {
+	
+	type: 'O',
+	
+	weight: 10,
 
 	uniforms: {
 		

@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const FXAAShader = {
+	
+	type: 'O',
+	
+	weight: 17,
 
 	uniforms: {
 

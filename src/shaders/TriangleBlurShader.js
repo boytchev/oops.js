@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const TriangleBlurShader = {
+	
+	type: 'O',
+	
+	weight: 15,
 
 	uniforms: {
 		

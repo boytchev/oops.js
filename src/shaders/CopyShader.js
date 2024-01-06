@@ -6,6 +6,10 @@
  
  
 const CopyShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

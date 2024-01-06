@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const TechnicolorShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

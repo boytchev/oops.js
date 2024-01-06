@@ -9,6 +9,10 @@ import { Vector3 } from 'three';
 
 
 const ColorifyShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

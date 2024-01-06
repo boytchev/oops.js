@@ -9,6 +9,10 @@ import { Vector3 } from 'three';
 
 
 const ColorCorrectionShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

@@ -6,6 +6,10 @@
  
  
 const UnpackDepthRGBAShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const DotScreenShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

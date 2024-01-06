@@ -6,6 +6,10 @@
  
  
 const ExposureShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		

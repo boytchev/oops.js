@@ -9,6 +9,10 @@ import { Vector2, Vector3 } from 'three';
 
 
 const HalftoneShader = {
+	
+	type: 'O',
+	
+	weight: 109,
 
 	uniforms: {
 		

@@ -9,6 +9,10 @@ import { Vector2 } from 'three';
 
 
 const HueSaturationShader = {
+	
+	type: 'O',
+	
+	weight: 1,
 
 	uniforms: {
 		
