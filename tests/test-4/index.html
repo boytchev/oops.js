@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../examples/styles.css">
+		<script type="importmap">
+		  {
+			"imports": {
+			  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+			  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+			}
+		  }
+		</script>
+	</head>
+
+
+	<body>
+		<script type="module">
+
+			// imports from Three.js
+			
+			import * as THREE from 'three';
+
+			import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+			import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+			
+			import { HalftoneShader } from 'three/addons/shaders/HalftoneShader.js';
+			import { ConvolutionShader } from 'three/addons/shaders/ConvolutionShader.js';
+
+			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+
+			// imports from Oops.js
+
+			import * as Stats from '../stats.js';
+			import { OOPSShader } from '../../src/oops.js';
+
+
+
+			var renderer, scene, camera, object, composers;
+
+
+
+			// a simple 3D scene with a single torus
+			
+			function init( ) {
+			
+				renderer = new THREE.WebGLRenderer( {antialias: true} );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( innerWidth, innerHeight );
+				renderer.setAnimationLoop( animationLoop );
+				
+				document.body.appendChild( renderer.domElement );
+				document.body.style = 'margin: 0; overflow: hidden;';
+					
+				camera = new THREE.PerspectiveCamera( 60, innerWidth / innerHeight, 0.1, 100 );
+				camera.position.z = 2;
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 'orange' );
+
+				object = new THREE.Mesh( 
+					new THREE.IcosahedronGeometry( 0.7 ),
+					new THREE.MeshNormalMaterial( )
+				);
+				
+				scene.add( object );
+				
+				// manage frame resize
+				
+				window.addEventListener( 'resize', onWindowResize );
+
+				function onWindowResize( ) {
+				
+					camera.aspect = innerWidth / innerHeight;
+					camera.updateProjectionMatrix();
+					
+					renderer.setSize( innerWidth, innerHeight );
+					
+					for( var composer of composers )
+						composer.setSize( innerWidth, innerHeight );
+
+				} // init.onWindowResize
+
+			} // init
+
+
+
+			init( );
+			
+			
+			var film, oops;
+			
+			function traditionalPostprocessing( ) {
+
+				var halftone = new ShaderPass( HalftoneShader );
+					halftone.uniforms['radius'].value = 15;
+					halftone.uniforms['rotateR'].value = Math.PI;
+					halftone.uniforms['rotateG'].value = 0;
+					halftone.uniforms['rotateB'].value = 0;
+					halftone.uniforms['width'].value = innerWidth;
+					halftone.uniforms['height'].value = innerHeight;
+
+		
+				var convolution = new ShaderPass( ConvolutionShader );
+					convolution.uniforms['cKernel'].value = ConvolutionShader.buildKernel( 4 );
+					convolution.uniforms['uImageIncrement'].value.set( 3/innerWidth, 0 );
+
+				var composer = new EffectComposer( renderer );
+					composer.addPass( new RenderPass( scene, camera ) );
+					composer.addPass( halftone  );
+					composer.addPass( convolution  );
+					composer.addPass( new OutputPass() );
+					
+				return composer;
+				
+			} // traditionalPostprocessing
+
+
+			
+			function oopsPostprocessing( ) {
+	
+				oops = new ShaderPass( new OOPSShader( )
+					.addShader( 'HalftoneShader', {
+						radius: 15,
+						rotate: new THREE.Vector3(Math.PI,0,0),
+					} )
+					.addShader( 'ConvolutionShader' )
+					.addUniform( 'uImageIncrement', new THREE.Vector2(3/innerWidth,0) )
+					.addUniform( 'cKernel' )
+				);
+				
+				oops.uniforms.cKernel.value = ConvolutionShader.buildKernel( 4 );
+
+				var composer = new EffectComposer( renderer );
+					composer.addPass( new RenderPass( scene, camera ) );
+					composer.addPass( oops );
+					composer.addPass( new OutputPass() );	
+
+				return composer;
+				
+			} // oopsPostprocessing
+
+
+			
+			composers = [ traditionalPostprocessing(), oopsPostprocessing( ) ];
+			
+			Stats.init( 'Test 4', ['EffectComposer', 'EffectComposer + OOPS'] );
+
+	
+			
+
+			function animationLoop( time ) {
+
+				Stats.update( );
+				
+				object.rotation.set( time/1200, time/1300, time/1400 );
+
+				for( var i=0; i<Stats.params.count; i++ )
+					composers[Stats.params.index].render( );
+				
+			} // animationLoop
+
+		</script>
+
+	</body>
+</html>
+
+

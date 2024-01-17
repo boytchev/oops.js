@@ -26,7 +26,8 @@ Run: [test-1.html](test-1/index.html)
 
 This test merges 3 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader),
 [ColorifyShader](../examples/index.md#colorifyshader) and
-[BrightnessContrastShader](../examples/index.md#brightnesscontrastshader)) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
+[BrightnessContrastShader](../examples/index.md#brightnesscontrastshader)) into
+one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
 Merging increases performance by **40%-70%** ([details](test-2/details.md)).
 
 Run: [test-2.html](test-2/index.html)
@@ -40,10 +41,27 @@ Run: [test-2.html](test-2/index.html)
 This test merges 4 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader),
 [FilmShader](../examples/index.md#filmshader),
 [VignetteShader](../examples/index.md#vignetteshader) and
-[BleachBypassShader](../examples/index.md#bleachbypassshader)) into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
+[BleachBypassShader](../examples/index.md#bleachbypassshader)) into one OOPS
+shader. The shader is used by a ShaderPass in an EffectComposer.
 Merging increases performance by **70%-100%** ([details](test-3/details.md)).
 
 Run: [test-3.html](test-3/index.html)
 	
 [<img src="test-3/snapshot.jpg">](test-3/index.html)
+
+
+
+## Test 4<br><small>[Merging shaders with many samplings]</small>
+
+This test merges 2 shaders ([HalftoneShader](../examples/index.md#halftoneshader)
+and [ConvolutionShader](../examples/index.md#convolutionshader)) into one OOPS
+shader. The shader is used by a ShaderPass in an EffectComposer. The shaders
+samples a texture 109 and 25 times. Using the shaders in separate passes results
+in 109+25=134 samplings per fragment, while merging the shaders results to 
+109&times;25=2725 samplings. The overall results is that in this case merging
+decreases performance by **??%-???%** ([details](test-4/details.md)).
+
+Run: [test-4.html](test-4/index.html)
+	
+[<img src="test-4/snapshot.jpg">](test-4/index.html)
 

@@ -183,7 +183,6 @@ class OOPSShader
 		this.compileShader( 'vertexShader',   'vertexShaderHead'   );
 		this.compileShader( 'fragmentShader', 'fragmentShaderHead' );	
 		this.updateUniforms( );
-		
 	} // OOPSShader.compileShaders
 
 
@@ -203,10 +202,10 @@ class OOPSShader
 		if( value instanceof Color )
 			return `#define ${name}_$ vec3(${value.r},${value.g},${value.b})\n`;
 			
-		if( type === true )
+		if( value === true )
 			return `#define ${name}_$ true\n`;
 			
-		if( type === false )
+		if( value === false )
 			return `#define ${name}_$ false\n`;
 			
 		if( type == 'int' )
@@ -265,17 +264,18 @@ class OOPSShader
 	compileShader( shaderName, shaderHeadName )
 	{
 		var glsl = '',
-			j = 0;
+			prevIndex = 0;
 		
 		// process user-added shaders
-		for( var shader of this.shaders )
+		for( var index=0; index<this.shaders.length; index++ )
 		{
-			var head = shader[shaderHeadName] || '',
+			var shader = this.shaders[index],
+				head = shader[shaderHeadName] || '',
 				body = shader[shaderName] || '';
 			
 			if( head )
 			{
-				head = head.replaceAll( '$', j+1 );
+				head = head.replaceAll( '$', (index+1) );
 				head = head.split('\n').map(e=>e.trim()).filter(e=>e).join('\n')+'\n';
 					
 				if( glsl.indexOf(head) == -1 )
@@ -286,8 +286,8 @@ class OOPSShader
 			
 			if( body )
 			{	
-				glsl = glsl + this.processShader( shader, body, j );	
-				j++;
+				glsl = glsl + this.processShader( shader, body, (prevIndex+1), (index+1) );	
+				prevIndex = index;
 			}
 		}
 		
@@ -297,7 +297,7 @@ class OOPSShader
 
 
 
-	processShader( shader, glsl, n )
+	processShader( shader, glsl, prevIndex, index )
 	{
 		glsl = (glsl || '');
 		
@@ -308,10 +308,10 @@ class OOPSShader
 
 		// process shader GLSL code
 		glsl = glsl
-				.replaceAll( '$$', `main_${n}` )	// $$ -> main_|n|
-				.replaceAll( '_$', `_${n+1}` )		// _$ -> _|n+1|
-				.replaceAll( '$', `main_${n+1}` )	// $ -> main_|n+1|
-				.replaceAll( '\n\t\t', '\n' )		// shilft left two tabs
+				.replaceAll( '$$', `main_${prevIndex}` )	// $$ -> main_i
+				.replaceAll( '_$', `_${index}` )		    // _$ -> _j
+				.replaceAll( '$', `main_${index}` )			// $ -> main_j
+				.replaceAll( '\n\t\t', '\n' )				// shilft left two tabs
 				+ `\n`;
 		
 		// add comment with shader name
