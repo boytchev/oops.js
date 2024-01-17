@@ -61,7 +61,7 @@ shader. The shader is used by a ShaderPass in an EffectComposer. The shaders
 samples a texture 109 and 25 times. Using the shaders in separate passes results
 in 109+25=134 samplings per fragment, while merging the shaders results to 
 109&times;25=2725 samplings. The overall results is that in this case merging
-**decreases performance by 70%-100%** ([details](test-4/details.md)).
+**decreases performance by 65%-80%** ([details](test-4/details.md)).
 
 Run: [test-4.html](test-4/index.html)
 	
