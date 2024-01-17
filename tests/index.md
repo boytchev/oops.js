@@ -6,7 +6,9 @@ isolate rendering time, each test runs N = 1, 2, ... 1024 renderings per frame.
 A temporal average is calculated every second and the final results are
 collected after continuous full-screen running for 20 seconds.
 
-The tests are preliminary and not statistically sound.
+The tests are preliminary and not statistically sound. However, they show that
+the reduction of number of passes increaces performance, but merging shaders with
+many samplings may actually decrease it (see Test 4).
 
 
 ## Test 1<br><small>[Merging 2 shaders in one]</small>
@@ -59,7 +61,7 @@ shader. The shader is used by a ShaderPass in an EffectComposer. The shaders
 samples a texture 109 and 25 times. Using the shaders in separate passes results
 in 109+25=134 samplings per fragment, while merging the shaders results to 
 109&times;25=2725 samplings. The overall results is that in this case merging
-decreases performance by **??%-???%** ([details](test-4/details.md)).
+**decreases performance by 70%-100%** ([details](test-4/details.md)).
 
 Run: [test-4.html](test-4/index.html)
 	
