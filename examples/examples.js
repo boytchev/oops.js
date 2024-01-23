@@ -18,7 +18,7 @@ var renderer = new THREE.WebGLRenderer( EXAMPLE_RENDERER_OPTIONS );
 				
 
 var camera = new THREE.PerspectiveCamera( 30, innerWidth / innerHeight, 1, 5000 );
-	camera.position.z = 400;
+	camera.position.z = 800;
 
 
 var scene = new THREE.Scene();
@@ -129,13 +129,26 @@ function backgroundHatched( gridColor = 'white', backgroundColor = 'black', fact
 }
 
 
+window.addEventListener( 'resize', onWindowResize );
+
+function onWindowResize()
+{
+	camera.aspect = innerWidth / innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( innerWidth, innerHeight );
+	composer.setSize( innerWidth, innerHeight );
+}
+	
+		
 
 var composer, renderTick;
 
-function setAnimationLoop( comp, tick )
+function animationLoop( comp, tick )
 {
 	composer = comp;
 	renderTick = tick;
+	onWindowResize( );	
 }
 
 
@@ -149,4 +162,4 @@ function animate( t )
 
 renderer.setAnimationLoop( animate );
 
-export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, backgroundGrid, backgroundHatched, setAnimationLoop };
+export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, backgroundGrid, backgroundHatched, animationLoop };

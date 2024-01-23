@@ -7,9 +7,9 @@
 	<script type="importmap">
 	  {
 		"imports": {
-		  "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
-		  "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
-		  "oops": "../src/oops.js"
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
 		}
 	  }
 	</script>
@@ -19,79 +19,25 @@
 <body>
 	<script type="module">
 
-		import * as THREE from 'three';
-
+		import { Vector2 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-		import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-		import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-		import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-		import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-
-		import { OOPSShader } from 'oops';
-		import { renderer, camera, scene, randomBalls, controls, light, setAnimationLoop } from './examples.js';
+		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { OOPSEffects } from 'oops';
 
 
-		randomBalls( 100 );
+		// TO DO: default convolution kernel, not user provided
 
-
-// TO DO: default convolution kernel, not user provided
-
-		// custom postprocessing
-
-		var oops = new OOPSShader( )
-			.addShader( 'ConvolutionShader' )
-			//.addUniform( 'resolution', new THREE.Vector2(innerWidth,innerHeight) )
-			.addUniform( 'uImageIncrement', new THREE.Vector2(1/innerWidth,0) )
-			.addUniform( 'cKernel' );
+		var composer = new OOPSEffects( renderer, scene, camera )
+			.addEffect( 'Convolution' )
+			.addParameter( 'uImageIncrement', new Vector2(1/innerWidth,0) )
+			.addParameter( 'cKernel' );
 			
-			//oops.updateShaders();
 			
-				
-		//console.log( '---- VERTEX SHADER ----' );
-		//console.log( oops.vertexShader );
-		
-		//console.log( '---- FRAGMENT SHADER ----' );
-		//console.log( oops.fragmentShader );
-		
-		var effect = new ShaderPass( oops );
-
-		var composer = new EffectComposer( renderer );
-			composer.addPass( new RenderPass( scene, camera ) );
-			composer.addPass( effect );
-			composer.addPass( new OutputPass() );
-
-
-
-		// process window resize
-
-		window.addEventListener( 'resize', onWindowResize );
-
-		function onWindowResize()
-		{
-			camera.aspect = innerWidth / innerHeight;
-			camera.updateProjectionMatrix();
-
-			renderer.setSize( innerWidth, innerHeight );
-			composer.setSize( innerWidth, innerHeight );
-			
-			effect.uniforms['uImageIncrement'].value.set( 1/innerWidth, 0*innerHeight );
-			gui.controllers[0].updateDisplay( );
-			gui.controllers[1].updateDisplay( );
-		}
-
-
-		function kernelRandom( )
-		{
-				
-
-		}
-		
 		function changeKernel( value )
 		{
 			var kernelSize = 25,
 				halfWidth = (kernelSize - 1)/2,
-				values = effect.uniforms.cKernel.value,
+				values = composer.cKernel,
 				sum = 0;
 				
 			for( var i=0; i<kernelSize; i++ )
@@ -128,20 +74,28 @@
 			for( var i=0; i<kernelSize; i++ )
 				values[i] /= sum;
 		}
-		
-		
-		// create control panel
-		var data = {filter:'Default'};
-		
-		var gui = new GUI( { title: '<big><em>ConvolutionShader</em></big>' } );
 
-			gui.add( effect.uniforms['uImageIncrement']['value'], 'x', 0, 25/innerWidth ).step( 0.0001 );
-			gui.add( effect.uniforms['uImageIncrement']['value'], 'y', 0, 25/innerHeight ).step( 0.0001 );
+			
+		var data = { filter: 'Default' };
+		
+		var gui = new GUI( { title: '<big><em>Convolution</em></big>' } );
+			gui.add( composer.uImageIncrement, 'x', 0, 25/innerWidth ).step( 0.0001 );
+			gui.add( composer.uImageIncrement, 'y', 0, 25/innerHeight ).step( 0.0001 );
 			gui.add( data, 'filter', ['Blur (default)', 'Random', 'Over sharpen', 'Astigmatism', 'Double vision', 'Double silhouette'] ).onChange( changeKernel );
 
-		// animation loop
-		
-		setAnimationLoop( composer );
+
+		randomBalls( );
+		animationLoop( composer );
+
+
+		window.addEventListener( 'resize', onWindowResize );
+
+		function onWindowResize()
+		{
+			composer.uImageIncrement.set( 1/innerWidth, 0*innerHeight );
+			gui.controllers[0].updateDisplay( );
+			gui.controllers[1].updateDisplay( );
+		}
 
 	</script>
 

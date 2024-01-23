@@ -7,8 +7,9 @@
 		<script type="importmap">
 		  {
 			"imports": {
-			  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-			  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+			  "three":         "../../libs/build/three.module.js",
+			  "three/addons/": "../../libs/examples/jsm/",
+			  "oops":          "../../src/oops.js"
 			}
 		  }
 		</script>
@@ -36,7 +37,7 @@
 			// imports from Oops.js
 
 			import * as Stats from '../stats.js';
-			import { OOPSShader } from '../../src/oops.js';
+			import { OOPSEffects } from 'oops';
 
 
 
@@ -114,17 +115,10 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var oops = new ShaderPass( new OOPSShader( )
-					.addShader( 'RGBShiftShader', {amount: 0.02} )
-					.addShader( 'ColorifyShader', {color:new THREE.Color(1,2,3)} )
-				);
-				
-				
-				var composer = new EffectComposer( renderer );
-					composer.addPass( new RenderPass( scene, camera ) );
-					composer.addPass( oops );
-					composer.addPass( new OutputPass() );	
-
+				var composer = new OOPSEffects( renderer, scene, camera )
+					.addEffect( 'RGBShift', {amount: 0.02} )
+					.addEffect( 'Colorify', {color:new THREE.Color(1,2,3)} )
+					
 				return composer;
 				
 			} // oopsPostprocessing

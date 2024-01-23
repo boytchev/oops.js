@@ -47,7 +47,7 @@ const HalftoneShader = {
 
 	fragmentShader: /* glsl */`
 	
-		const int samples_$ = 1; //8
+		const int samples_$ = 8;
 
 		float blend_$( float a, float b, float t ) {
 

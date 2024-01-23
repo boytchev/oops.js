@@ -1,5 +1,10 @@
 ﻿import { Vector2, Vector3, Color } from 'three';
-		
+
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+			
 import { SHADERS } from './oops.shaders.js';
 
 
@@ -36,10 +41,9 @@ class OOPSShader
 	{
 		this.name = 'OnlyOnePassShader';
 
-		this.uniforms = {};
-
-		this.fragmentShader = '';
-		this.vertexShader = '';
+		this._uniforms = {};
+		this._fragmentShader = '';
+		this._vertexShader = '';
 
 		this.shaders = [
 			{...SHADERS.HeaderShader},
@@ -48,7 +52,9 @@ class OOPSShader
 		
 		this.addUniform( 'tDiffuse' );
 		
-		this.compileShaders( );
+		this.needsCompile = true;
+		
+		//this.compileShaders( );
 		
 	} // OOPSShader.constructor
 	
@@ -107,7 +113,8 @@ class OOPSShader
 		this.shaders.splice( this.shaders.length-1, 0, shaderClone );
 
 
-		this.compileShaders( );
+		this.needsCompile = true;
+		//this.compileShaders( );
 		
 		return this;
 		
@@ -170,7 +177,8 @@ class OOPSShader
 		if( typeof param2 !== 'undefined' ) uniform.value = param2;
 		uniform.glsl = this.uniformGLSL( name, uniform );
 
-		this.compileShaders( );
+		this.needsCompile = true;
+		//this.compileShaders( );
 		
 		return this;		
 		
@@ -180,6 +188,8 @@ class OOPSShader
 
 	compileShaders( )
 	{
+//		console.log('Compiling shaders');
+		this.needsCompile = false;
 		this.compileShader( 'vertexShader',   'vertexShaderHead'   );
 		this.compileShader( 'fragmentShader', 'fragmentShaderHead' );	
 		this.updateUniforms( );
@@ -291,12 +301,32 @@ class OOPSShader
 			}
 		}
 		
-		this[shaderName] = glsl;
+		this['_'+shaderName] = glsl;
 		
 	} // OOPSShader.compileShader
 
 
-
+	get vertexShader( )
+	{
+		if( this.needsCompile ) this.compileShaders( );
+		return this._vertexShader;
+	}
+	
+	
+	get fragmentShader( )
+	{
+		if( this.needsCompile ) this.compileShaders( );
+		return this._fragmentShader;
+	}
+	
+	
+	get uniforms( )
+	{
+		if( this.needsCompile ) this.compileShaders( );
+		return this._uniforms;
+	}
+	
+	
 	processShader( shader, glsl, prevIndex, index )
 	{
 		glsl = (glsl || '');
@@ -325,7 +355,7 @@ class OOPSShader
 
 	updateUniforms( )
 	{				
-		this.uniforms = {
+		this._uniforms = {
 			tDiffuse: { value: null },
 		};
 
@@ -339,9 +369,9 @@ class OOPSShader
 				if( name )
 				{
 					if( typeof this.uniforms[name] === 'undefined' )
-						this.uniforms[name] = {};
+						this._uniforms[name] = {};
 					
-					this.uniforms[name].value = uniform.value;
+					this._uniforms[name].value = uniform.value;
 				}
 			} // for name
 		// for shader
@@ -349,12 +379,96 @@ class OOPSShader
 	} // OOPSShader.updateUniforms
 
 	
-	
-
-
-
 
 } // OOPSShader
 			
 
-export {OOPSShader};
+
+
+class OOPSEffects extends EffectComposer
+{
+	constructor( renderer, scene, camera )
+	{
+		super( renderer );
+		
+		// TODO: some effects have their own render passes
+		// TODO: maybe in some cases output pass is not used
+		this.addPass( new RenderPass( scene, camera ) );
+		this.addPass( new OutputPass() );
+		
+		this.oopsShader = new OOPSShader();
+		this._parameters = null;
+
+		this.needsUpdate = true;
+		
+	} // OOPSEffects.constructor
+	
+	
+	
+	addEffect( effectName, bakedParameters={} )
+	{
+		this.oopsShader.addShader( effectName+'Shader', bakedParameters );
+	
+		return this; // for chaining
+	} // OOPSEffects.addEffect
+	
+
+	addParameter( paramName, value1, value2 )
+	{
+		this.oopsShader.addUniform( paramName, value1, value2 )
+		
+		var shader = this.oopsShader.shaders[ this.oopsShader.shaders.length-2 ];
+		let publicName = shader.uniforms[paramName].publicName;
+	
+		Object.defineProperty (this, publicName,
+			{
+				get: function( )
+				{ 
+					return this.parameters[publicName].value;
+				},
+				set: function( value )
+				{
+					this.parameters[publicName].value = value;
+				}
+			});
+				
+				
+		
+		return this; // for chaining
+	} // OOPSEffects.addParameter
+
+
+	render( deltaTime )
+	{
+		if( this.needsUpdate ) this.update( );
+		
+		super.render( deltaTime );
+	} // OOPSEffects.render
+	
+	
+	get parameters( )
+	{
+		if( this.needsUpdate ) this.update( );
+		return this._parameters;
+	} // OOPSEffects.render
+	
+	
+	update( )
+	{
+//		console.log('Update');
+		
+		this.needsUpdate = false;
+		
+//		if( this.oopsShader.needsCompile ) this.oopsShader.compileShaders( );
+		
+		var oopsShaderPass = new ShaderPass( this.oopsShader );
+		this.insertPass( oopsShaderPass, 1 );
+		this._parameters = oopsShaderPass.uniforms;
+	} // OOPSEffects.update
+	
+} // OOPSEffects
+
+
+
+
+export { OOPSShader, OOPSEffects };

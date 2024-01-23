@@ -7,9 +7,9 @@
 	<script type="importmap">
 	  {
 		"imports": {
-		  "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
-		  "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
-		  "oops": "../src/oops.js"
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
 		}
 	  }
 	</script>
@@ -19,64 +19,22 @@
 <body>
 	<script type="module">
 
-		import * as THREE from 'three';
-
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-		import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-		import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-		import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-		import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-
-		import { OOPSShader } from 'oops';
-		import { renderer, camera, scene, randomBallsAndCubes, controls, light, setAnimationLoop } from './examples.js';
+		import { renderer, camera, scene, randomBallsAndCubes, animationLoop } from './examples.js';
+		import { OOPSEffects } from 'oops';
 
 
-
-		randomBallsAndCubes( 100 );
-
-
-
-		// custom postprocessing
-
-		var oops = new OOPSShader( )
-			.addShader( 'MirrorShader' )
-			.addUniform( 'side' );
-
-		var effect = new ShaderPass( oops );
-
-		var composer = new EffectComposer( renderer );
-			composer.addPass( new RenderPass( scene, camera ) );
-			composer.addPass( effect );
-			composer.addPass( new OutputPass() );
+		var composer = new OOPSEffects( renderer, scene, camera )
+			.addEffect( 'Mirror' )
+			.addParameter( 'side' );
 
 
-
-		// process window resize
-
-		window.addEventListener( 'resize', onWindowResize );
-
-		function onWindowResize()
-		{
-			camera.aspect = innerWidth / innerHeight;
-			camera.updateProjectionMatrix();
-
-			renderer.setSize( innerWidth, innerHeight );
-			composer.setSize( innerWidth, innerHeight );
-		}
+		var gui = new GUI( { title: '<big><em>Mirror</em></big>' } );
+			gui.add( composer, 'side', {'Left-to-right (0)':0, 'Right-to-left (1)':1, 'Top-to-bottom (2)':2, 'Bottom-to-top (3)':3} ).name( 'Side' ).$display.classList.add('bottom');
 
 
-
-		// create control panel
-		
-		var gui = new GUI( { title: '<big><em>Mirror Shader</em></big>' } );
-			gui.add( effect.uniforms['side'], 'value', {'Left-to-right (0)':0, 'Right-to-left (1)':1, 'Top-to-bottom (2)':2, 'Bottom-to-top (3)':3} ).name( 'Side' ).$display.classList.add('bottom');
-
-
-
-		// animation loop
-		
-		setAnimationLoop( composer );
+		randomBallsAndCubes( );
+		animationLoop( composer );
 
 	</script>
 

@@ -7,8 +7,9 @@
 		<script type="importmap">
 		  {
 			"imports": {
-			  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-			  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+			  "three":         "../../libs/build/three.module.js",
+			  "three/addons/": "../../libs/examples/jsm/",
+			  "oops":          "../../src/oops.js"
 			}
 		  }
 		</script>
@@ -35,7 +36,7 @@
 			// imports from Oops.js
 
 			import * as Stats from '../stats.js';
-			import { OOPSShader } from '../../src/oops.js';
+			import { OOPSEffects } from 'oops';
 
 
 
@@ -91,7 +92,6 @@
 			init( );
 			
 			
-			var film, oops;
 			
 			function traditionalPostprocessing( ) {
 
@@ -122,22 +122,16 @@
 			
 			function oopsPostprocessing( ) {
 	
-				oops = new ShaderPass( new OOPSShader( )
-					.addShader( 'HalftoneShader', {
+				var composer = new OOPSEffects( renderer, scene, camera )
+					.addEffect( 'Halftone', {
 						radius: 15,
 						rotate: new THREE.Vector3(Math.PI,0,0),
 					} )
-					.addShader( 'ConvolutionShader' )
-					.addUniform( 'uImageIncrement', new THREE.Vector2(3/innerWidth,0) )
-					.addUniform( 'cKernel' )
-				);
+					.addEffect( 'Convolution' )
+					.addParameter( 'uImageIncrement', new THREE.Vector2(3/innerWidth,0) )
+					.addParameter( 'cKernel' );
 				
-				oops.uniforms.cKernel.value = ConvolutionShader.buildKernel( 4 );
-
-				var composer = new EffectComposer( renderer );
-					composer.addPass( new RenderPass( scene, camera ) );
-					composer.addPass( oops );
-					composer.addPass( new OutputPass() );	
+				composer.cKernel.value = ConvolutionShader.buildKernel( 4 );
 
 				return composer;
 				

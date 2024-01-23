@@ -7,9 +7,9 @@
 	<script type="importmap">
 	  {
 		"imports": {
-		  "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
-		  "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
-		  "oops": "../src/oops.js"
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
 		}
 	  }
 	</script>
@@ -19,72 +19,32 @@
 <body>
 	<script type="module">
 
-		import * as THREE from 'three';
-
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-		import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-		import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-		import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-		import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-
-		import { OOPSShader } from 'oops';
-		import { renderer, camera, scene, randomBalls, controls, light, setAnimationLoop } from './examples.js';
+		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { OOPSEffects } from 'oops';
 
 
-
-		randomBalls( 100 );
-
-
-
-		// custom postprocessing
-
-		var oops = new OOPSShader( )
-			.addShader( 'FilmShader' )
-			.addUniform( 'time' )
-			.addUniform( 'intensity' )
-			.addUniform( 'grayscale' );
-
-		var effect = new ShaderPass( oops );
-
-		var composer = new EffectComposer( renderer );
-			composer.addPass( new RenderPass( scene, camera ) );
-			composer.addPass( effect );
-			composer.addPass( new OutputPass() );
+		var composer = new OOPSEffects( renderer, scene, camera )
+			.addEffect( 'Film' )
+			.addParameter( 'time' )
+			.addParameter( 'intensity' )
+			.addParameter( 'grayscale' );
 
 
-
-		// process window resize
-
-		window.addEventListener( 'resize', onWindowResize );
-
-		function onWindowResize()
-		{
-			camera.aspect = innerWidth / innerHeight;
-			camera.updateProjectionMatrix();
-
-			renderer.setSize( innerWidth, innerHeight );
-			composer.setSize( innerWidth, innerHeight );
-		}
+		var gui = new GUI( { title: '<big><em>Film</em></big>' } );
+			gui.add( composer, 'time' ).name( 'Time' );
+			gui.add( composer, 'intensity', 0, 3 ).step( 0.01 ).name( 'Intensity' );
+			gui.add( composer, 'grayscale' ).name( 'Grayscale' );
 
 
-
-		// create control panel
+		// TO DO: add timer to effect pass
 		
-		var gui = new GUI( { title: '<big><em>Film Shader</em></big>' } );
-			gui.add( effect.uniforms['time'], 'value' ).name( 'Time' );
-			gui.add( effect.uniforms['intensity'], 'value', 0, 3 ).step( 0.01 ).name( 'Intensity' );
-			gui.add( effect.uniforms['grayscale'], 'value' ).name( 'Grayscale' );
-
-
-
-		// animation loop
-		
-		setAnimationLoop( composer, autoTimer );
+		randomBalls( );
+		animationLoop( composer, autoTimer );
 		
 		function autoTimer( time )
 		{
-			effect.uniforms.time.value = time;
+			composer.time = time;
 			gui.controllers[0].updateDisplay( );
 		}
 		

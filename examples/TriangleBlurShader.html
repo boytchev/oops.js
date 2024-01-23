@@ -7,9 +7,9 @@
 	<script type="importmap">
 	  {
 		"imports": {
-		  "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
-		  "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/",
-		  "oops": "../src/oops.js"
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
 		}
 	  }
 	</script>
@@ -19,73 +19,27 @@
 <body>
 	<script type="module">
 
-		import * as THREE from 'three';
-
+		import { Vector2 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-
-		import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-		import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-		import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-		import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-
-		import { OOPSShader } from 'oops';
-		import { renderer, camera, scene, randomBalls, controls, light, setAnimationLoop } from './examples.js';
+		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { OOPSEffects } from 'oops';
 
 
-
-		randomBalls( 100 );
-
-
-
-		// custom postprocessing
-
-		var oops1 = new OOPSShader( )
-			.addShader( 'TriangleBlurShader' )
-			.addUniform( 'amount', new THREE.Vector2(0.1,0) )
-		var oops2 = new OOPSShader( )
-			.addShader( 'TriangleBlurShader' )
-			.addUniform( 'amount', new THREE.Vector2(0,0.1) );
-				
-		var effect1 = new ShaderPass( oops1 ),
-			effect2 = new ShaderPass( oops2 );
-
-		var composer = new EffectComposer( renderer );
-			composer.addPass( new RenderPass( scene, camera ) );
-			composer.addPass( effect1 );
-			composer.addPass( effect2 );
-			composer.addPass( new OutputPass() );
-
-
-
-		// process window resize
-
-		window.addEventListener( 'resize', onWindowResize );
-
-		function onWindowResize()
-		{
-			camera.aspect = innerWidth / innerHeight;
-			camera.updateProjectionMatrix();
-
-			renderer.setSize( innerWidth, innerHeight );
-			composer.setSize( innerWidth, innerHeight );
-		}
-
-
-
-		// create control panel
+		// TO DO: Example with two blurs -- horizontal and
+		// vertical, so that two separate passes are needed
 		
-		var gui = new GUI( { title: '<big><em>Triangle Blur Shader</em> (pass 1)</big>' } );
-			gui.add( effect1.uniforms['amount']['value'], 'x', 0, 0.2 ).step( 0.002 ).name( 'Amount<right>x</right>' );
-			gui.add( effect1.uniforms['amount']['value'], 'y', 0, 0.2 ).step( 0.002 ).name( '<right>y</right>' );
-		var gui2 = gui.addFolder( '<big><em>Triangle Blur Shader</em> (pass 2)</big>' );
-			gui2.add( effect2.uniforms['amount']['value'], 'x', 0, 0.2 ).step( 0.002 ).name( 'Amount<right>x</right>' );
-			gui2.add( effect2.uniforms['amount']['value'], 'y', 0, 0.2 ).step( 0.002 ).name( '<right>y</right>' ).$input.classList.add('bottom');
+		var composer = new OOPSEffects( renderer, scene, camera )
+			.addEffect( 'TriangleBlur' )
+			.addParameter( 'amount', new Vector2(0.1,0) )
+			
+			
+		var gui = new GUI( { title: '<big><em>Triangle Blur</em></big>' } );
+			gui.add( composer.amount, 'x', 0, 0.2 ).step( 0.002 ).name( 'Amount<right>x</right>' );
+			gui.add( composer.amount, 'y', 0, 0.2 ).step( 0.002 ).name( '<right>y</right>' );
 
-
-
-		// animation loop
-		
-		setAnimationLoop( composer );
+			
+		randomBalls( );
+		animationLoop( composer );
 
 	</script>
 

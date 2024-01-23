@@ -7,8 +7,9 @@
 		<script type="importmap">
 		  {
 			"imports": {
-			  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-			  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+			  "three":         "../../libs/build/three.module.js",
+			  "three/addons/": "../../libs/examples/jsm/",
+			  "oops":          "../../src/oops.js"
 			}
 		  }
 		</script>
@@ -38,7 +39,7 @@
 			// imports from Oops.js
 
 			import * as Stats from '../stats.js';
-			import { OOPSShader } from '../../src/oops.js';
+			import { OOPSEffects } from 'oops';
 
 
 
@@ -94,7 +95,7 @@
 			init( );
 			
 			
-			var film, oops;
+			var film;
 			
 			function traditionalPostprocessing( ) {
 
@@ -126,19 +127,12 @@
 			
 			function oopsPostprocessing( ) {
 	
-				oops = new ShaderPass( new OOPSShader( )
-					.addShader( 'RGBShiftShader', {amount: 0.2} )
-					.addShader( 'FilmShader', {intensity: 0.12} )
-					.addUniform( 'time' )
-					.addShader( 'VignetteShader', {radius: 1.65, blur: 1.3} )
-					.addShader( 'BleachBypassShader', {amount: 1.8} )
-				);
-				
-				
-				var composer = new EffectComposer( renderer );
-					composer.addPass( new RenderPass( scene, camera ) );
-					composer.addPass( oops );
-					composer.addPass( new OutputPass() );	
+				var composer = new OOPSEffects( renderer, scene, camera )
+					.addEffect( 'RGBShift', {amount: 0.2} )
+					.addEffect( 'Film', {intensity: 0.12} )
+					.addParameter( 'time' )
+					.addEffect( 'Vignette', {radius: 1.65, blur: 1.3} )
+					.addEffect( 'BleachBypass', {amount: 1.8} );
 
 				return composer;
 				
@@ -156,8 +150,10 @@
 
 				Stats.update( );
 				
-				film.uniforms['time'].value = time % 1;
-				oops.uniforms['time'].value = time % 1;
+				if( Stats.params.index == 0 )
+					film.uniforms['time'].value = time % 1;
+				else
+					composers[1].time = time % 1;
 				
 				object.rotation.set( time/1200, time/1300, time/1400 );
 
