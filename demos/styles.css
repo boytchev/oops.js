@@ -1,0 +1,77 @@
+﻿.lil-gui {
+	--name-width: 6em;
+	--slider-knob-width: 0.5em;
+	--widget-padding: 0 0 0 0.5em;
+	--number-color: orange;
+	--title-background-color: #1f1f1f;
+}
+
+.lil-gui.root {
+	border-bottom-right-radius: 2em;
+	margin: 0em;
+	padding: 1em;
+	left: 0;
+	top: 0;
+	position: fixed;
+	box-shadow: 0 0 1em black;
+}
+
+.lil-gui input.top{
+	border-top-right-radius: 0.65em;
+}
+
+.lil-gui input.bottom, .lil-gui div.display.bottom, .lil-gui button.bottom{
+	border-bottom-right-radius: 0.65em !important;
+}
+
+.lil-gui .controller.option .widget div {
+	width: 13.6em;
+}
+
+.lil-gui em {
+	color: Orange;
+	font-weight: bold;
+	font-style: normal;
+}
+.lil-gui big {
+	font-weight: normal;
+	/*text-transform: uppercase;*/
+}
+
+right {
+	color: gray;
+	font-size: 100%;
+	float: right;
+}
+
+small {
+	display: block;
+	padding-right: 2em !important;
+	text-align: right;
+	color: gray;
+	text-decoration: none;
+}
+
+a:hover, a:visited, a:link, a:active {
+	color: gray;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+.lil-gui .controller.string input {
+	font-family: Monospace;
+}
+
+#hud-bottom {
+	bottom: 0;
+	position: absolute;
+	z-index: 1;
+	text-align: center;
+	width: 100%;
+	pointer-events: none;
+	padding: 0.5em;
+}
