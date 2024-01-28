@@ -1,0 +1,50 @@
+﻿#info {
+	font-family: Candara, Calibri;
+	font-weight: 100;
+	font-size: 2em;
+	text-align: center;
+	margin: auto;
+	max-width: 30em;
+}
+
+.caption {
+	font-weight: 900;
+	font-size: 2em;
+}
+
+a {
+	font-weight: normal;
+}
+
+video {
+	display: none;
+	position: absolute;
+	width: 12.8em;
+	height:7.2em;
+	z-index:100;
+	right:0;
+	bottom: 0;
+	border-top-left-radius: 1em;
+}
+
+.credits {
+	padding-top: 4em;
+	font-size: 0.5em;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+	color: black;
+	font-weight: normal;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a:hover, a:active {
+	color: RoyalBlue;
+	font-weight: normal;
+}
+
+.space {
+	display: inline-block;
+	width: 18em;
+}

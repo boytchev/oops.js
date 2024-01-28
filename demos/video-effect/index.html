@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../../libs/build/three.module.js",
+		  "three/addons/": "../../libs/examples/jsm/",
+		  "oops":          "../../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<div id="info">
+		<p class="caption">Video Texture Demo</p>
+		<p>This demo demonstrates
+			<a href="https://boytchev.github.io/oops.js/examples/HalftoneShader.html">Halftone</a>,
+			<a href="https://boytchev.github.io/oops.js/examples/HueSaturationShader.html">HueSaturation</a>,
+			<a href="https://boytchev.github.io/oops.js/examples/VignetteShader.html">Vignette</a> and
+			<a href="https://boytchev.github.io/oops.js/examples/TriangleBlurShader.html">TriangleBlur</a> postprocessing effects
+			applied on a video.</p>
+		<p>&nbsp;</p>
+		<p><a><b>Tap to start the demo</b></a></p>
+		<p class="credits">
+			<span class="space">Video by <a href="https://pixabay.com/users/santosjesus90-39838168/?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=185787">Santos Bryan</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=185787">Pixabay</a></span>
+			<span class="space">Music by <a href="https://pixabay.com/users/royaltyfreemusic-29393722/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=167020">Nver Avetyan</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=167020">Pixabay</a></span>
+		</p>
+	</div>
+	
+	<video id="video" loop playsinline style="display: none">
+		<source src="video.mp4" type='video/mp4'>
+	</video>
+
+	<script type="module">
+
+		import * as THREE from 'three';
+		import { OOPSEffects } from 'oops';
+
+		var renderer = new THREE.WebGLRenderer( {antialias: true} );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( innerWidth, innerHeight );
+			renderer.domElement.style = 'display:none;';
+			document.body.appendChild( renderer.domElement );
+			document.body.style = 'margin: 0; overflow: hidden;';
+				
+		var camera = new THREE.PerspectiveCamera( 30, innerWidth / innerHeight, 1, 500 );
+			camera.position.z = 130;
+
+		var scene = new THREE.Scene();
+
+		var video = document.getElementById( 'video' ),
+			texture = new THREE.VideoTexture( video );
+
+		var geometry = new THREE.BoxGeometry( 128, 72, 1 ),
+			material = new THREE.MeshBasicMaterial( {color: 'white', map: texture} ),
+			mesh = new THREE.Mesh( geometry, material );
+			
+		scene.add( mesh );
+
+		window.addEventListener( 'click', onClick );
+		
+		function onClick( )
+		{
+			document.getElementById('info').style.display = 'none';
+			renderer.domElement.style.display = 'block';
+			video.style.display = 'block';
+			video.play( );
+			window.removeEventListener( 'click', onClick );
+		}
+		
+		var composer = new OOPSEffects( renderer, scene, camera )
+			.addEffect( 'Halftone', {radius:15, rotate: new THREE.Vector3(Math.PI/4,Math.PI/4,Math.PI/4)} )
+			.addParameter( 'resolution' )
+			.addEffect( 'HueSaturation' )
+			.addParameter( 'hue' )
+			.addEffect( 'Vignette' )
+			.addEffect( 'TriangleBlur' )
+			.addParameter( 'amount' )
+			
+		window.addEventListener( 'resize', onWindowResize );
+
+		function onWindowResize()
+		{
+			camera.aspect = innerWidth / innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( innerWidth, innerHeight );
+			composer.setSize( innerWidth, innerHeight );
+			composer.resolution.set( innerWidth, innerHeight );
+		}
+
+		onWindowResize();
+
+		function animate( t )
+		{
+			var k = 0.1*((Math.sin(t/1000)**20));
+			composer.amount.set( k*Math.sin(t/500), k*Math.cos(t/500) );
+			composer.hue = t/2000;
+			composer.render();
+		}
+
+		renderer.setAnimationLoop( animate );
+
+	</script>
+
+</body>
+</html>
