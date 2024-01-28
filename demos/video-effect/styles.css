@@ -48,3 +48,10 @@ a:hover, a:active {
 	display: inline-block;
 	width: 18em;
 }
+
+.tap {
+	padding: 0.5em 1em;
+	border-radius: 0.5em;
+	border-left: gray 1px solid;
+	border-right: gray 1px solid;
+}
