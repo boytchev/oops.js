@@ -5,7 +5,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 			
-import { OOPSShader } from './oops.shader.js';
+import { OOPSShader, options } from './oops.shader.js';
 
 
 console.log( `
@@ -16,6 +16,8 @@ console.log( `
  .'  #  '.
  
 ` )
+
+
 
 
 class OOPSEffects extends EffectComposer
@@ -29,20 +31,34 @@ class OOPSEffects extends EffectComposer
 		this.addPass( new RenderPass( scene, camera ) );
 		this.addPass( new OutputPass() );
 		
-		this.oopsShader = new OOPSShader();
-		this._parameters = null;
+		this.oopsShader = new OOPSShader(); // the current (i.e. last) shader
+		this.oopsShaders = [this.oopsShader]; // all shaders
+		
+		this._parameters = [];
 
 		this.needsUpdate = true;
 		
 	} // OOPSEffects.constructor
 	
 	
+	split( )
+	{
+		this.oopsShader = new OOPSShader();
+		this.oopsShaders.push( this.oopsShader );
+		
+		return this; // for chaining
+		
+	} // OOPSEffects.split
+	
 	
 	addEffect( effectName, bakedParameters={} )
 	{
+		if( this.oopsShader.shouldSplit( effectName+'Shader' ) ) this.split( );
+		
 		this.oopsShader.addShader( effectName+'Shader', bakedParameters );
 	
 		return this; // for chaining
+		
 	} // OOPSEffects.addEffect
 	
 
@@ -88,9 +104,15 @@ class OOPSEffects extends EffectComposer
 	{
 		this.needsUpdate = false;
 		
-		var oopsShaderPass = new ShaderPass( this.oopsShader );
-		this.insertPass( oopsShaderPass, 1 );
-		this._parameters = oopsShaderPass.uniforms;
+		var index = 0;
+		for( var shader of this.oopsShaders )
+		{
+			var shaderPass = new ShaderPass( shader );
+			
+			index++;
+			this.insertPass( shaderPass, index );
+			this._parameters = {...this._parameters, ...shaderPass.uniforms};
+		}
 	} // OOPSEffects.update
 	
 } // OOPSEffects

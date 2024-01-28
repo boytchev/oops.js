@@ -19,7 +19,8 @@ import { SHADERS } from './oops.shaders.js';
 
 
 const options = {
-		WARNING_THRESHOLD: 20, // warn in the console if shader weight is above this threshold
+		WARNING_THRESHOLD: 30, // warn in the console if shader weight is above this threshold
+		SPLIT_THRESHOLD: 30, // split shaders if combined weight is above threshold
 }
 
 
@@ -45,12 +46,29 @@ class OOPSShader
 		
 		this.weight = 1;
 		
-		//this.compileShaders( );
-		
 	} // OOPSShader.constructor
 	
 	
 
+	shouldSplit( shaderName )
+	{
+		var shader = SHADERS[shaderName];
+
+		// shader exists?
+		if( shader === undefined ) return false;
+
+		// calculate new weight
+		var weight = this.weight * (shader.weight?shader.weight:1);
+		
+		if( (weight>options.SPLIT_THRESHOLD) &&  (this.weight>1) )
+		{
+			console.warn( `The total weight of accummulated effects is ${weight}, which is more than the defined split threshold ${options.SPLIT_THRESHOLD}. A new postprocessing pass is added for ${shaderName}.` );
+			return true;
+		}
+	} // OOPSShader.shouldSplit
+	
+	
+	
 	addShader( shaderName, bakedValues={} )
 	{
 		var shader = SHADERS[shaderName];
@@ -63,11 +81,13 @@ class OOPSShader
 		}
 
 		// calculate new weight
-		this.weight = this.weight * (shader.weight?shader.weight:1);
-		if( this.weight > options.WARNING_THRESHOLD )
+		var weight = this.weight * (shader.weight?shader.weight:1);
+		if( (weight>options.WARNING_THRESHOLD) && (this.weight>1) )
 		{
-			console.warn( `The total weight of accummulated effects is ${this.weight}, which is more that the defined threshold ${options.WARNING_THRESHOLD}. This may slow down the performance if these effects are not split in separate passes.` );
+			console.warn( `The total weight of accummulated effects is ${weight}, which is more than the defined threshold ${options.WARNING_THRESHOLD}. This may slow down the performance if these effects are not split in separate passes.` );
 		}
+		
+		this.weight = weight;
 		
 		// deep copy
 		var shaderClone = {
@@ -380,4 +400,4 @@ class OOPSShader
 
 } // OOPSShader
 
-export { OOPSShader  };
+export { OOPSShader, options  };
