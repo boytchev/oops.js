@@ -124,11 +124,11 @@
 	
 				var composer = new OOPSEffects( renderer, scene, camera  )
 					.addEffect( 'Halftone', {
-						radius: 15,
-						rotate: new THREE.Vector3(0,0.1,0),
+						radius: 20,
+						rotate: new THREE.Vector3(0,0,0),
 					} )
 					.addEffect( 'Convolution' )
-					.addParameter( 'uImageIncrement', new THREE.Vector2(5/innerWidth,0) )
+					.addParameter( 'uImageIncrement', new THREE.Vector2(0, 20/innerHeight) )
 					.addParameter( 'cKernel', ConvolutionShader.buildKernel( 4 ) );
 				
 				return composer;
