@@ -76,7 +76,7 @@ This test uses 2 shaders ([HalftoneShader](../examples/index.md#halftoneshader)
 and [ConvolutionShader](../examples/index.md#convolutionshader)) automatically
 split into to separate passes. The performance increase is because of baked
 uniforms. The overall results is that in this case splitting
-**increases performance by ??%-??%** ([details](test-5/details.md)).
+**increases performance by 5%-70%** ([details](test-5/details.md)).
 
 Run: [test-5.html](test-5/index.html)
 	

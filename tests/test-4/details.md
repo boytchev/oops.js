@@ -46,7 +46,7 @@
 | 1024 | n/a | n/a | n/a |
 
 
-### Run №3 - ongoing
+### Run №3
 
 * Intel HD Graphics 4000 + ANGLE(Direct3D11)
 * Resolution 1368x768 (1368x768)
