@@ -1,4 +1,4 @@
-# Test 4<br><small>[Merging shaders with many samplings]</small>
+# Test 5<br><small>[Splitting shaders with many samplings]</small>
 
 <img src="diagram.png">
 
@@ -8,8 +8,8 @@
 
 * NVIDIA GeForce GTX 1660 Ti + ANGLE(Direct3D11)
 * Resolution 1536x864 (1920x1080)
-* Jan 17, 2024
-
+* Jan 28, 2024
+<!--
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
 | 1 | 144 | 101 | -30% |
@@ -23,14 +23,14 @@
 | 256 | 1.51 | 0.787 | -48% |
 | 512 | 1.09 | 0.574 | -47% |
 | 1024 | 0.392 | 0.11 | -72% |
-
+-->
 
 ### Run №2
 
 * Intel UHD Graphics 630 + ANGLE(Direct3D11)
 * Resolution 1536x864 (1920x1080)
-* Jan 17, 2024
-
+* Jan 28, 2024
+<!--
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
 | 1 | 37.1 | 8.95 | -76% |
@@ -44,14 +44,14 @@
 | 256 | 0.158 | 0.036 | -77% |
 | 512 | n/a | n/a | n/a |
 | 1024 | n/a | n/a | n/a |
-
+-->
 
 ### Run №3 - ongoing
 
 * Intel HD Graphics 4000 + ANGLE(Direct3D11)
 * Resolution 1368x768 (1368x768)
-* Jan 17, 2024
-
+* Jan 28, 2024
+<!--
 | Renderings | A fps | B fps | Gain |
 | :-: | :-: | :-: | :-: |
 | 1 | 12.3 | 9.13 | -26% |
@@ -65,3 +65,4 @@
 | 256 | 0.126 | 0.044 | -65% |
 | 512 | n/a | n/a | n/a |
 | 1024 | n/a | n/a | n/a |
+-->

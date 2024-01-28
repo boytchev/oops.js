@@ -60,10 +60,10 @@
 				camera.position.z = 2;
 
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 'seagreen' );
+				scene.background = new THREE.Color( 'navy' );
 
 				object = new THREE.Mesh( 
-					new THREE.TorusGeometry( 0.7, 0.2, 4, 4 ),
+					new THREE.TorusGeometry( 1, 0.3, 8, 8, Math.PI ),
 					new THREE.MeshNormalMaterial( )
 				);
 				
@@ -96,8 +96,8 @@
 			function traditionalPostprocessing( ) {
 
 				var halftone = new ShaderPass( HalftoneShader );
-					halftone.uniforms['radius'].value = 5;
-					halftone.uniforms['rotateR'].value = Math.PI;
+					halftone.uniforms['radius'].value = 20;
+					halftone.uniforms['rotateR'].value = 0;
 					halftone.uniforms['rotateG'].value = 0;
 					halftone.uniforms['rotateB'].value = 0;
 					halftone.uniforms['width'].value = innerWidth;
@@ -106,7 +106,7 @@
 		
 				var convolution = new ShaderPass( ConvolutionShader );
 					convolution.uniforms['cKernel'].value = ConvolutionShader.buildKernel( 4 );
-					convolution.uniforms['uImageIncrement'].value.set( 1/innerWidth, 0 );
+					convolution.uniforms['uImageIncrement'].value.set( 0, 20/innerHeight );
 
 				var composer = new EffectComposer( renderer );
 					composer.addPass( new RenderPass( scene, camera ) );
@@ -124,11 +124,11 @@
 	
 				var composer = new OOPSEffects( renderer, scene, camera  )
 					.addEffect( 'Halftone', {
-						radius: 5,
-						rotate: new THREE.Vector3(Math.PI,0,0),
+						radius: 15,
+						rotate: new THREE.Vector3(0,0.1,0),
 					} )
 					.addEffect( 'Convolution' )
-					.addParameter( 'uImageIncrement', new THREE.Vector2(1/innerWidth,0) )
+					.addParameter( 'uImageIncrement', new THREE.Vector2(5/innerWidth,0) )
 					.addParameter( 'cKernel', ConvolutionShader.buildKernel( 4 ) );
 				
 				return composer;
@@ -148,7 +148,7 @@
 
 				Stats.update( );
 				
-				object.rotation.set( time/1200, time/1300, time/1400 );
+				object.rotation.set( 0, 0, time/500 );
 
 				for( var i=0; i<Stats.params.count; i++ )
 					composers[Stats.params.index].render( );
