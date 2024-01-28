@@ -57,7 +57,7 @@
 		var video = document.getElementById( 'video' ),
 			texture = new THREE.VideoTexture( video );
 
-		var geometry = new THREE.BoxGeometry( 128, 72, 1 ),
+		var geometry = new THREE.PlaneGeometry( 128, 72 ),
 			material = new THREE.MeshBasicMaterial( {color: 'white', map: texture} ),
 			mesh = new THREE.Mesh( geometry, material );
 			
