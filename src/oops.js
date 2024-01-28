@@ -5,7 +5,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 			
-import { OOPSShader, options } from './oops.shader.js';
+import { OOPSShader } from './oops.shader.js';
 
 
 console.log( `
@@ -22,7 +22,7 @@ console.log( `
 
 class OOPSEffects extends EffectComposer
 {
-	constructor( renderer, scene, camera )
+	constructor( renderer, scene, camera, options={} )
 	{
 		super( renderer );
 		
@@ -31,7 +31,7 @@ class OOPSEffects extends EffectComposer
 		this.addPass( new RenderPass( scene, camera ) );
 		this.addPass( new OutputPass() );
 		
-		this.oopsShader = new OOPSShader(); // the current (i.e. last) shader
+		this.oopsShader = new OOPSShader( options ); // the current (i.e. last) shader
 		this.oopsShaders = [this.oopsShader]; // all shaders
 		
 		this._parameters = [];
@@ -43,7 +43,7 @@ class OOPSEffects extends EffectComposer
 	
 	split( )
 	{
-		this.oopsShader = new OOPSShader();
+		this.oopsShader = new OOPSShader( );
 		this.oopsShaders.push( this.oopsShader );
 		
 		return this; // for chaining

@@ -60,10 +60,10 @@
 				camera.position.z = 2;
 
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 'orange' );
+				scene.background = new THREE.Color( 'seagreen' );
 
 				object = new THREE.Mesh( 
-					new THREE.IcosahedronGeometry( 0.7 ),
+					new THREE.TorusGeometry( 0.7, 0.2, 4, 4 ),
 					new THREE.MeshNormalMaterial( )
 				);
 				
@@ -96,7 +96,7 @@
 			function traditionalPostprocessing( ) {
 
 				var halftone = new ShaderPass( HalftoneShader );
-					halftone.uniforms['radius'].value = 15;
+					halftone.uniforms['radius'].value = 5;
 					halftone.uniforms['rotateR'].value = Math.PI;
 					halftone.uniforms['rotateG'].value = 0;
 					halftone.uniforms['rotateB'].value = 0;
@@ -106,7 +106,7 @@
 		
 				var convolution = new ShaderPass( ConvolutionShader );
 					convolution.uniforms['cKernel'].value = ConvolutionShader.buildKernel( 4 );
-					convolution.uniforms['uImageIncrement'].value.set( 3/innerWidth, 0 );
+					convolution.uniforms['uImageIncrement'].value.set( 1/innerWidth, 0 );
 
 				var composer = new EffectComposer( renderer );
 					composer.addPass( new RenderPass( scene, camera ) );
@@ -122,17 +122,15 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var composer = new OOPSEffects( renderer, scene, camera, {SPLIT_THRESHOLD: Infinity}  )
+				var composer = new OOPSEffects( renderer, scene, camera  )
 					.addEffect( 'Halftone', {
-						radius: 15,
+						radius: 5,
 						rotate: new THREE.Vector3(Math.PI,0,0),
 					} )
 					.addEffect( 'Convolution' )
-					.addParameter( 'uImageIncrement', new THREE.Vector2(3/innerWidth,0) )
-					.addParameter( 'cKernel' );
+					.addParameter( 'uImageIncrement', new THREE.Vector2(1/innerWidth,0) )
+					.addParameter( 'cKernel', ConvolutionShader.buildKernel( 4 ) );
 				
-				composer.cKernel.value = ConvolutionShader.buildKernel( 4 );
-
 				return composer;
 				
 			} // oopsPostprocessing
@@ -141,7 +139,7 @@
 			
 			composers = [ traditionalPostprocessing(), oopsPostprocessing( ) ];
 			
-			Stats.init( 'Test 4', ['EffectComposer', 'EffectComposer + OOPS'] );
+			Stats.init( 'Test 5', ['EffectComposer', 'EffectComposer + OOPS'] );
 
 	
 			

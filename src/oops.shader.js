@@ -18,7 +18,7 @@ import { SHADERS } from './oops.shaders.js';
 //		ex: addUniform( name, initialValue )
 
 
-const options = {
+const OPTIONS = {
 		WARNING_THRESHOLD: 30, // warn in the console if shader weight is above this threshold
 		SPLIT_THRESHOLD: 30, // split shaders if combined weight is above threshold
 }
@@ -27,10 +27,12 @@ const options = {
 class OOPSShader
 {
 
-	constructor( )
+	constructor( options={} )
 	{
 		this.name = 'OnlyOnePassShader';
 
+		this.options = {...OPTIONS, ...options};
+		
 		this._uniforms = {};
 		this._fragmentShader = '';
 		this._vertexShader = '';
@@ -60,9 +62,9 @@ class OOPSShader
 		// calculate new weight
 		var weight = this.weight * (shader.weight?shader.weight:1);
 		
-		if( (weight>options.SPLIT_THRESHOLD) &&  (this.weight>1) )
+		if( (weight>this.options.SPLIT_THRESHOLD) &&  (this.weight>1) )
 		{
-			console.warn( `The total weight of accummulated effects is ${weight}, which is more than the defined split threshold ${options.SPLIT_THRESHOLD}. A new postprocessing pass is added for ${shaderName}.` );
+			console.warn( `The total weight of accummulated effects is ${weight}, which is more than the defined split threshold ${this.options.SPLIT_THRESHOLD}. A new postprocessing pass is added for ${shaderName}.` );
 			return true;
 		}
 	} // OOPSShader.shouldSplit
@@ -82,9 +84,9 @@ class OOPSShader
 
 		// calculate new weight
 		var weight = this.weight * (shader.weight?shader.weight:1);
-		if( (weight>options.WARNING_THRESHOLD) && (this.weight>1) )
+		if( (weight>this.options.WARNING_THRESHOLD) && (this.weight>1) )
 		{
-			console.warn( `The total weight of accummulated effects is ${weight}, which is more than the defined threshold ${options.WARNING_THRESHOLD}. This may slow down the performance if these effects are not split in separate passes.` );
+			console.warn( `The total weight of accummulated effects is ${weight}, which is more than the defined threshold ${this.options.WARNING_THRESHOLD}. This may slow down the performance if these effects are not split in separate passes.` );
 		}
 		
 		this.weight = weight;
@@ -400,4 +402,4 @@ class OOPSShader
 
 } // OOPSShader
 
-export { OOPSShader, options  };
+export { OOPSShader  };
