@@ -257,7 +257,7 @@ A shader that adds graininess to the frame. The pattern of the grains is defined
 the fracrional part of the *time* parameter -- if it is changed for every frame,
 the result will be noisy grains.
 	
-* **`time`** – defines the grain pattern (float)
+* **`time`** – defines the grain pattern (float) -- this parameter is set internally
 * **`intensity`** – intensity of graininess (float, 0.0 to 3.0, default value 0.5) 
 * **`grayscale`** – a flag whether to convert the colors to grayscale (boolean, default value false) 
 

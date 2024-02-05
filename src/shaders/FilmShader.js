@@ -16,7 +16,7 @@ const FilmShader = {
 
 	uniforms: {
 		
-		time: { value: 0.0 },
+		time: { value: 0.0, auto: true },
 		intensity: { value: 0.5 },
 		grayscale: { value: false },
 		
@@ -47,8 +47,17 @@ const FilmShader = {
 
 			return vec4( color, base.a );
 			
-		}`
+		}`,
+	
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'time' );
+		},
 		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.time.value = Math.random();
+		},
 };
 
 

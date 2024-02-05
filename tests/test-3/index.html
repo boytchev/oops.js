@@ -130,7 +130,6 @@
 				var composer = new OOPSEffects( renderer, scene, camera )
 					.addEffect( 'RGBShift', {amount: 0.2} )
 					.addEffect( 'Film', {intensity: 0.12} )
-					.addParameter( 'time' )
 					.addEffect( 'Vignette', {radius: 1.65, blur: 1.3} )
 					.addEffect( 'BleachBypass', {amount: 1.8} );
 
@@ -152,8 +151,6 @@
 				
 				if( Stats.params.index == 0 )
 					film.uniforms['time'].value = time % 1;
-				else
-					composers[1].time = time % 1;
 				
 				object.rotation.set( time/1200, time/1300, time/1400 );
 

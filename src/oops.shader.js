@@ -98,6 +98,7 @@ class OOPSShader
 				vertexShaderHead: shader.vertexShaderHead || '',
 				fragmentShader: shader.fragmentShader || '',
 				fragmentShaderHead: shader.fragmentShaderHead || '',
+				onRender: shader.onRender,
 				uniforms: {},
 			};
 		
@@ -119,19 +120,20 @@ class OOPSShader
 					value: value,
 					type: shader.uniforms[name].type,
 					size: shader.uniforms[name].size,
-					glsl: this.bakedUniformGLSL( name, shader.uniforms[name].type, value )
+					auto: shader.uniforms[name].auto,
+					glsl: this.bakedUniformGLSL( name, shader.uniforms[name].type, value ),
 				};
 		}
 
 		
-		if( shader.onLoad )
-		{
-			shader.onLoad( shaderClone );
-		}
-		
 		// insert the shader before the last shader (i.e. FooterShader)
 		this.shaders.splice( this.shaders.length-1, 0, shaderClone );
 
+		if( shader.onLoad )
+		{
+			shader.onLoad( shaderClone, this );
+		}
+		
 
 		this.needsCompile = true;
 		//this.compileShaders( );
@@ -171,6 +173,13 @@ class OOPSShader
 				
 			return null;
 		}
+
+		//if( uniform.auto )
+		//{
+		//	throw new Error( `Uniform "${name}" in ${shader.name} is internaly set. It cannot be defined as parameter.\n` );
+		//		
+		//	return null;
+		//}
 
 		// addUniform(...) can be used in four styles:
 		//
@@ -253,9 +262,11 @@ class OOPSShader
 	uniformGLSL( name, uniform )
 	{
 		var value = uniform.value,
-			type = uniform.type;
-
-		var define = `#define ${name}_$ ${uniform.publicName}\n`;
+			type = uniform.type,
+			define = '';
+			
+		// set define if there is public name
+		if( uniform.publicName ) define = `#define ${name}_$ ${uniform.publicName}\n`;
 
 // why is this?
 		// if( this.uniforms[publicName] )

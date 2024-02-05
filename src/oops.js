@@ -2,10 +2,11 @@
 
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+//import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 			
 import { OOPSShader } from './oops.shader.js';
+import { OOPSPass } from './oops.pass.js';
 
 
 console.log( `
@@ -56,6 +57,7 @@ class OOPSEffects extends EffectComposer
 		if( this.oopsShader.shouldSplit( effectName+'Shader' ) ) this.split( );
 		
 		this.oopsShader.addShader( effectName+'Shader', bakedParameters );
+		//this.oopsShader.addAutoUniforms( );
 	
 		return this; // for chaining
 		
@@ -68,6 +70,11 @@ class OOPSEffects extends EffectComposer
 		
 		var shader = this.oopsShader.shaders[ this.oopsShader.shaders.length-2 ];
 		let publicName = shader.uniforms[paramName].publicName;
+
+		if( shader.uniforms[paramName].auto )
+		{
+			throw new Error( `Parameter "${paramName}" is internaly set. It cannot be defined as parameter.\n` );
+		}
 	
 		Object.defineProperty (this, publicName,
 			{
@@ -100,6 +107,13 @@ class OOPSEffects extends EffectComposer
 	} // OOPSEffects.render
 	
 	
+	get shaders( )
+	{
+		if( this.needsUpdate ) this.update( );
+		return this.oopsShaders;
+	}
+	
+	
 	update( )
 	{
 		this.needsUpdate = false;
@@ -107,7 +121,7 @@ class OOPSEffects extends EffectComposer
 		var index = 0;
 		for( var shader of this.oopsShaders )
 		{
-			var shaderPass = new ShaderPass( shader );
+			var shaderPass = new OOPSPass( shader );
 			
 			index++;
 			this.insertPass( shaderPass, index );
