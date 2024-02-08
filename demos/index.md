@@ -14,5 +14,5 @@ and applies 4 postprocessing effects onto it:
 
 Run: [Video effect demo](video-effect/index.html)
 	
-[<img src="video-effect/snapshot.jpg">](test-1/index.html)
+[<img src="video-effect/snapshot.jpg">](video-effect/index.html)
 
