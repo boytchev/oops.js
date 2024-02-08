@@ -1,4 +1,4 @@
-# Shaders Examples
+# Examples
 
 This page lists short online demos for supported shaders.<br>
 They can be used to play with the shaders' parameters.

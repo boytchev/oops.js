@@ -1,4 +1,4 @@
-# Preliminary Tests
+# Tests
 
 This page contains a few preliminary tests to measure and compare performance
 of the traditional use of postprocessing effects versus the new approach. To
