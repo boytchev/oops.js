@@ -22,10 +22,10 @@
 		import { Vector3 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
-		import { OOPSEffects } from 'oops';
+		import { Effects } from 'oops';
 
 
-		var composer = new OOPSEffects( renderer, scene, camera )
+		var composer = new Effects( renderer, scene, camera )
 			.addEffect( 'ColorCorrection' )
 			.addParameter( 'powRGB', new Vector3(2,2,2) )
 			.addParameter( 'mulRGB', new Vector3(1,1,1) )

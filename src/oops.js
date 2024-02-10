@@ -21,7 +21,7 @@ console.log( `
 
 
 
-class OOPSEffects extends EffectComposer
+class Effects extends EffectComposer
 {
 	constructor( renderer, scene, camera, options={} )
 	{
@@ -39,7 +39,7 @@ class OOPSEffects extends EffectComposer
 
 		this.needsUpdate = true;
 		
-	} // OOPSEffects.constructor
+	} // Effects.constructor
 	
 	
 	split( )
@@ -49,7 +49,7 @@ class OOPSEffects extends EffectComposer
 		
 		return this; // for chaining
 		
-	} // OOPSEffects.split
+	} // Effects.split
 	
 	
 	addEffect( effectName, bakedParameters={} )
@@ -61,7 +61,7 @@ class OOPSEffects extends EffectComposer
 	
 		return this; // for chaining
 		
-	} // OOPSEffects.addEffect
+	} // Effects.addEffect
 	
 
 	addParameter( paramName, value1, value2 )
@@ -89,7 +89,7 @@ class OOPSEffects extends EffectComposer
 			});
 		
 		return this; // for chaining
-	} // OOPSEffects.addParameter
+	} // Effects.addParameter
 
 
 	render( deltaTime )
@@ -97,14 +97,14 @@ class OOPSEffects extends EffectComposer
 		if( this.needsUpdate ) this.update( );
 		
 		super.render( deltaTime );
-	} // OOPSEffects.render
+	} // Effects.render
 	
 	
 	get parameters( )
 	{
 		if( this.needsUpdate ) this.update( );
 		return this._parameters;
-	} // OOPSEffects.render
+	} // Effects.render
 	
 	
 	get shaders( )
@@ -127,11 +127,11 @@ class OOPSEffects extends EffectComposer
 			this.insertPass( shaderPass, index );
 			this._parameters = {...this._parameters, ...shaderPass.uniforms};
 		}
-	} // OOPSEffects.update
+	} // Effects.update
 	
-} // OOPSEffects
+} // OEffects
 
 
 
 
-export { OOPSShader, OOPSEffects };
+export { OOPSShader, Effects };

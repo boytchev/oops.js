@@ -21,10 +21,10 @@
 
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
-		import { OOPSEffects } from 'oops';
+		import { Effects } from 'oops';
 
 
-		var composer = new OOPSEffects( renderer, scene, camera )
+		var composer = new Effects( renderer, scene, camera )
 			.addEffect( 'Exposure' )
 			.addParameter( 'exposure' );	
 			

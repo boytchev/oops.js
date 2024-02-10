@@ -39,7 +39,7 @@
 			// imports from Oops.js
 
 			import * as Stats from '../stats.js';
-			import { OOPSEffects } from 'oops';
+			import { Effects } from 'oops';
 
 
 
@@ -127,7 +127,7 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var composer = new OOPSEffects( renderer, scene, camera )
+				var composer = new Effects( renderer, scene, camera )
 					.addEffect( 'RGBShift', {amount: 0.2} )
 					.addEffect( 'Film', {intensity: 0.12} )
 					.addEffect( 'Vignette', {radius: 1.65, blur: 1.3} )

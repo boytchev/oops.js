@@ -10,7 +10,7 @@
 		  "three":         "../../libs/build/three.module.js",
 		  "three/addons/": "../../libs/examples/jsm/",
 		  "oops":          "../../src/oops.js",
-		  "platons":	   "./T2-T435-O525.js"
+		  "platons":	   "./T3-O247-O336.js"
 		}
 	  }
 	</script>
@@ -18,7 +18,7 @@
 
 
 <body>
-	<a class="caption" href="../">&larr; Empty Effect</a>
+	<a class="caption" href="../">&larr; Simple Effect</a>
 	
 	<script type="module">
 
@@ -47,7 +47,9 @@
 
 
 		// create the composer
-		var composer = new Effects( renderer, scene, camera );
+		var composer = new Effects( renderer, scene, camera )
+				.addEffect( 'Sepia' )
+				.addEffect( 'Film' );
 
 
 		// adjust composer size

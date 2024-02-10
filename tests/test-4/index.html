@@ -36,7 +36,7 @@
 			// imports from Oops.js
 
 			import * as Stats from '../stats.js';
-			import { OOPSEffects } from 'oops';
+			import { Effects } from 'oops';
 
 
 
@@ -122,7 +122,7 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var composer = new OOPSEffects( renderer, scene, camera, {SPLIT_THRESHOLD: Infinity}  )
+				var composer = new Effects( renderer, scene, camera, {SPLIT_THRESHOLD: Infinity}  )
 					.addEffect( 'Halftone', {
 						radius: 15,
 						rotate: new THREE.Vector3(Math.PI,0,0),

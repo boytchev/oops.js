@@ -1,23 +1,4 @@
-﻿#info {
-	font-family: Candara, Calibri;
-	font-weight: 100;
-	font-size: 2em;
-	text-align: center;
-	margin: auto;
-	max-width: 30em;
-}
-
-.caption {
-	font-weight: 900;
-	font-size: 2em;
-}
-
-a {
-	font-weight: normal;
-}
-
-video {
-	display: none;
+﻿video {
 	position: absolute;
 	width: 12.8em;
 	height:7.2em;
@@ -27,31 +8,30 @@ video {
 	border-top-left-radius: 1em;
 }
 
+
 .credits {
-	padding-top: 4em;
-	font-size: 0.5em;
+	position: absolute;
+	z-index:100;
+	left:0;
+	bottom: 0;
+	color: rgba(255,255,255,20%);
+	font-family: Candara, Calibri, sans-serif;
+	text-decoration: none;
+	padding-left: 0.5em;
+	font-size: 80%;
 }
 
-a, a:link, a:visited, a:hover, a:active {
-	color: black;
+
+.credits a, .credits a:link, .credits a:visited, .credits a:hover, .credits a:active {
+	color: rgba(255,255,255,30%);
 	font-weight: normal;
 	text-decoration: none;
 	cursor: pointer;
+	border-bottom: rgba(255,255,255,20%) 1px dotted;
 }
 
-a:hover, a:active {
-	color: RoyalBlue;
+.credits a:hover, .credits a:active {
+	color: rgba(255,255,255,100%);
 	font-weight: normal;
-}
-
-.space {
-	display: inline-block;
-	width: 18em;
-}
-
-.tap {
-	padding: 0.5em 1em;
-	border-radius: 0.5em;
-	border-left: gray 1px solid;
-	border-right: gray 1px solid;
+	border-bottom: rgba(255,255,255,40%) 1px dotted;
 }
