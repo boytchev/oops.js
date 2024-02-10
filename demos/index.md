@@ -59,9 +59,9 @@ var composer = new Effects(renderer,scene,camera)
 
 
 
-Run: [Simple effects demo](simple-effects/index.html)
+Run: [Simple effect demo](simple-effect/index.html)
 	
-[<img src="simple-effects/snapshot.jpg">](simple-effects/index.html)
+[<img src="simple-effect/snapshot.jpg">](simple-effect/index.html)
 
 For a list of available effects see the [Examples](../examples) page.
 
