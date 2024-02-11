@@ -2,6 +2,16 @@
 
 This page describes the Oops.js API and demonstrates its features.
 
+* [Using Oops.js](#using-oopsjs)
+	* <small>[Initializing effect composer](#initializing-effect-composer)</small>
+	* <small>[Adding effects](#adding-effects)</small>
+	* <small>[Effect parameters](#effect-parameters): [static](#static-parameters), [dynamic](#dynamic-parameters)</small>
+	* <small>[Video postprocessing](#video-postprocessing)</small>
+* [API](#api)
+	* <small>[`Effects`](#effects): [`addEffect`](#addeffect), [`addParameter`](#addparameter), [`render`](#render), [`parameters`](#parameters), [`shaders`](#shaders)</small>
+	
+
+
 
 ## Using Oops.js
 
@@ -67,11 +77,55 @@ For a list of available effects see the [Examples](../examples) page.
 
 
 
+### Effect parameters
+
+Almost all postprocessing effects have parameters that specify their properties.
+These parameters have preset default values that can be changed statically (i.e.
+only once, at initialization) or dynamically (i.e. at each frame of an animation). 
+
+#### Static parameters
+
+Static parameters are hard-coded or baked into the shader code. This makes the
+postprocessing faster as the shader compiler can optimize the code.
+
+Static parameters are provided as an optional second parameter of `.addEffect`
+&ndash; an object with parameter names and values. The following demo shows
+three overlapping [Halftone](../examples/index.md#halftoneshader) effects with
+custom static parameters.
 
 
-## Video effect demo
+```js
+var zero = new THREE.Vector3(0,0,0);
+var composer = new Effects( renderer, scene, camera )
+    .addEffect( 'Halftone', {radius: 80/1, rotate: zero, blending: 0.2} )
+    .addEffect( 'Halftone', {radius: 80/3, rotate: zero, blending: 0.4} )
+    .addEffect( 'Halftone', {radius: 80/9, rotate: zero, blending: 0.3} );
+```
 
-This demo displayes a video via a [video texture](https://threejs.org/docs/#api/en/textures/VideoTexture)
+
+
+Run: [Static parameters demo](static-parameters/index.html)
+	
+[<img src="static-parameters/snapshot.jpg">](static-parameters/index.html)
+
+For a list of available parameters to each effect see the [Examples](../examples) page.
+
+
+
+
+#### Dynamic parameters
+
+TO DO
+
+
+
+
+
+
+### Video postprocessing
+
+Although the postprocessing effects cannot be applied directly on a video,
+they can be applied on a video, rendered on the screen. This demo displayes a video via a [video texture](https://threejs.org/docs/#api/en/textures/VideoTexture)
 and applies 4 postprocessing effects onto it:
 * [Halftone](../examples/index.md#halftoneshader) to create dotted pattern of the video
 * [HueSaturation](../examples/index.md#huesaturationshader) to change dynamically the color
@@ -82,3 +136,59 @@ Run: [Video effect demo](video-effect/index.html)
 	
 [<img src="video-effect/snapshot.jpg">](video-effect/index.html)
 
+
+
+
+
+
+
+
+## API
+
+### `Effects`
+
+A class. Defines effect composer that manages postprocessing effects and their
+rendering. `Effects` extends [`THREE.EffectComposer`](https://threejs.org/docs/#examples/en/postprocessing/EffectComposer).
+
+
+```javascript
+new Effects(
+    renderer : THREE.WebGLRenderer,
+	scene : THREE.Scene,
+	camera : THREE.Camera,
+	options
+)
+```
+The optional parameter `options` is an object
+```
+{
+    WARNING_THRESHOLD: 30,
+    SPLIT_THRESHOLD: 30,
+}
+```
+where `WARNING_THRESHOLD` sets a warning in the console if the overall shader weight is above the threshold, and `SPLIT_THRESHOLD` forces shaders to split in separate passes if their combined weight is above threshold.
+
+
+### `.addEffect`
+
+A method. TO DO.
+
+
+### `.addParameter`
+
+A method. TO DO.
+
+
+### `.render`
+
+A method. TO DO.
+
+
+### `.parameters`
+
+A virtual property. TO DO.
+
+
+### `.shaders`
+
+A virtual property. TO DO.

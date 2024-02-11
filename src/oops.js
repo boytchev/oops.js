@@ -104,14 +104,14 @@ class Effects extends EffectComposer
 	{
 		if( this.needsUpdate ) this.update( );
 		return this._parameters;
-	} // Effects.render
+	} // Effects.parameters
 	
 	
 	get shaders( )
 	{
 		if( this.needsUpdate ) this.update( );
 		return this.oopsShaders;
-	}
+	} // Effects.shaders
 	
 	
 	update( )

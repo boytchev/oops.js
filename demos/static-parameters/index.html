@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="../styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../../libs/build/three.module.js",
+		  "three/addons/": "../../libs/examples/jsm/",
+		  "oops":          "../../src/oops.js",
+		  "platons":	   "./T4-T348-T549.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<a class="caption" href="../">&larr; Static Parameters</a>
+	
+	<script type="module">
+
+		import * as THREE from 'three';
+		import { Effects } from 'oops';
+		import { Platon } from 'platons';
+
+		var renderer = new THREE.WebGLRenderer( {antialias: true} );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( innerWidth, innerHeight );
+			document.body.appendChild( renderer.domElement );
+			document.body.style = 'margin: 0; overflow: hidden;';
+				
+		var camera = new THREE.PerspectiveCamera( 60, innerWidth / innerHeight, 1, 50 );
+			camera.position.z = 3;
+
+		var scene = new THREE.Scene();
+			scene.background = new THREE.Color('Purple')
+			
+		var light = new THREE.DirectionalLight( 'white', 3 );
+			light.position.set( 0, 1, 1 );
+			scene.add( light );
+		
+		var platon = new Platon();
+			scene.add( platon );
+
+
+		// create the composer
+		var zero = new THREE.Vector3(0,0,0);
+		var composer = new Effects( renderer, scene, camera )
+				.addEffect( 'Halftone', {radius: 80/1, rotate: zero, blending: 0.2} )
+				.addEffect( 'Halftone', {radius: 80/3, rotate: zero, blending: 0.4} )
+				.addEffect( 'Halftone', {radius: 80/9, rotate: zero, blending: 0.3} );
+
+
+		// adjust composer size
+		window.addEventListener( 'resize', onWindowResize );
+
+		function onWindowResize()
+		{
+			camera.aspect = innerWidth / innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( innerWidth, innerHeight );
+			composer.setSize( innerWidth, innerHeight );
+		}
+
+		onWindowResize();
+
+
+		// use the composer to render animation
+		function animate( t )
+		{
+			platon.rotation.set( Math.PI/6, t/1000, Math.PI/4*0 );
+			composer.render( );
+		}
+
+		renderer.setAnimationLoop( animate );
+
+	</script>
+
+</body>
+</html>
