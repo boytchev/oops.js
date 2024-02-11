@@ -8,7 +8,7 @@ This page describes the Oops.js API and demonstrates its features.
 	* <small>[Effect parameters](#effect-parameters): [static](#static-parameters), [dynamic](#dynamic-parameters)</small>
 	* <small>[Video postprocessing](#video-postprocessing)</small>
 * [API](#api)
-	* <small>[`Effects`](#effects): [`addEffect`](#addeffect), [`addParameter`](#addparameter), [`render`](#render), [`parameters`](#parameters), [`shaders`](#shaders)</small>
+	* <small>Class [Effects](#effects): methods [addEffect](#addeffect), [addParameter](#addparameter), [render](#render), properties: [parameters](#parameters), [shaders](#shaders)</small>
 	
 
 
