@@ -2,13 +2,15 @@
 
 This page describes the Oops.js API and demonstrates its features.
 
-* [Using Oops.js](#using-oopsjs)
-	* <small>[Initializing effect composer](#initializing-effect-composer)</small>
-	* <small>[Adding effects](#adding-effects)</small>
-	* <small>[Effect parameters](#effect-parameters): [static](#static-parameters), [dynamic](#dynamic-parameters)</small>
-	* <small>[Video postprocessing](#video-postprocessing)</small>
-* [API](#api)
-	* <small>Class [Effects](#effects): methods [addEffect](#addeffect), [addParameter](#addparameter), [render](#render), properties: [parameters](#parameters), [shaders](#shaders)</small>
+<big>**[Using Oops.js](#using-oopsjs)**</big><br>
+&nbsp; &nbsp; &nbsp;[Initializing effect composer](#initializing-effect-composer)<br>
+&nbsp; &nbsp; &nbsp;[Adding effects](#adding-effects)<br>
+&nbsp; &nbsp; &nbsp;[Effect parameters](#effect-parameters): [static](#static-parameters), [dynamic](#dynamic-parameters)<br>
+&nbsp; &nbsp; &nbsp;[Video postprocessing](#video-postprocessing)<br>
+<big>**[API](#api)**</big><br>
+&nbsp; &nbsp; &nbsp;[Class Effects](#effects)<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &bull; <small>Methods: [addEffect](#addeffect), [addParameter](#addparameter), [render](#render)</small><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &bull; <small>Properties: [parameters](#parameters), [shaders](#shaders)</small><br>
 	
 
 
