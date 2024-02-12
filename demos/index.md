@@ -33,7 +33,7 @@ var composer = new Effects( renderer );
 :
 function animationLoop( )
 {
-	composer.render( scene, camera );
+    composer.render( scene, camera );
 }
 ```
 
@@ -154,12 +154,11 @@ rendering. `Effects` extends [`THREE.EffectComposer`](https://threejs.org/docs/#
 
 
 ```javascript
-new Effects(
-    renderer : THREE.WebGLRenderer,
-	options
-)
+new Effects( renderer )
+new Effects( renderer, options )
 ```
-The optional parameter `options` is an object
+where `renderer` is `THREE.WebGLRenderer` abd the optional parameter `options` is an object
+
 ```
 {
     WARNING_THRESHOLD: 30,
@@ -171,7 +170,15 @@ where `WARNING_THRESHOLD` sets a warning in the console if the overall shader we
 
 ### `.addEffect`
 
-A method. TO DO.
+A method. Adds a postprocessing effect to the effect composer. Returns the composer, in order to allow method chaning.
+
+```javascript
+.addEffect( name )
+.addEffect( name, parameters )
+```
+
+where `name` is the case-sensitive name of the postprocessing effect, and the
+optional `parameters` is an object with static (baked) parameters.
 
 
 ### `.addParameter`
