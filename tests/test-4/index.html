@@ -81,7 +81,7 @@
 					renderer.setSize( innerWidth, innerHeight );
 					
 					for( var composer of composers )
-						composer.setSize( innerWidth, innerHeight );
+						effects.setSize( innerWidth, innerHeight );
 
 				} // init.onWindowResize
 
@@ -122,7 +122,7 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var composer = new Effects( renderer, scene, camera, {SPLIT_THRESHOLD: Infinity}  )
+				var effects = new Effects( renderer, scene, camera, {SPLIT_THRESHOLD: Infinity}  )
 					.addEffect( 'Halftone', {
 						radius: 15,
 						rotate: new THREE.Vector3(Math.PI,0,0),
@@ -131,9 +131,9 @@
 					.addParameter( 'uImageIncrement', new THREE.Vector2(3/innerWidth,0) )
 					.addParameter( 'cKernel' );
 				
-				composer.cKernel.value = ConvolutionShader.buildKernel( 4 );
+				effects.cKernel.value = ConvolutionShader.buildKernel( 4 );
 
-				return composer;
+				return effects;
 				
 			} // oopsPostprocessing
 
@@ -153,7 +153,7 @@
 				object.rotation.set( time/1200, time/1300, time/1400 );
 
 				for( var i=0; i<Stats.params.count; i++ )
-					composers[Stats.params.index].render( );
+					composers[Stats.params.index].render( scene, camera );
 				
 			} // animationLoop
 

@@ -21,24 +21,24 @@
 
 		import { Color } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, scene, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'Colorify' )
 			.addParameter( 'color', new Color(1,1,1) )
 			.addParameter( 'opacity' );
 
 
 		var gui = new GUI( { title: '<big><em>Colorify</em></big>' } );
-			gui.addColor( composer, 'color' ).name( 'Color' );
-			gui.add( composer, 'opacity', 0, 1 ).step( 0.1 ).name( 'Opacity' ).$input.classList.add('bottom');
+			gui.addColor( effects, 'color' ).name( 'Color' );
+			gui.add( effects, 'opacity', 0, 1 ).step( 0.1 ).name( 'Opacity' ).$input.classList.add('bottom');
 
 
 		scene.background = new Color( 'linen' );
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

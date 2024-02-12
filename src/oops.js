@@ -23,13 +23,16 @@ console.log( `
 
 class Effects extends EffectComposer
 {
-	constructor( renderer, scene, camera, options={} )
+	constructor( renderer, options={} )
 	{
 		super( renderer );
 		
 		// TODO: some effects have their own render passes
 		// TODO: maybe in some cases output pass is not used
-		this.addPass( new RenderPass( scene, camera ) );
+		
+		this.renderPass = new RenderPass( /*scene, camera*/ );
+		
+		this.addPass(  this.renderPass );
 		this.addPass( new OutputPass() );
 		
 		this.oopsShader = new OOPSShader( options ); // the current (i.e. last) shader
@@ -92,9 +95,12 @@ class Effects extends EffectComposer
 	} // Effects.addParameter
 
 
-	render( deltaTime )
+	render( scene, camera, deltaTime )
 	{
 		if( this.needsUpdate ) this.update( );
+		
+		this.renderPass.scene = scene;
+		this.renderPass.camera = camera;
 		
 		super.render( deltaTime );
 	} // Effects.render

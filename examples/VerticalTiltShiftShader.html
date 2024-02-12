@@ -20,11 +20,11 @@
 	<script type="module">
 
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, backgroundGrid, animationLoop } from './examples.js';
+		import { renderer, randomBalls, backgroundGrid, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 		
 		
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'VerticalTiltShift' )
 			.addParameter( 'position' )
 			.addParameter( 'span' )
@@ -33,13 +33,13 @@
 				
 		randomBalls( );
 		backgroundGrid( 'black', 'linen' );
-		animationLoop( composer );
+		animationLoop( effects );
 
 
 		var gui = new GUI( { title: '<big><em>Vertical Tilt-shift</em></big>' } );
-			gui.add( composer, 'position', 0, 1 ).step( 0.01 ).name( 'Position' );
-			gui.add( composer, 'amount', 0, 10 ).step( 0.1 ).name( 'Amount' );
-			gui.add( composer, 'span', 0, 0.2 ).step( 0.01 ).name( 'Span' ).$input.classList.add('bottom');
+			gui.add( effects, 'position', 0, 1 ).step( 0.01 ).name( 'Position' );
+			gui.add( effects, 'amount', 0, 10 ).step( 0.1 ).name( 'Amount' );
+			gui.add( effects, 'span', 0, 0.2 ).step( 0.01 ).name( 'Span' ).$input.classList.add('bottom');
 
 
 		window.addEventListener( 'resize', onWindowResize );

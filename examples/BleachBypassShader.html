@@ -21,22 +21,22 @@
 
 		import { Color } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBallsAndCubes, animationLoop } from './examples.js';
+		import { renderer, scene, randomBallsAndCubes, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'BleachBypass' )
 			.addParameter( 'amount' );
 
 
 		var gui = new GUI( { title: '<big><em>Bleach Bypass</em></big>' } );
-			gui.add( composer, 'amount', 0, 6 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');
+			gui.add( effects, 'amount', 0, 6 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');
 
 
 		scene.background = new Color( 'lightgray' );
 		randomBallsAndCubes( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

@@ -20,21 +20,21 @@
 	<script type="module">
 
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'Sepia' )
 			.addParameter( 'amount' );
 				
 
 		var gui = new GUI( { title: '<big><em>Sepia</em></big>' } );
-			gui.add( composer, 'amount', 0, 1 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');;
+			gui.add( effects, 'amount', 0, 1 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');;
 
 
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

@@ -21,17 +21,17 @@
 
 		import { MeshDepthMaterial, RGBADepthPacking } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBallsAndCubes, animationLoop } from './examples.js';
+		import { renderer, randomBallsAndCubes, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 		
 		
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'UnpackDepthRGBA' )
 			.addParameter( 'opacity' );
 
 
 		var gui = new GUI( { title: '<big><em>Unpack Depth RGBA</em></big>' } );
-			gui.add( composer, 'opacity', 0, 1 ).step( 0.01 ).name( 'Opacity' ).$input.classList.add('bottom');
+			gui.add( effects, 'opacity', 0, 1 ).step( 0.01 ).name( 'Opacity' ).$input.classList.add('bottom');
 
 
 		var material = new MeshDepthMaterial( {
@@ -39,7 +39,7 @@
 			} );
 			
 		randomBallsAndCubes( 100, material );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

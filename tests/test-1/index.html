@@ -82,7 +82,7 @@
 					renderer.setSize( innerWidth, innerHeight );
 					
 					for( var composer of composers )
-						composer.setSize( innerWidth, innerHeight );
+						effects.setSize( innerWidth, innerHeight );
 
 				} // init.onWindowResize
 
@@ -115,11 +115,11 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var composer = new Effects( renderer, scene, camera )
+				var effects = new Effects( renderer )
 					.addEffect( 'RGBShift', {amount: 0.02} )
 					.addEffect( 'Colorify', {color:new THREE.Color(1,2,3)} )
 					
-				return composer;
+				return effects;
 				
 			} // oopsPostprocessing
 
@@ -138,7 +138,7 @@
 				object.rotation.set( time/1200, time/1300, time/1400 );
 
 				for( var i=0; i<Stats.params.count; i++ )
-					composers[Stats.params.index].render( );
+					composers[Stats.params.index].render( scene, camera );
 				
 			} // animationLoop
 

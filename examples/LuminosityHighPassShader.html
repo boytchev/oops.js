@@ -20,11 +20,11 @@
 	<script type="module">
 
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 				.addEffect( 'LuminosityHighPass' )
 				.addParameter( 'color' )
 				.addParameter( 'alpha' )
@@ -33,14 +33,14 @@
 
 
 		var gui = new GUI( { title: '<big><em>Luminosity High-Pass</em></big>' } );
-			gui.addColor( composer, 'color' ).name( 'Color' );
-			gui.add( composer, 'alpha', 0, 1 ).step( 0.01 ).name( 'Alpha' );
-			gui.add( composer, 'threshold', -1, 1 ).step( 0.01 ).name( 'Threshold' );
-			gui.add( composer, 'span', 0, 1 ).step( 0.01 ).name( 'Span' ).$input.classList.add('bottom');
+			gui.addColor( effects, 'color' ).name( 'Color' );
+			gui.add( effects, 'alpha', 0, 1 ).step( 0.01 ).name( 'Alpha' );
+			gui.add( effects, 'threshold', -1, 1 ).step( 0.01 ).name( 'Threshold' );
+			gui.add( effects, 'span', 0, 1 ).step( 0.01 ).name( 'Span' ).$input.classList.add('bottom');
 		
 		
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

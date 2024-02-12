@@ -46,9 +46,9 @@
 			scene.add( platon );
 
 
-		// create the composer
+		// create the effect composer
 		var zero = new THREE.Vector3(0,0,0);
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 				.addEffect( 'Halftone', {radius: 80/1, rotate: zero, blending: 0.2} )
 				.addEffect( 'Halftone', {radius: 80/3, rotate: zero, blending: 0.4} )
 				.addEffect( 'Halftone', {radius: 80/9, rotate: zero, blending: 0.3} );
@@ -63,7 +63,7 @@
 			camera.updateProjectionMatrix();
 
 			renderer.setSize( innerWidth, innerHeight );
-			composer.setSize( innerWidth, innerHeight );
+			effects.setSize( innerWidth, innerHeight );
 		}
 
 		onWindowResize();
@@ -73,7 +73,7 @@
 		function animate( t )
 		{
 			platon.rotation.set( Math.PI/6, t/1000, Math.PI/4*0 );
-			composer.render( );
+			effects.render( scene, camera );
 		}
 
 		renderer.setAnimationLoop( animate );

@@ -28,17 +28,17 @@
 		// TO DO: Example with two blurs -- horizontal and
 		// vertical, so that two separate passes are needed
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'TriangleBlur' )
 			.addParameter( 'amount', 'amount1', new Vector2(0.1,0) )
 			//.split( )
 			.addEffect( 'TriangleBlur' )
 			.addParameter( 'amount', 'amount2', new Vector2(0,0.1) )
 			
-		console.log( composer.parameters );
+		console.log( effects.parameters );
 		
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

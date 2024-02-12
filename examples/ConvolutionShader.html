@@ -21,13 +21,13 @@
 
 		import { Vector2 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
 		// TO DO: default convolution kernel, not user provided
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'Convolution' )
 			.addParameter( 'uImageIncrement', new Vector2(1/innerWidth,0) )
 			.addParameter( 'cKernel' );
@@ -37,7 +37,7 @@
 		{
 			var kernelSize = 25,
 				halfWidth = (kernelSize - 1)/2,
-				values = composer.cKernel,
+				values = effects.cKernel,
 				sum = 0;
 				
 			for( var i=0; i<kernelSize; i++ )
@@ -79,20 +79,20 @@
 		var data = { filter: 'Default' };
 		
 		var gui = new GUI( { title: '<big><em>Convolution</em></big>' } );
-			gui.add( composer.uImageIncrement, 'x', 0, 25/innerWidth ).step( 0.0001 );
-			gui.add( composer.uImageIncrement, 'y', 0, 25/innerHeight ).step( 0.0001 );
+			gui.add( effects.uImageIncrement, 'x', 0, 25/innerWidth ).step( 0.0001 );
+			gui.add( effects.uImageIncrement, 'y', 0, 25/innerHeight ).step( 0.0001 );
 			gui.add( data, 'filter', ['Blur (default)', 'Random', 'Over sharpen', 'Astigmatism', 'Double vision', 'Double silhouette'] ).onChange( changeKernel );
 
 
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 
 		window.addEventListener( 'resize', onWindowResize );
 
 		function onWindowResize()
 		{
-			composer.uImageIncrement.set( 1/innerWidth, 0*innerHeight );
+			effects.uImageIncrement.set( 1/innerWidth, 0*innerHeight );
 			gui.controllers[0].updateDisplay( );
 			gui.controllers[1].updateDisplay( );
 		}

@@ -20,30 +20,30 @@
 	<script type="module">
 
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'VerticalBlur' )
 			.addParameter( 'resolution', innerHeight )
 			.addParameter( 'amount' );
 			
 
 		var gui = new GUI( { title: '<big><em>Vertical Blur</em></big>' } );
-			gui.add( composer, 'resolution', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
-			gui.add( composer, 'amount', 0, 4 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');
+			gui.add( effects, 'resolution', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
+			gui.add( effects, 'amount', 0, 4 ).step( 0.01 ).name( 'Amount' ).$input.classList.add('bottom');
 
 			
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 
 		window.addEventListener( 'resize', onWindowResize );
 
 		function onWindowResize()
 		{
-			composer.resolution = innerHeight;
+			effects.resolution = innerHeight;
 			gui.controllers[0].updateDisplay( );
 		}
 		

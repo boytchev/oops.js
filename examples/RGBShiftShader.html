@@ -20,11 +20,11 @@
 	<script type="module">
 
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'RGBShift' )
 			.addParameter( 'amount' )
 			.addParameter( 'angle' )
@@ -32,13 +32,13 @@
 				
 				
 		var gui = new GUI( { title: '<big><em>RGB Shift</em></big>' } );
-			gui.add( composer, 'amount', 0, 0.04 ).step( 0.001 ).name( 'Amount' );//.$input.classList.add('top');
-			gui.add( composer, 'angle', 0, 6.28 ).step( 0.01 ).name( 'Angle' );
-			gui.add( composer, 'opacity', 0, 1 ).step( 0.01 ).name( 'Opacity' ).$input.classList.add('bottom');
+			gui.add( effects, 'amount', 0, 0.04 ).step( 0.001 ).name( 'Amount' );//.$input.classList.add('top');
+			gui.add( effects, 'angle', 0, 6.28 ).step( 0.01 ).name( 'Angle' );
+			gui.add( effects, 'opacity', 0, 1 ).step( 0.01 ).name( 'Opacity' ).$input.classList.add('bottom');
 
 
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

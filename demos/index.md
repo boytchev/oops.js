@@ -21,7 +21,7 @@ This page describes the Oops.js API and demonstrates its features.
 
 The postprocessing effects in Oops.js are intentionally similar to those in
 Three.js. The effect composer of Oops.js is called `Effects`. Creating an
-instance of `Effects` requires a renderer, a scene and a camera.
+instance of `Effects` requires a renderer.
 
 `Effects` is a manager of postprocessing effects. Initially the composer is
 empty. If its `.render` is called it will just render the scene without any
@@ -29,11 +29,11 @@ effect. The following demo shows how to create an empty `Effects` and use it
 to render the scene.
 
 ```js
-var composer = new Effects(renderer,scene,camera);
+var composer = new Effects( renderer );
 :
 function animationLoop( )
 {
-	composer.render( );
+	composer.render( scene, camera );
 }
 ```
 
@@ -55,7 +55,7 @@ The following demo shows application of two effects:
 
 
 ```js
-var composer = new Effects(renderer,scene,camera);
+var composer = new Effects( renderer );
 
 composer.addEffect( 'Sepia' );
 composer.addEffect( 'Film' );
@@ -64,7 +64,7 @@ composer.addEffect( 'Film' );
 The `.addEffect` method is chainable, so the same code couls be shortened as:
 
 ```js
-var composer = new Effects(renderer,scene,camera)
+var composer = new Effects( renderer )
     .addEffect( 'Sepia' )
     .addEffect( 'Film' );
 ```
@@ -98,7 +98,7 @@ custom static parameters.
 
 ```js
 var zero = new THREE.Vector3(0,0,0);
-var composer = new Effects( renderer, scene, camera )
+var composer = new Effects( renderer )
     .addEffect( 'Halftone', {radius: 80/1, rotate: zero, blending: 0.2} )
     .addEffect( 'Halftone', {radius: 80/3, rotate: zero, blending: 0.4} )
     .addEffect( 'Halftone', {radius: 80/9, rotate: zero, blending: 0.3} );
@@ -156,8 +156,6 @@ rendering. `Effects` extends [`THREE.EffectComposer`](https://threejs.org/docs/#
 ```javascript
 new Effects(
     renderer : THREE.WebGLRenderer,
-	scene : THREE.Scene,
-	camera : THREE.Camera,
 	options
 )
 ```

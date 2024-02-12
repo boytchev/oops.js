@@ -21,11 +21,11 @@
 
 		import { FogExp2 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, scene, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'GammaCorrection' );
 
 
@@ -34,7 +34,7 @@
 
 		randomBalls( );
 		scene.fog = new FogExp2( 'black', 0.002 );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

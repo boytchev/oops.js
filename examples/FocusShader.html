@@ -21,11 +21,11 @@
 
 		import { Vector2 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, backgroundGrid, animationLoop } from './examples.js';
+		import { renderer, randomBalls, backgroundGrid, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'Focus' )
 			.addParameter( 'resolution', new Vector2(innerWidth,innerHeight) )
 			.addParameter( 'sampleDistance' )
@@ -33,22 +33,22 @@
 			
 			
 		var gui = new GUI( { title: '<big><em>Focus</em></big>' } );
-			gui.add( composer.resolution, 'x', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
-			gui.add( composer.resolution, 'y', 100, 4000 ).step( 1 ).name( '<right>y</right>' );
-			gui.add( composer, 'sampleDistance', 0, 2 ).step( 0.01 ).name( 'Sample distance' );
-			gui.add( composer, 'waveFactor', 0, 2 ).step( 0.01 ).name( 'Wave factor' ).$input.classList.add('bottom');
+			gui.add( effects.resolution, 'x', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
+			gui.add( effects.resolution, 'y', 100, 4000 ).step( 1 ).name( '<right>y</right>' );
+			gui.add( effects, 'sampleDistance', 0, 2 ).step( 0.01 ).name( 'Sample distance' );
+			gui.add( effects, 'waveFactor', 0, 2 ).step( 0.01 ).name( 'Wave factor' ).$input.classList.add('bottom');
 
 
 		backgroundGrid( );
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 
 		window.addEventListener( 'resize', onWindowResize );
 
 		function onWindowResize()
 		{
-			composer.resolution.set( innerWidth, innerHeight );
+			effects.resolution.set( innerWidth, innerHeight );
 			gui.controllers[0].updateDisplay( );
 			gui.controllers[1].updateDisplay( );
 		}

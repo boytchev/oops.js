@@ -47,7 +47,7 @@
 
 
 		// create the composer
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 				.addEffect( 'Sepia' )
 				.addEffect( 'Film' );
 
@@ -61,7 +61,7 @@
 			camera.updateProjectionMatrix();
 
 			renderer.setSize( innerWidth, innerHeight );
-			composer.setSize( innerWidth, innerHeight );
+			effects.setSize( innerWidth, innerHeight );
 		}
 
 		onWindowResize();
@@ -71,7 +71,7 @@
 		function animate( t )
 		{
 			platon.rotation.set( Math.PI/6, t/1000, Math.PI/4*0 );
-			composer.render( );
+			effects.render( scene, camera );
 		}
 
 		renderer.setAnimationLoop( animate );

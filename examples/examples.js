@@ -157,7 +157,7 @@ function animate( t )
 	controls.update( );
 	light.position.copy( camera.position );
 	if( renderTick ) renderTick( t );
-	composer?.render();
+	composer?.render( scene, camera );
 }
 
 renderer.setAnimationLoop( animate );

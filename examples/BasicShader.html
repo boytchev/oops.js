@@ -21,22 +21,22 @@
 
 		import { Color } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, scene, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'Basic' )
 			.addParameter( 'color' );
 
 
 		var gui = new GUI( { title: '<big><em>Basic</em></big>' } );
-			gui.addColor( composer, 'color' ).name( 'Color' ).$text.classList.add('bottom');
+			gui.addColor( effects, 'color' ).name( 'Color' ).$text.classList.add('bottom');
 
 
 		scene.background = new Color( 'linen' );
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 

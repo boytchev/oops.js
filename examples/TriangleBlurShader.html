@@ -21,25 +21,25 @@
 
 		import { Vector2 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-		import { renderer, camera, scene, randomBalls, animationLoop } from './examples.js';
+		import { renderer, randomBalls, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
 
 
 		// TO DO: Example with two blurs -- horizontal and
 		// vertical, so that two separate passes are needed
 		
-		var composer = new Effects( renderer, scene, camera )
+		var effects = new Effects( renderer )
 			.addEffect( 'TriangleBlur' )
 			.addParameter( 'amount', new Vector2(0.1,0) )
 			
 			
 		var gui = new GUI( { title: '<big><em>Triangle Blur</em></big>' } );
-			gui.add( composer.amount, 'x', 0, 0.2 ).step( 0.002 ).name( 'Amount<right>x</right>' );
-			gui.add( composer.amount, 'y', 0, 0.2 ).step( 0.002 ).name( '<right>y</right>' );
+			gui.add( effects.amount, 'x', 0, 0.2 ).step( 0.002 ).name( 'Amount<right>x</right>' );
+			gui.add( effects.amount, 'y', 0, 0.2 ).step( 0.002 ).name( '<right>y</right>' );
 
 			
 		randomBalls( );
-		animationLoop( composer );
+		animationLoop( effects );
 
 	</script>
 
