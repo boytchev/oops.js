@@ -20,7 +20,7 @@ const HalftoneShader = {
 		radius: { value: 4 },
 		rotate: { value: new Vector3(1*Math.PI/12,2*Math.PI/12,3*Math.PI/12) },
 		scatter: { value: 0 },
-		resolution: { value: new Vector2(innerWidth,innerHeight) },
+		resolution: { value: new Vector2(innerWidth,innerHeight), auto: true },
 		blending: { value: 1 },
 		blendingMode: { value: 1, type: 'int' },
 		grayscale: { value: false },
@@ -288,8 +288,17 @@ const HalftoneShader = {
 
 			}
 			
-		}`
+		}`,
 		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value.set( readBuffer.width, readBuffer.height );
+		},
 };
 
 

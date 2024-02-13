@@ -56,7 +56,6 @@
 
 		var effects = new Effects( renderer )
 			.addEffect( 'Halftone', {radius:15, rotate: new THREE.Vector3(Math.PI/4,Math.PI/4,Math.PI/4)} )
-			.addParameter( 'resolution' )
 			.addEffect( 'HueSaturation' )
 			.addParameter( 'hue' )
 			.addEffect( 'Vignette' )
@@ -72,7 +71,6 @@
 
 			renderer.setSize( innerWidth, innerHeight );
 			effects.setSize( innerWidth, innerHeight );
-			effects.resolution.set( innerWidth, innerHeight );
 		}
 
 		onWindowResize();

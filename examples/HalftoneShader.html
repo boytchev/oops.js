@@ -27,7 +27,6 @@
 
 		var effects = new Effects( renderer )
 			.addEffect( 'Halftone' )
-			.addParameter( 'resolution', new Vector2(innerWidth,innerHeight) )
 			.addParameter( 'shape' )
 			.addParameter( 'radius' )
 			.addParameter( 'rotate', new Vector3(0.26,0.52,0.79) )
@@ -51,9 +50,6 @@
 			gui.add( effects, 'blending', 0, 1 ).step(0.01).name( 'Blending' );
 			gui.add( effects, 'blendingMode', {Linear:1, Multiply:2, Add:3, Lighter:4, Darker:5} ).step(0.01).name( '<right>mode</right>' );
 			
-			gui.add( effects.resolution, 'x', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
-			gui.add( effects.resolution, 'y', 100, 4000 ).step( 1 ).name( '<right>y</right>' );
-			
 			gui.add( effects, 'grayscale' ).name( 'Grayscale' );
 			gui.add( effects, 'disable' ).name( 'Disable' );
 
@@ -61,15 +57,6 @@
 		randomBalls( );
 		animationLoop( effects );
 
-
-		window.addEventListener( 'resize', onWindowResize );
-
-		function onWindowResize()
-		{
-			effects.resolution.set( innerWidth, innerHeight );
-			gui.controllers[8].updateDisplay( );
-			gui.controllers[9].updateDisplay( );
-		}
 
 	</script>
 

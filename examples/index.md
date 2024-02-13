@@ -353,7 +353,7 @@ A shader that converts the colors in the frame into [overlapping single-color pa
 * **`rotate`** – rotation-vector of the patterns in radians, the *x*, *y* and *z* components define the rotation of red, green and blue patterns (vector, each component is from 0 to 2&pi;, default value THREE.Vector3(&pi;/12,2&pi;/12,3&pi;/12) which correponds to 15&deg;, 30&deg; and 45&deg;)
 * **`blending`** – blending strength/opacity (float, from 0.0 to 1.0, default value 1.0)
 * **`blendingMode`** – defines how the halftone image is blended with the original frame: *linear*=1, *multiply*=2, *add*=3, *lighter*=4 and *darker*=5 (int, from 1 to 5, default value 1 for linear)
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
+* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight)) -- this parameter is set internally
 * **`grayscale`** - flag for grayscale effect (boolean, default value *false*)
 * **`disable`** - flag for disabling the shader (boolean, default value *false*)
 

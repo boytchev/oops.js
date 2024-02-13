@@ -39,12 +39,16 @@ class Effects extends EffectComposer
 		this.oopsShaders = [this.oopsShader]; // all shaders
 		
 		this._parameters = [];
+		
+		this.width = renderer.domElement.clientWidth;
+		this.height = renderer.domElement.clientHeight;
 
 		this.needsUpdate = true;
 		
 	} // Effects.constructor
 	
 	
+
 	split( )
 	{
 		this.oopsShader = new OOPSShader( );
@@ -76,7 +80,7 @@ class Effects extends EffectComposer
 
 		if( shader.uniforms[paramName].auto )
 		{
-			throw new Error( `Parameter "${paramName}" is internaly set. It cannot be defined as parameter.\n` );
+			throw new Error( `Parameter "${paramName}" is internaly set. It cannot be added as parameter with addParameter(...).\n` );
 		}
 	
 		Object.defineProperty (this, publicName,
