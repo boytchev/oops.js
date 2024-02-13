@@ -297,7 +297,7 @@ const HalftoneShader = {
 		
 	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
 		{
-			pass.uniforms.resolution.value.set( readBuffer.width, readBuffer.height );
+			pass.uniforms.resolution.value.set( readBuffer.width/renderer.getPixelRatio(), readBuffer.height/renderer.getPixelRatio() );
 		},
 };
 
