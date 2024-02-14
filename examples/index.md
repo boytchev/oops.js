@@ -272,7 +272,6 @@ a different range.</span>*
 
 A shader that blurs the frame by keeping the center more focused.
 	
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`sampleDistance`** – non-linear component of the blur effect (float, 0.0 to 2.0, default value 0.94)
 * **`waveFactor`** – linear component of the blur effect (float, 0.0 to 2.0, default value 0.125)
 
@@ -280,8 +279,7 @@ Example: [FocusShader.html](FocusShader.html)
 		
 [<img src="FocusShader.jpg">](FocusShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **screenWidth** and **screenHeight** are combined in **resolution** and
-has another default value; (2) **waveFactor** is scaled by 100.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **waveFactor** is scaled by 100.</span>*
 
 
 

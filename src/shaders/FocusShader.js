@@ -16,7 +16,7 @@ const FocusShader = {
 
 	uniforms: {
 		
-		resolution: { value: new Vector2(innerWidth,innerHeight) },
+		resolution: { value: new Vector2(innerWidth,innerHeight), auto: true },
 		sampleDistance:  { value: 0.94 },
 		waveFactor:  { value: 0.125 },
 		
@@ -66,7 +66,17 @@ const FocusShader = {
 
 			return vec4( color.rgb * color.rgb * vec3( 0.95 ) + color.rgb, 1.0 );
 			
-		}`
+		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value.set( readBuffer.width/renderer.getPixelRatio(), readBuffer.height/renderer.getPixelRatio() );
+		},
 		
 };
 
