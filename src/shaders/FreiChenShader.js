@@ -16,7 +16,7 @@ const FreiChenShader = {
 
 	uniforms: {
 		
-		resolution: { value: new Vector2(innerWidth,innerHeight) },
+		resolution: { value: new Vector2(innerWidth,innerHeight), auto: true },
 		opacity:  { value: 1.0 },
 		
 	},
@@ -74,7 +74,17 @@ const FreiChenShader = {
 
 			return mix( $$(vUv), vec4(vec3(sqrt(M/S)), 1.0), opacity_$ );
 			
-		}`
+		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value.set( readBuffer.width/renderer.getPixelRatio(), readBuffer.height/renderer.getPixelRatio() );
+		},
 		
 };
 

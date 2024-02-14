@@ -290,15 +290,13 @@ Example: [FocusShader.html](FocusShader.html)
 A shader that marks the edges of shapes based on the Frei-Chen edge detection
 algorithm.
 	
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
 Example: [FreiChenShader.html](FreiChenShader.html)
 		
 [<img src="FreiChenShader.jpg">](FreiChenShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **aspect** is renamed to **resolution** and
-has another default value; (2) **opacity** is added; (3) a syntax bug in the shader is fixed.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added; (3) a syntax bug in the shader is fixed.</span>*
 
 
 
