@@ -19,7 +19,7 @@ const DotScreenShader = {
 		angle:  { value: 0.0 },
 		scale:  { value: 1.5 },
 		center: { value: new Vector2( 0, 0 ) },
-		resolution: { value: new Vector2(innerWidth,innerHeight) },
+		resolution: { value: new Vector2(innerWidth,innerHeight), auto: true },
 		opacity:  { value: 1.0 },
 		
 	},
@@ -47,8 +47,17 @@ const DotScreenShader = {
 			
 			return mix( color, vec4( vec3( average * 10.0 - 5.0 + pattern_$(vUv) ), color.a ), pow(opacity_$,2.0) );
 			
-		}`
+		}`,
 		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value.set( readBuffer.width/renderer.getPixelRatio(), readBuffer.height/renderer.getPixelRatio() );
+		},
 };
 
 

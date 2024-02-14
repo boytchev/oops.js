@@ -200,15 +200,13 @@ A shader that converts the frame into regularly spread dots.
 * **`scale`** – size of the dots in the pattern (float, default value 1.5)
 * **`angle`** – angle of the pattern (float, default value 0)
 * **`center`** – center of the pattern (vector, default value THREE.Vector2(0,0))
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
 Example: [DotScreenShader.html](DotScreenShader.html)
 		
 [<img src="DotScreenShader.jpg">](DotScreenShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **tSize** is renamed to **resolution** and
-has another default value; (2) **opacity** is added.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 
 
 
@@ -253,11 +251,8 @@ Example: [ExposureExpShader.html](ExposureExpShader.html)
 ## FilmShader
 <span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: O<sup>1</sup> ]</span>
 
-A shader that adds graininess to the frame. The pattern of the grains is defined by
-the fracrional part of the *time* parameter -- if it is changed for every frame,
-the result will be noisy grains.
+A shader that adds graininess to the frame. 
 	
-* **`time`** – defines the grain pattern (float) -- this parameter is set internally
 * **`intensity`** – intensity of graininess (float, 0.0 to 3.0, default value 0.5) 
 * **`grayscale`** – a flag whether to convert the colors to grayscale (boolean, default value false) 
 
@@ -353,7 +348,6 @@ A shader that converts the colors in the frame into [overlapping single-color pa
 * **`rotate`** – rotation-vector of the patterns in radians, the *x*, *y* and *z* components define the rotation of red, green and blue patterns (vector, each component is from 0 to 2&pi;, default value THREE.Vector3(&pi;/12,2&pi;/12,3&pi;/12) which correponds to 15&deg;, 30&deg; and 45&deg;)
 * **`blending`** – blending strength/opacity (float, from 0.0 to 1.0, default value 1.0)
 * **`blendingMode`** – defines how the halftone image is blended with the original frame: *linear*=1, *multiply*=2, *add*=3, *lighter*=4 and *darker*=5 (int, from 1 to 5, default value 1 for linear)
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight)) -- this parameter is set internally
 * **`grayscale`** - flag for grayscale effect (boolean, default value *false*)
 * **`disable`** - flag for disabling the shader (boolean, default value *false*)
 
@@ -361,7 +355,7 @@ Example: [HalftoneShader.html](HalftoneShader.html)
 		
 [<img src="HalftoneShader.jpg">](HalftoneShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **rotateR**, **rotateG** and **rotateB** merged into vector **rotate**; (2) **greyscale** is renamed to **grayscale**; (3) **width** and **height** merged into **resolution**.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **rotateR**, **rotateG** and **rotateB** merged into vector **rotate**; (2) **greyscale** is renamed to **grayscale**.</span>*
 
 
 

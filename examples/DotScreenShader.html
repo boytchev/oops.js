@@ -27,7 +27,6 @@
 
 		var effects = new Effects( renderer )
 			.addEffect( 'DotScreen' )
-			.addParameter( 'resolution', new Vector2(innerWidth,innerHeight) )
 			.addParameter( 'center' )
 			.addParameter( 'angle' )
 			.addParameter( 'scale' )
@@ -39,23 +38,11 @@
 			gui.add( effects, 'scale', 0.7, 3 ).step( 0.01 ).name( 'Scale' );
 			gui.add( effects.center, 'x', -10, 10 ).step( 0.01 ).name( 'Center <right>x</right>' );
 			gui.add( effects.center, 'y', -10, 10 ).step( 0.01 ).name( '<right>y</right>' );
-			gui.add( effects.resolution, 'x', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
-			gui.add( effects.resolution, 'y', 100, 4000 ).step( 1 ).name( '<right>y</right>' );
 			gui.add( effects, 'opacity', 0, 1 ).step( 0.01 ).name( 'Opacity' ).$input.classList.add('bottom');
 
 
 		randomBalls( );
 		animationLoop( effects );
-
-
-		window.addEventListener( 'resize', onWindowResize );
-
-		function onWindowResize()
-		{
-			effects.resolution.set( innerWidth, innerHeight );
-			gui.controllers[4].updateDisplay( );
-			gui.controllers[5].updateDisplay( );
-		}
 
 	</script>
 
