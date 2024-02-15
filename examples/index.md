@@ -360,15 +360,13 @@ Example: [HalftoneShader.html](HalftoneShader.html)
 
 A shader that blurs the frame horizontally with a Gaussian blur filter. 
 	
-* **`resolution`** – canvas width (float, default value innerWidth)
 * **`amount`** – amount of shader effect (float, default value 1.0) 
 
 Example: [HorizontalBlurShader.html](HorizontalBlurShader.html)
 		
 [<img src="HorizontalBlurShader.jpg">](HorizontalBlurShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **h** is renamed to **resolution**,
-it is not 1/*width* and has another default value; (2) **amount** is added.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **amount** is added.</span>*
 
 
 

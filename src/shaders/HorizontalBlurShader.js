@@ -13,7 +13,7 @@ const HorizontalBlurShader = {
 
 	uniforms: {
 		
-		resolution: { value: innerWidth },
+		resolution: { value: innerWidth, auto: true },
 		amount: { value: 1 },
 		
 	},
@@ -38,7 +38,19 @@ const HorizontalBlurShader = {
 
 			return sum;
 			
-		}`
+		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value = readBuffer.width/renderer.getPixelRatio();
+		},
+		
+
 		
 };
 
