@@ -13,7 +13,7 @@ const VerticalBlurShader = {
 
 	uniforms: {
 		
-		resolution: { value: innerHeight },
+		resolution: { value: innerHeight, auto: true },
 		amount: { value: 1 },
 		
 	},
@@ -38,7 +38,17 @@ const VerticalBlurShader = {
 
 			return sum;
 			
-		}`
+		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value = readBuffer.height/renderer.getPixelRatio();
+		},
 		
 };
 

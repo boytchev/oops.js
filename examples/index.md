@@ -583,15 +583,13 @@ Example: [UnpackDepthRGBAShader.html](UnpackDepthRGBAShader.html)
 
 A shader that blurs the frame vertically with a Gaussian blur filter.
 	
-* **`resolution`** – canvas height (float, default value innerHeight)
 * **`amount`** – amount of shader effect (float, default value 1.0) 
 
 Example: [VerticalBlurShader.html](VerticalBlurShader.html)
 		
 [<img src="VerticalBlurShader.jpg">](VerticalBlurShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **h** is renamed to **resolution**,
-it is not 1/*height* and has another default value; (2) **amount** is added.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **amount** is added.</span>*
 
 
 
