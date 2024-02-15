@@ -306,14 +306,13 @@ Example: [FreiChenShader.html](FreiChenShader.html)
 
 A shader that implements a variation of the [FXAA (Fast approximate anti-aliasing)](https://en.wikipedia.org/wiki/Fast_approximate_anti-aliasing) screen-space anti-aliasing.
 	
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`disable`** - flag for disabling the shader (boolean, default value *false*)
 
 Example: [FXAAShader.html](FXAAShader.html)
 		
 [<img src="FXAAShader.jpg">](FXAAShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **resolution** uses size in pixels; (2) **disable** is added; (3) texture sampling is without bias.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **disable** is added; (2) texture sampling is without bias.</span>*
 
 
 

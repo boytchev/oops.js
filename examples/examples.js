@@ -100,6 +100,15 @@ function backgroundGrid( gridColor = 'white', backgroundColor = 'black', factor=
 		
 	scene.background = texture;
 	scene.background.repeat.set( innerWidth/factor, innerHeight/factor );
+	
+	
+	window.addEventListener( 'resize', onWindowResize );
+
+	function onWindowResize()
+	{
+		scene.background.repeat.set( innerWidth/factor, innerHeight/factor );
+	}
+
 }
 
 
@@ -126,6 +135,13 @@ function backgroundHatched( gridColor = 'white', backgroundColor = 'black', fact
 		
 	scene.background = texture;
 	scene.background.repeat.set( innerWidth/factor, innerHeight/factor );
+		
+	window.addEventListener( 'resize', onWindowResize );
+
+	function onWindowResize()
+	{
+		scene.background.repeat.set( innerWidth/factor, innerHeight/factor );
+	}
 }
 
 

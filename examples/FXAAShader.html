@@ -23,7 +23,6 @@
 	
 	<script type="module">
 
-		import { Vector2 } from 'three';
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 		import { renderer, randomBallsAndCubes, backgroundHatched, animationLoop } from './examples.js';
 		import { Effects } from 'oops';
@@ -31,30 +30,16 @@
 
 		var effects = new Effects( renderer )
 			.addEffect( 'FXAA' )
-			.addParameter( 'resolution', new Vector2(innerWidth,innerHeight) )
 			.addParameter( 'disable' );
 			
 			
 		var gui = new GUI( { title: '<big><em>FXAA</em></big>' } );
-			gui.add( effects.resolution, 'x', 100, 4000 ).step( 1 ).name( 'Resolution <right>x</right>' );
-			gui.add( effects.resolution, 'y', 100, 4000 ).step( 1 ).name( '<right>y</right>' );
 			gui.add( effects, 'disable' ).name( 'Disable' );
 			
 			
 		randomBallsAndCubes( );
 		backgroundHatched( 'black', 'white' );
 		animationLoop( effects );
-
-
-		window.addEventListener( 'resize', onWindowResize );
-
-		function onWindowResize()
-		{
-			effects.resolution.set( innerWidth, innerHeight );
-			gui.controllers[0].updateDisplay( );
-			gui.controllers[1].updateDisplay( );
-			scene.background.repeat.set( innerWidth/8, innerHeight/8 );
-		}
 
 	</script>
 

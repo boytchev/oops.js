@@ -16,7 +16,7 @@ const FXAAShader = {
 
 	uniforms: {
 
-		resolution: { value: new Vector2( innerWidth, innerHeight ) },
+		resolution: { value: new Vector2( innerWidth, innerHeight ), auto: true },
 		disable: { value: false }
 
 	},
@@ -269,8 +269,18 @@ const FXAAShader = {
 					invEdgeDetectionQuality
 			);
 
-		}`
-
+		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value.set( readBuffer.width/renderer.getPixelRatio(), readBuffer.height/renderer.getPixelRatio() );
+		},
+		
 };
 
 export { FXAAShader };
