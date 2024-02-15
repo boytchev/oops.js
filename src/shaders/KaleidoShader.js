@@ -18,7 +18,7 @@ const KaleidoShader = {
 		
 		sides: { value: 6 },
 		angle: { value: 0 },
-		resolution: { value: new Vector2(innerWidth,innerHeight) },
+		resolution: { value: new Vector2(innerWidth,innerHeight), auto: true },
 		
 	},
 
@@ -40,7 +40,17 @@ const KaleidoShader = {
 			
 			return $$(p + 0.5);
 			
-		}`
+		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value.set( readBuffer.width/renderer.getPixelRatio(), readBuffer.height/renderer.getPixelRatio() );
+		},
 		
 };
 

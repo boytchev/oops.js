@@ -16,7 +16,7 @@ const SobelOperatorShader = {
 
 	uniforms: {
 		
-		resolution: { value: new Vector2(innerWidth,innerHeight) },
+		resolution: { value: new Vector2(innerWidth,innerHeight), auto: true },
 		opacity:  { value: 1.0 },
 		
 	},
@@ -72,7 +72,17 @@ const SobelOperatorShader = {
 
 			return mix( color, vec4( vec3( G ), 1 ), opacity_$ );
 			
-		}`
+		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'resolution' );
+		},
+		
+	onRender: /* js */ function( renderer, writeBuffer, readBuffer, deltaTime, maskActive, pass )
+		{
+			pass.uniforms.resolution.value.set( readBuffer.width/renderer.getPixelRatio(), readBuffer.height/renderer.getPixelRatio() );
+		},
 		
 };
 

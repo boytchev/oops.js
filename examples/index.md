@@ -414,14 +414,12 @@ A shader that mirrors a pie fragment of the frame into a [kaleidoscopic](https:/
 	
 * **`sides`** – number of side of the kaleidoscope image (int, 3 or more, default value 6)
 * **`angle`** – rotation of the kaleidoscope image in radians (float, default value 0)
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 
 Example: [KaleidoShader.html](KaleidoShader.html)
 		
 [<img src="KaleidoShader.jpg">](KaleidoShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) added **resolution** and
-fixed aspect.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) fixed aspect.</span>*
 
 
 
@@ -517,15 +515,13 @@ Example: [SepiaShader.html](SepiaShader.html)
 
 A shader that marks the edges of shapes based on the red color component in the frame.
 	
-* **`resolution`** – canvas resolution (vector, default value THREE.Vector2(innerWidth,innerHeight))
 * **`opacity`** – shader effect opacity (float, 0.0 to 1.0, default value 1.0) 
 
 Example: [SobelOperatorShader.html](SobelOperatorShader.html)
 		
 [<img src="SobelOperatorShader.jpg">](SobelOperatorShader.html)
 
-*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **resolution** 
-has another default value; (2) **opacity** is added.</span>*
+*<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **opacity** is added.</span>*
 
 
 
