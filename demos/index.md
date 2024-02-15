@@ -5,12 +5,12 @@ This page describes the Oops.js API and demonstrates its features.
 <big>**[Using Oops.js](#using-oopsjs)**</big><br>
 &nbsp; &nbsp; &nbsp;[Initializing effect composer](#initializing-effect-composer)<br>
 &nbsp; &nbsp; &nbsp;[Adding effects](#adding-effects)<br>
-&nbsp; &nbsp; &nbsp;[Effect parameters](#effect-parameters): [static](#static-parameters), [dynamic](#dynamic-parameters)<br>
+&nbsp; &nbsp; &nbsp;[Customizing effects](#customizing-effects)<br>
 &nbsp; &nbsp; &nbsp;[Video postprocessing](#video-postprocessing)<br>
-<big>**[API](#api)**</big><br>
-&nbsp; &nbsp; &nbsp;[Class Effects](#effects)<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &bull; <small>Methods: [addEffect](#addeffect), [addParameter](#addparameter), [render](#render)</small><br>
-&nbsp; &nbsp; &nbsp; &nbsp; &bull; <small>Properties: [parameters](#parameters), [shaders](#shaders)</small><br>
+<big>**[User API](#user-api)**</big><br>
+&nbsp; &nbsp; &nbsp;Class [`Effects`](#class-effects): <small>[`addEffect`](#addeffect), TODO:[`addParameter`](#addparameter), [`render`](#render)</small><br>
+<big>**[Developer API](#developer-api)**</big><br>
+&nbsp; &nbsp; &nbsp;Class [`Effects`](#class-effects2): <small>[`split`](#split), [`parameters`](#parameters), [`shaders`](#shaders)</small><br>
 	
 
 
@@ -79,7 +79,7 @@ For a list of available effects see the [Examples](../examples) page.
 
 
 
-### Effect parameters
+### Customizing effects
 
 Almost all postprocessing effects have parameters that specify their properties.
 These parameters have preset default values that can be changed statically (i.e.
@@ -104,8 +104,6 @@ var composer = new Effects( renderer )
     .addEffect( 'Halftone', {radius: 80/9, rotate: zero, blending: 0.3} );
 ```
 
-
-
 Run: [Static parameters demo](static-parameters/index.html)
 	
 [<img src="static-parameters/snapshot.jpg">](static-parameters/index.html)
@@ -116,6 +114,13 @@ For a list of available parameters to each effect see the [Examples](../examples
 
 
 #### Dynamic parameters
+
+TO DO
+
+
+
+
+#### Automatic parameters
 
 TO DO
 
@@ -145,9 +150,9 @@ Run: [Video effect demo](video-effect/index.html)
 
 
 
-## API
+## User API
 
-### `Effects`
+### Class `Effects`
 
 A class. Defines effect composer that manages postprocessing effects and their
 rendering. `Effects` extends [`THREE.EffectComposer`](https://threejs.org/docs/#examples/en/postprocessing/EffectComposer).
@@ -157,7 +162,7 @@ rendering. `Effects` extends [`THREE.EffectComposer`](https://threejs.org/docs/#
 new Effects( renderer )
 new Effects( renderer, options )
 ```
-where `renderer` is `THREE.WebGLRenderer` abd the optional parameter `options` is an object
+where `renderer` is `THREE.WebGLRenderer` abd the optional parameter `options` is an object with the following structure:
 
 ```
 {
@@ -168,9 +173,9 @@ where `renderer` is `THREE.WebGLRenderer` abd the optional parameter `options` i
 where `WARNING_THRESHOLD` sets a warning in the console if the overall shader weight is above the threshold, and `SPLIT_THRESHOLD` forces shaders to split in separate passes if their combined weight is above threshold.
 
 
-### `.addEffect`
+#### `.addEffect`
 
-A method. Adds a postprocessing effect to the effect composer. Returns the composer, in order to allow method chaning.
+A method of [`Effects`](#effects). Adds a postprocessing effect to the effect composer. Returns the composer, in order to allow method chaning.
 
 ```javascript
 .addEffect( name )
@@ -181,21 +186,54 @@ where `name` is the case-sensitive name of the postprocessing effect, and the
 optional `parameters` is an object with static (baked) parameters.
 
 
-### `.addParameter`
+#### `.addParameter`
 
-A method. TO DO.
-
-
-### `.render`
-
-A method. TO DO.
+A method of [`Effects`](#effects). TO DO.
 
 
-### `.parameters`
+#### `.render`
 
-A virtual property. TO DO.
+A method of [`Effects`](#effects). Renders the postprocessing effects.
+
+```javascript
+.render( scene, camera, deltaTime )
+```
+
+where `scene` is the `THREE.Scene` to be rendered, `camera` is
+the `THREE.Camera` (usually it is `THREE.PerspectiveCamera` or
+`THREE.OrthographicCamera`) for the viewpoint, and `deltaTime`
+is the ellapsed time in seconds since the previous call to `render`.
 
 
-### `.shaders`
+## Developer API
 
-A virtual property. TO DO.
+
+### Class `Effects`
+
+The `Effects` class provides two properties to access the internal
+structure of the class.
+
+
+#### `.split`
+
+A method of [`Effects`](#effects). It is used while adding effects. It forces
+the composer to split next effects into a separate shader. Returns the composer,
+in order to allow method chaning. This method is intended for internal debug purposes.
+
+```js
+.split()
+```
+
+#### `.parameters`
+
+A virtual property of [`Effects`](#effects). Returns an array of shader
+parameters &ndash; explicitly added by the user via [`.addParameter`](#addparameter)
+ot implicitly added by the effect composer (like screen resolution, time, etc.)
+This property is intended for internal debug purposes.
+
+
+#### `.shaders`
+
+A virtual property of [`Effects`](#effects). Returns an array of passes and
+shader in each pass. This property is intended for internal debug purposes.
+
