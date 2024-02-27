@@ -7,6 +7,8 @@ const HeaderShader = {
 	
 	type: 'O',
 	
+	name: 'HeaderShader',
+	
 	weight: 1,
 
 	uniforms: {

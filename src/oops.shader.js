@@ -1,5 +1,6 @@
 ﻿import { Vector2, Vector3, Color } from 'three';
 
+import { Pass } from './Pass.js';
 import { SHADERS } from './oops.shaders.js';
 
 
@@ -71,7 +72,7 @@ class OOPSShader
 	
 	
 	
-	addShader( shaderName, bakedValues={} )
+	addShader( shaderName, bakedValues={}, oopsPass )
 	{
 		var shader = SHADERS[shaderName];
 
@@ -98,15 +99,17 @@ class OOPSShader
 				vertexShaderHead: shader.vertexShaderHead || '',
 				fragmentShader: shader.fragmentShader || '',
 				fragmentShaderHead: shader.fragmentShaderHead || '',
-				onRender: shader.onRender,
 				uniforms: {},
 			};
+			
+		if( shader.onRender ) shaderClone.onRender = shader.onRender;
+		if( shader.onPass ) shaderClone.onPass = shader.onPass;
 		
 		if( shader.uniforms )
 		for( var name of Object.keys(shader.uniforms) )
 		{
 			var value = bakedValues[name] || shader.uniforms[name].value;
-			if( value.clone )
+			if( value?.clone )
 				value = value.clone();
 			else
 			{
@@ -131,7 +134,7 @@ class OOPSShader
 
 		if( shader.onLoad )
 		{
-			shader.onLoad( shaderClone, this );
+			shader.onLoad( shaderClone, this, oopsPass );
 		}
 		
 

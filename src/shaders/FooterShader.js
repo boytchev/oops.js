@@ -7,6 +7,8 @@ const FooterShader = {
 	
 	type: 'O',
 	
+	name: 'FooterShader',
+
 	weight: 1,
 
 	vertexShader: /* glsl */`

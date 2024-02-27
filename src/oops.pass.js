@@ -11,6 +11,7 @@ class OOPSPass extends Pass {
 		super();
 
 		this.textureID = ( textureID !== undefined ) ? textureID : 'tDiffuse';
+		this.shader = shader;
 
 		if ( shader ) {
 

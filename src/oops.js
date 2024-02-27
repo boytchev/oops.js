@@ -32,7 +32,7 @@ class Effects extends EffectComposer
 		
 		this.renderPass = new RenderPass( /*scene, camera*/ );
 		
-		this.addPass(  this.renderPass );
+		this.addPass( this.renderPass );
 		this.addPass( new OutputPass() );
 		
 		this.oopsShader = new OOPSShader( options ); // the current (i.e. last) shader
@@ -63,7 +63,7 @@ class Effects extends EffectComposer
 	{
 		if( this.oopsShader.shouldSplit( effectName+'Shader' ) ) this.split( );
 		
-		this.oopsShader.addShader( effectName+'Shader', bakedParameters );
+		this.oopsShader.addShader( effectName+'Shader', bakedParameters, this );
 		//this.oopsShader.addAutoUniforms( );
 	
 		return this; // for chaining
@@ -127,11 +127,17 @@ class Effects extends EffectComposer
 	update( )
 	{
 		this.needsUpdate = false;
-		
+
 		var index = 0;
 		for( var shader of this.oopsShaders )
 		{
-			var shaderPass = new OOPSPass( shader );
+			var shaderPass;
+			var customPass = shader.shaders[1].onPass;
+
+			if( customPass )
+				shaderPass = new customPass( shader );
+			else
+				shaderPass = new OOPSPass( shader );
 			
 			index++;
 			this.insertPass( shaderPass, index );
