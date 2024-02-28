@@ -15,9 +15,9 @@ example shows increased performance by 50%.
 
 ## More information
 
+* [Gallery](examples/) &ndash; a gallery of individual effects
 * [Tutorias](demos/) &ndash; a short tutorial of using Oops.js
 * [Tests](tests/) &ndash; some non-binding performance tests
-* [Examples](examples/) &ndash; simple examples of effects
 <!--* [Shaders Types](examples/types.md) &ndash; general classification of shader types-->
 
 
