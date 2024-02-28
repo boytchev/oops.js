@@ -1,7 +1,8 @@
-# Examples
+# Gallery
 
-This page lists short online demos for supported shaders.<br>
-They can be used to play with the shaders' parameters.
+This page is a showcase of supported effects.<br>
+The demos are made simple on purpose. Then can be used to
+pick desired parameters of the effects.
 
 ## Contents
 <span style="font-size:80%; font-weight:300;">
