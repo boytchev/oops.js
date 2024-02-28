@@ -1,8 +1,24 @@
-﻿import { Vector2, Vector3, Color } from 'three';
+﻿/*
+	class Effects:EffectComposer( renderer, options={} )
+	
+	properties
+		.oopsShader : OOPSShader 				-- the current (i.e. last) shader
+		.oopsShaders = [OOPSShader,...] 		-- all shaders
+		.width : int
+		.height : int
+		.parameters = []
+		.shaders = []
+	methods
+		.split( )
+		.addEffect( effectName, bakedParameters={} )
+		.addParameter( paramName, value1, value2 )
+		.render( scene, camera, deltaTime )
+*/
+
+import { Vector2, Vector3, Color } from 'three';
 
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-//import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 			
 import { OOPSShader } from './oops.shader.js';
@@ -26,10 +42,7 @@ class Effects extends EffectComposer
 	constructor( renderer, options={} )
 	{
 		super( renderer );
-		
-		// TODO: some effects have their own render passes
-		// TODO: maybe in some cases output pass is not used
-		
+
 		this.renderPass = new RenderPass( /*scene, camera*/ );
 		
 		this.addPass( this.renderPass );
@@ -38,12 +51,11 @@ class Effects extends EffectComposer
 		this.oopsShader = new OOPSShader( options ); // the current (i.e. last) shader
 		this.oopsShaders = [this.oopsShader]; // all shaders
 		
-		this._parameters = [];
-		
 		this.width = renderer.domElement.clientWidth;
 		this.height = renderer.domElement.clientHeight;
 
-		this.needsUpdate = true;
+		this.needsRebuild = true;
+		this._parameters = [];
 		
 	} // Effects.constructor
 	
@@ -59,16 +71,18 @@ class Effects extends EffectComposer
 	} // Effects.split
 	
 	
+	
 	addEffect( effectName, bakedParameters={} )
 	{
 		if( this.oopsShader.shouldSplit( effectName+'Shader' ) ) this.split( );
 		
-		this.oopsShader.addShader( effectName+'Shader', bakedParameters, this );
+		this.oopsShader.addShader( effectName+'Shader', bakedParameters/*, this*/ );
 		//this.oopsShader.addAutoUniforms( );
 	
 		return this; // for chaining
 		
 	} // Effects.addEffect
+	
 	
 
 	addParameter( paramName, value1, value2 )
@@ -99,9 +113,10 @@ class Effects extends EffectComposer
 	} // Effects.addParameter
 
 
+
 	render( scene, camera, deltaTime )
 	{
-		if( this.needsUpdate ) this.update( );
+		if( this.needsRebuild ) this.#rebuild( );
 		
 		this.renderPass.scene = scene;
 		this.renderPass.camera = camera;
@@ -110,24 +125,41 @@ class Effects extends EffectComposer
 	} // Effects.render
 	
 	
+	
 	get parameters( )
 	{
-		if( this.needsUpdate ) this.update( );
+		if( this.needsRebuild ) this.#rebuild( );
 		return this._parameters;
 	} // Effects.parameters
 	
 	
+	
 	get shaders( )
 	{
-		if( this.needsUpdate ) this.update( );
+		if( this.needsRebuild ) this.#rebuild( );
 		return this.oopsShaders;
 	} // Effects.shaders
 	
 	
-	update( )
+	
+	#rebuild( )
 	{
-		this.needsUpdate = false;
 
+//console.log('Effects.#rebuild()');
+
+		this.needsRebuild = false;
+
+		// remove all intermediate passes (keep the first
+		// and the last ones, they are RenderPass and OutputPass)
+		while( this.passes.length > 2 )
+		{
+			this.passes[1].dispose();
+			this.remove( this.passes[1] );
+		}
+		
+		// create and insert new passes between the
+		// RenderPass and OutpotPass. Each new pass
+		// corresponds to a shader in oopsShaders[]
 		var index = 0;
 		for( var shader of this.oopsShaders )
 		{
@@ -143,6 +175,8 @@ class Effects extends EffectComposer
 			this.insertPass( shaderPass, index );
 			this._parameters = {...this._parameters, ...shaderPass.uniforms};
 		}
+		
+//console.log('Effects.passes =',this.passes);
 	} // Effects.update
 	
 } // OEffects

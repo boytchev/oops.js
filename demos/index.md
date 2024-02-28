@@ -228,7 +228,7 @@ in order to allow method chaning. This method is intended for internal debug pur
 
 A virtual property of [`Effects`](#effects). Returns an array of shader
 parameters &ndash; explicitly added by the user via [`.addParameter`](#addparameter)
-ot implicitly added by the effect composer (like screen resolution, time, etc.)
+or implicitly added by the effect composer (like screen resolution, time, etc.)
 This property is intended for internal debug purposes.
 
 

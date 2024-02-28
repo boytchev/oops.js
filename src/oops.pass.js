@@ -14,9 +14,7 @@ class OOPSPass extends Pass {
 		this.shader = shader;
 
 		if ( shader ) {
-
 			this.uniforms = UniformsUtils.clone( shader.uniforms );
-
 			this.material = new ShaderMaterial( {
 
 				name: ( shader.name !== undefined ) ? shader.name : 'unspecified',
@@ -26,7 +24,6 @@ class OOPSPass extends Pass {
 				fragmentShader: shader.fragmentShader
 
 			} );
-
 		}
 
 		this.fsQuad = new FullScreenQuad( this.material );
@@ -43,7 +40,6 @@ class OOPSPass extends Pass {
 	
 
 	render( renderer, writeBuffer, readBuffer, deltaTime, maskActive ) {
-
 
 		if ( this.uniforms[ this.textureID ] ) {
 

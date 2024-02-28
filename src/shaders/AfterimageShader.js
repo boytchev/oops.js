@@ -20,15 +20,14 @@ import { Pass, FullScreenQuad } from '../Pass.js';
 
 class AfterimagePass extends Pass {
 
-	constructor( oopsShader, damp = 0.96 ) {
+	constructor( shader ) {
 
 		super();
 
-		this.shader = AfterimageShader;
+		//this.shader = AfterimageShader;
+		this.shader = shader;
 
 		this.uniforms = UniformsUtils.clone( this.shader.uniforms );
-
-		this.uniforms[ 'damp' ].value = damp;
 
 		this.textureComp = new WebGLRenderTarget( window.innerWidth, window.innerHeight, {
 			magFilter: NearestFilter,
@@ -53,6 +52,12 @@ class AfterimagePass extends Pass {
 		this.copyFsMaterial = new MeshBasicMaterial();
 		this.copyFsQuad = new FullScreenQuad( this.copyFsMaterial );
 
+		this.renderList = [];
+		for( var sh of shader.shaders )
+		{
+			if( sh.onRender )
+				this.renderList.push( sh.onRender );
+		}
 	}
 
 	render( renderer, writeBuffer, readBuffer/*, deltaTime, maskActive*/ ) {
@@ -65,6 +70,9 @@ class AfterimagePass extends Pass {
 
 		this.copyFsQuad.material.map = this.textureComp.texture;
 
+		for( var renderFunc of this.renderList )
+			renderFunc( renderer, writeBuffer, readBuffer, deltaTime, maskActive, this );
+		
 		if ( this.renderToScreen ) {
 
 			renderer.setRenderTarget( null );
@@ -74,7 +82,7 @@ class AfterimagePass extends Pass {
 
 			renderer.setRenderTarget( writeBuffer );
 
-			if ( this.clear ) renderer.clear();
+			if ( this.clear ) renderer.clear( renderer.autoClearColor, renderer.autoClearDepth, renderer.autoClearStencil );
 
 			this.copyFsQuad.render( renderer );
 
@@ -113,7 +121,7 @@ class AfterimagePass extends Pass {
 
 const AfterimageShader = {
 	
-	type: 'PASS',
+	type: 'S',
 	
 	weight: 2,
 
@@ -125,42 +133,30 @@ const AfterimageShader = {
 		
 	},
 
-	vertexShader: /* glsl */`
-
-		varying vec2 vUv;
-
-		void main() {
-
-			vUv = uv;
-			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-
-		}`,
-
 	fragmentShader: /* glsl */`
 	
-		uniform float damp;
-		
-		uniform sampler2D tOld;
-		uniform sampler2D tNew;
-
-		varying vec2 vUv;
-		
-		vec4 when_gt( vec4 x, float y ) {
+		vec4 when_gt_$( vec4 x, float y ) {
 
 			return max( sign( x - y ), 0.0 );
 
 		}
 
-		void main( ) {
+		vec4 $( vec2 vUv ) {
 
 			vec4 texelOld = texture2D( tOld, vUv );
 			vec4 texelNew = texture2D( tNew, vUv );
 
-			texelOld *= damp * when_gt( texelOld, 0.1 );
+			texelOld *= damp_$ * when_gt_$( texelOld, 0.1 );
 
-			gl_FragColor = max(texelNew, texelOld);
+			return max(texelNew, texelOld);
 			
 		}`,
+		
+	onLoad: /* js */ function( shader, oopsShader )
+		{
+			oopsShader.addUniform( 'tOld' );
+			oopsShader.addUniform( 'tNew' );
+		},
 		
 	onPass: AfterimagePass,
 

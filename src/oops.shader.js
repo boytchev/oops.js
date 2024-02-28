@@ -48,6 +48,7 @@ class OOPSShader
 		this.needsCompile = true;
 		
 		this.weight = 1;
+		this.type = '';
 		
 	} // OOPSShader.constructor
 	
@@ -60,6 +61,9 @@ class OOPSShader
 		// shader exists?
 		if( shader === undefined ) return false;
 
+		// shader is defind as split-only
+		if( shader.type == 'S' || this.type == 'S' ) return true;
+		
 		// calculate new weight
 		var weight = this.weight * (shader.weight?shader.weight:1);
 		
@@ -72,8 +76,12 @@ class OOPSShader
 	
 	
 	
-	addShader( shaderName, bakedValues={}, oopsPass )
+	addShader( shaderName, bakedValues={}/*, oopsPass*/ )
 	{
+//console.log(`\n\nOOPSShader.addShader( ${shaderName} )`);
+//console.log('\tbakedValues =',bakedValues);
+/*console.log('\toopsPass =',oopsPass);*/
+
 		var shader = SHADERS[shaderName];
 
 		// shader exists?
@@ -91,6 +99,7 @@ class OOPSShader
 		}
 		
 		this.weight = weight;
+		this.type = shader.type;
 		
 		// deep copy
 		var shaderClone = {
@@ -134,7 +143,7 @@ class OOPSShader
 
 		if( shader.onLoad )
 		{
-			shader.onLoad( shaderClone, this, oopsPass );
+			shader.onLoad( shaderClone, this /*, oopsPass*/ ); // is it needed?
 		}
 		
 

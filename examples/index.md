@@ -6,7 +6,7 @@ They can be used to play with the shaders' parameters.
 ## Contents
 <span style="font-size:80%; font-weight:300;">
 [ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
-&middot; AfterimageShader
+&middot; [AfterimageShader](#afterimageshader)
 &middot; [BasicShader](#basicshader)
 &middot; [BleachBypassShader](#bleachbypassshader)
 &middot; BlendShader
@@ -75,6 +75,20 @@ Example: [ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
 [<img style="width:100%" src="ACESFilmicToneMappingShader.jpg">](ACESFilmicToneMappingShader.html)
 
 *<span style="font-size: 0.75em; color: dimgray;">Notes: (1) **exposure** range is expanded.</span>*
+	
+
+
+## AfterimageShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]</span>
+
+A shader that applies the frame onto cumulative image of older versions of the frame, thus
+building and after immage effect.
+	
+* **`damp`** – damping factor, i.e. how much of the old frame to use (float, from 0 to 1, default value 0.96) 
+
+Example: [AfterimageShader.html](AfterimageShader.html)
+		
+[<img style="width:100%" src="AfterimageShader.jpg">](AfterimageShader.html)
 	
 
 
