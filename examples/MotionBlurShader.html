@@ -25,11 +25,11 @@
 
 
 		var effects = new Effects( renderer )
-			.addEffect( 'Afterimage' )
+			.addEffect( 'MotionBlur' )
 			.addParameter( 'damp' );
 			
 
-		var gui = new GUI( { title: '<big><em>Afterimage</em></big>' } );
+		var gui = new GUI( { title: '<big><em>MotionBlur</em></big>' } );
 			gui.add( effects, 'damp', 0.7, 1 ).step( 0.01 ).name( 'Damp' ).$input.classList.add('bottom');
 
 			

@@ -39,6 +39,7 @@ pick desired parameters of the effects.
 &middot; [LuminosityShader](#luminosityshader)
 &middot; [MirrorShader](#mirrorshader)
 &middot; MMDToonShader
+&middot; [MotionBlurShader](#motionblurshader)
 &middot; NormalMapShader
 &middot; OutputShader
 &middot; [RGBShiftShader](#rgbshiftshader)
@@ -83,7 +84,7 @@ Example: [ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
 <span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]</span>
 
 A shader that applies the frame onto cumulative image of older versions of the frame, thus
-building and after immage effect.
+building an after image effect. This effect is similar to [MotionBlurShader](#motionblurshader).
 	
 * **`damp`** – damping factor, i.e. how much of the old frame to use (float, from 0 to 1, default value 0.96) 
 
@@ -490,6 +491,21 @@ Example: [MirrorShader.html](MirrorShader.html)
 [<img src="MirrorShader.jpg">](MirrorShader.html)
 
 		
+
+
+
+## MotionBlurShader
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]</span>
+
+A shader that applies the frame onto cumulative image of older versions of the frame, thus
+building a motion blur effect. This effect is similar to [AfterimageShader](#afterimageshader).
+	
+* **`damp`** – damping factor, i.e. how much of the old frame to use (float, from 0 to 1, default value 0.9) 
+
+Example: [MotionBlurShader.html](MotionBlurShader.html)
+		
+[<img style="width:100%" src="MotionBlurShader.jpg">](MotionBlurShader.html)
+	
 
 
 

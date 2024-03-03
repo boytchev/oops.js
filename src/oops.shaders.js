@@ -34,6 +34,7 @@ import {HalftoneShader} from './shaders/HalftoneShader.js';
 import {ConvolutionShader} from './shaders/ConvolutionShader.js';
 import {FXAAShader} from './shaders/FXAAShader.js';
 import {AfterimageShader} from './shaders/AfterimageShader.js';
+import {MotionBlurShader} from './shaders/MotionBlurShader.js';
 //import {OutputShader} from './shaders/OutputShader.js';
 
 
@@ -74,6 +75,7 @@ const SHADERS = {
 		ConvolutionShader:			ConvolutionShader,
 		FXAAShader:					FXAAShader,
 		AfterimageShader:			AfterimageShader,
+		MotionBlurShader:			MotionBlurShader,
 //		OutputShader:				OutputShader,
 }
 

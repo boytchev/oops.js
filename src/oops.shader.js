@@ -62,7 +62,7 @@ class OOPSShader
 		if( shader === undefined ) return false;
 
 		// shader is defind as split-only
-		if( shader.type == 'S' || this.type == 'S' ) return true;
+		if( this.shaders.length>2 && (shader.type == 'S' || this.type == 'S') ) return true;
 		
 		// calculate new weight
 		var weight = this.weight * (shader.weight?shader.weight:1);

@@ -24,5 +24,5 @@ The table classifies shaders according to their type (base character) and weight
 | **O<sup>25</sup>** | [ConvolutionShader](index.md#convolutionshader) |
 | **O<sup>109</sup>** | [HalftoneShader](index.md#halftoneshader) |
 | **S** | **These shaders use their own specific render pass. A S-shader is automatically places in individual pass.** |
-| **S<sup>2</sup>** | [AfterimageShader](index.md#afterimageshader) |
+| **S<sup>2</sup>** | [AfterimageShader](index.md#afterimageshader), [MotionBlurShader](index.md#motionblurshader) |
 | | (to be continued) |

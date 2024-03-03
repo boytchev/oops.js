@@ -1,6 +1,6 @@
 ﻿/**
  *
- * Ported from examples/jsm/shaders/AfterimageShader.js
+ * Ported and modified from examples/jsm/shaders/AfterimageShader.js
  *
  */
  
@@ -18,7 +18,7 @@ import {
 import { Pass, FullScreenQuad } from '../Pass.js';
 
 
-class AfterimagePass extends Pass {
+class MotionBlurPass extends Pass {
 
 	constructor( shader ) {
 
@@ -119,7 +119,7 @@ class AfterimagePass extends Pass {
 }
 
 
-const AfterimageShader = {
+const MotionBlurShader = {
 	
 	type: 'S',
 	
@@ -127,7 +127,7 @@ const AfterimageShader = {
 
 	uniforms: {
 		
-		damp: { value: 0.96 },
+		damp: { value: 0.9 },
 		tOld: { value: null },
 		//tNew: { value: null },  reuse tDiffuse as tNew
 		
@@ -135,20 +135,12 @@ const AfterimageShader = {
 
 	fragmentShader: /* glsl */`
 	
-		vec4 when_gt_$( vec4 x, float y ) {
-
-			return max( sign( x - y ), 0.0 );
-
-		}
-
 		vec4 $( vec2 vUv ) {
 
 			vec4 texelOld = texture2D( tOld, vUv );
 			vec4 texelNew = $$( vUv );
 
-			texelOld *= damp_$ * when_gt_$( texelOld, 0.1 );
-
-			return max(texelNew, texelOld);
+			return mix(texelNew, texelOld, damp_$);
 			
 		}`,
 		
@@ -157,10 +149,10 @@ const AfterimageShader = {
 			oopsShader.addUniform( 'tOld' );
 		},
 		
-	onPass: AfterimagePass,
+	onPass: MotionBlurPass,
 
 };
 
 
 
-export { AfterimageShader };
+export { MotionBlurShader };
