@@ -63,7 +63,7 @@ const ConvolutionShader = {
 			
 		}`,
 
-	onLoad: function ( shader )	{
+	onLoad: function ( shader, sigma=4 ) {
 		
 		function gauss( x, sigma ) {
 			
@@ -72,7 +72,7 @@ const ConvolutionShader = {
 		}
 
 
-		var sigma = 4;
+		//var sigma = 4;
 		const kMaxKernelSize = 25;
 		var kernelSize = 2 * Math.ceil( sigma * 3.0 ) + 1;
 

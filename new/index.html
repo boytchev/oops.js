@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../examples/styles.css">
+		<script type="importmap">
+		  {
+			"imports": {
+			  "three":         "../libs/build/three.module.js",
+			  "three/addons/": "../libs/examples/jsm/",
+			  "oops":          "../src/oops2.js"
+			}
+		  }
+		</script>
+	</head>
+
+
+	<body>
+		<script type="module">
+
+			// imports from Three.js
+			
+			import * as THREE from 'three';
+
+			import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+			import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+			
+			import { ColorifyShader } from 'three/addons/shaders/ColorifyShader.js';
+			import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
+
+			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+			
+			import { Effects } from 'oops';
+
+			
+
+
+
+			var renderer, scene, camera, object, composers;
+
+
+
+			// a simple 3D scene with a single cube
+			
+			function init( ) {
+			
+				renderer = new THREE.WebGLRenderer( {antialias: true} );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( innerWidth, innerHeight );
+				renderer.setAnimationLoop( animationLoop );
+				
+				document.body.appendChild( renderer.domElement );
+				document.body.style = 'margin: 0; overflow: hidden;';
+					
+				camera = new THREE.PerspectiveCamera( 60, innerWidth / innerHeight, 0.1, 100 );
+				camera.position.z = 2;
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 'gray' );
+
+				object = new THREE.Mesh( 
+					new THREE.IcosahedronGeometry( 0.8 ),
+					new THREE.MeshNormalMaterial( )
+				);
+				
+				scene.add( object );
+				
+				// manage frame resize
+				
+				window.addEventListener( 'resize', onWindowResize );
+
+				function onWindowResize( ) {
+				
+					camera.aspect = innerWidth / innerHeight;
+					camera.updateProjectionMatrix();
+					
+					renderer.setSize( innerWidth, innerHeight );
+					
+					effects.setSize( innerWidth, innerHeight );
+
+				} // init.onWindowResize
+
+			} // init
+
+
+
+			init( );
+			
+
+			var effects = new Effects( renderer, {
+								verbose: true,
+								warning: true,
+								shaders: !true,
+								uniforms: true,
+							} )
+					.addEffect( RGBShiftShader, {amount: 0.3} )
+					.addParameter( 'angle' )
+					.addEffect( ColorifyShader, {color:new THREE.Color(1,0.5,0)} )
+					.addEffect( RGBShiftShader, {amount: 0.02} )
+					.addParameter( 'angle2', 'angle' )
+					//.addParameter( 'angle' )
+
+/*			
+console.log(effects.passes[1].material.vertexShader);
+console.log(effects.passes[1].material.fragmentShader);
+console.log(effects.passes[2].material.vertexShader);
+console.log(effects.passes[2].material.fragmentShader);
+console.log(effects.statistics);
+*/
+//console.log(effects.parameters);
+
+				
+var todo=true;
+
+			function animationLoop( time ) {
+
+				effects.angle = time/1000;
+				effects.angle2 = time/50;
+
+				object.rotation.set( time/1200, time/1300, time/1400 );
+
+				effects.render( scene, camera );
+				
+			} // animationLoop
+
+		</script>
+
+	</body>
+</html>
+
+
