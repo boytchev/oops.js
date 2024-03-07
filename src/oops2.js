@@ -12,7 +12,8 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 
-import { isShader, bakeUniform, renameWord, showShaders } from './oops.utils.js';
+import { isShader, bakeUniform, renameWord, getGlobalNames, showShaders, hasSimpleShader, mergeSimplePasses } from './oops.utils.js';
+import { KB } from './oops.kb.js';
 
 
 
@@ -64,8 +65,16 @@ class Effects extends EffectComposer
 			var pass = new ShaderPass( effect );
 			pass.id = this.passes.length;
 			
+			// preprocess fragment shader if needed
+			// this is usually done to fix bugs
+			if( KB[effect.name] )
+			if( KB[effect.name].fragmentPreprocessing )
+				KB[effect.name].fragmentPreprocessing( pass );
+			
 			for( var uniformName of Object.keys(bakedParameters) )
 				pass.uniforms[uniformName].value = bakedParameters[uniformName];
+			
+			//console.log( getGlobalNames( pass, 'fragmentShader', true ) );
 				
 			this.insertPass( pass, this.passes.length-1 );
 			
@@ -105,13 +114,12 @@ class Effects extends EffectComposer
 
 		if( this.parameters[publicName] )
 		{
-			throw new Error( `Parameter '${publicName}' is already defined. Use another name with .addParameter('...','${publicName}',...)` );
+			throw new Error( `Parameter '${publicName}' is already defined. Use another name or alias for this parameter.` );
 		}
 		
 		this.parameters[publicName] = this.passes[this.passes.length-2].uniforms[uniformName];
 		this.parameters[publicName].oopsParameter = true; // protect from baking
 
-//console.log(this.parameters[publicName])
 
 		Object.defineProperty (this, publicName,
 			{
@@ -153,9 +161,26 @@ class Effects extends EffectComposer
 		if( !this.needsUpdate ) return;
 		this.needsUpdate = false;
 
-		// bake all static uniforms that are not textures (i.e. null values)
+		this.updateBakeUniforms( );
+		this.updateRenameGlobals( );
+		this.updateMergePasses( );
+
+		if( this.options.verbose ) console.log( 'updateEffects', this.statistics );
+		
+		if( this.options.shaders || this.options.uniforms ) showShaders( this );
+		
+		
+	} // Effects.update	// update passes and shaders before renderings
+	
+	
+	
+	// bake all static uniforms that are not textures
+	updateBakeUniforms( )
+	{
+		// process all passes - bake uniforms
 		for( var pass of this.passes )
 		{
+			// bake all static uniforms that are not textures (i.e. null values)
 			if( pass.uniforms )
 				for( var uniformName of Object.keys(pass.uniforms) )
 				{
@@ -175,20 +200,70 @@ class Effects extends EffectComposer
 						this.statistics.reducedUniforms++;
 					}
 					else
+					if( KB[pass.material.name] &&
+						KB[pass.material.name].ignoreUniformBaking &&
+						KB[pass.material.name].ignoreUniformBaking.indexOf(uniformName)>=-1 )
+					{
+						// this uniform is known to be unbakeable
+						// so ignore the fact that it cannot be baked
+					}
+					else
 					{
 						if( this.options.warning ) console.warn( `\twarning '${uniformName}' in ${pass.material.name} cannot be baked` );
 					}	
 					
 				} // for uniformName
 		} // for pass
+				
+	} // Effects.updateBakeUniforms
+	
+	
+	
+	// rename all global definitions
+	updateRenameGlobals( )
+	{
+		// process all passes
+		for( var pass of this.passes )
+		{
+			// rename all globals
+			for( var ident of getGlobalNames( pass, 'fragmentShader', true ) )
+			{
+				// rename global ident
+				renameWord( pass, 'fragmentShader', ident, `${ident}_${pass.id}` );
+				if( this.options.verbose ) console.log( `\trename '${ident}' to '${ident}_${pass.id}'` );
+			} // for ident
+		} // for pass
+				
+	} // Effects.updateRenameGlobals
+	
+	
+	
+	// attempt to merge passes
+	updateMergePasses( )
+	{
+		if( this.options.merging === false ) return;
 		
-
-		if( this.options.verbose ) console.log( 'updateEffects', this.statistics );
-		
-		if( this.options.shaders || this.options.uniforms ) showShaders( this );
-		
-		
-	} // Effects.update
+		// process all passes
+		for( var i = this.passes.length-2; i>0; i-- )
+		{
+			// this = this+that;
+			var thisPass = this.passes[i];
+			var thatPass = this.passes[i+1];
+			
+			// currently only simple passes can be handled
+			if( !hasSimpleShader( thisPass ) ) continue;
+			if( !hasSimpleShader( thatPass ) ) continue;
+			
+			if( mergeSimplePasses( thisPass, thatPass, this.options ) )
+			{
+				if( this.options.verbose ) console.log('merged pass',i+1,'into',i);
+				//console.log('@@@@oldpasses',this.passes)
+				this.removePass( thatPass );
+				//console.log('@@@@newpasses',this.passes)
+			}
+		} // for i
+				
+	} // Effects.updateMergePasses
 	
 	
 } // Effects

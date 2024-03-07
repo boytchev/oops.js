@@ -29,6 +29,8 @@
 			
 			import { ColorifyShader } from 'three/addons/shaders/ColorifyShader.js';
 			import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
+			import { FreiChenShader } from 'three/addons/shaders/FreiChenShader.js';
+			import { DotScreenShader } from 'three/addons/shaders/DotScreenShader.js';
 
 			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 			
@@ -92,15 +94,17 @@
 			var effects = new Effects( renderer, {
 								verbose: true,
 								warning: true,
-								shaders: !true,
+								shaders: true,
 								uniforms: true,
+								merging: true,
 							} )
-					.addEffect( RGBShiftShader, {amount: 0.3} )
-					.addParameter( 'angle' )
-					.addEffect( ColorifyShader, {color:new THREE.Color(1,0.5,0)} )
-					.addEffect( RGBShiftShader, {amount: 0.02} )
-					.addParameter( 'angle2', 'angle' )
+					.addEffect( RGBShiftShader, {amount: 0.1} )
+					.addEffect( DotScreenShader )
+//					.addEffect( ColorifyShader, {color:new THREE.Color(0,0.5,0)} )
 					//.addParameter( 'angle' )
+					//.addEffect( FreiChenShader )
+					.addEffect( ColorifyShader, {color:new THREE.Color(1,-1,1)} )
+					.addEffect( FreiChenShader )
 
 /*			
 console.log(effects.passes[1].material.vertexShader);
@@ -112,12 +116,11 @@ console.log(effects.statistics);
 //console.log(effects.parameters);
 
 				
-var todo=true;
 
 			function animationLoop( time ) {
 
-				effects.angle = time/1000;
-				effects.angle2 = time/50;
+				//effects.angle = time/1000;
+				//effects.angle2 = time/50;
 
 				object.rotation.set( time/1200, time/1300, time/1400 );
 
