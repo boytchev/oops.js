@@ -3,6 +3,13 @@
 This page is a showcase of individual effects. They can be
 used to pick a desired effect and to play with its parameters.
 
+Most of the shaders are from Three.js. The X-shaders are
+alternative or new shaders that fix some issues with the
+official shader, or provide new functionality.
+
+Most shader parameters with predefined ranges could be used
+with values outside this range.
+
 <span style="font-size:80%; font-weight:300;">
 [ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
 <!--
