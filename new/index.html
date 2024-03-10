@@ -9,7 +9,8 @@
 			"imports": {
 			  "three":         "../libs/build/three.module.js",
 			  "three/addons/": "../libs/examples/jsm/",
-			  "oops":          "../src/oops2.js"
+			  "oops":          "../src/oops.js",
+			  "oops/shaders/": "../src/shaders/"
 			}
 		  }
 		</script>
@@ -31,10 +32,16 @@
 			import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
 			import { FreiChenShader } from 'three/addons/shaders/FreiChenShader.js';
 			import { DotScreenShader } from 'three/addons/shaders/DotScreenShader.js';
+			import { FocusShader } from 'three/addons/shaders/FocusShader.js';
+			import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+			
+			import { FilmShader } from 'three/addons/shaders/FilmShader.js';
+			import { TriangleBlurShader } from 'three/addons/shaders/TriangleBlurShader.js';
 
 			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 			
 			import { Effects } from 'oops';
+			//import { FilmShader } from 'oops/shaders/FilmShader.js';
 
 			
 
@@ -79,7 +86,7 @@
 					camera.updateProjectionMatrix();
 					
 					renderer.setSize( innerWidth, innerHeight );
-					
+
 					effects.setSize( innerWidth, innerHeight );
 
 				} // init.onWindowResize
@@ -98,14 +105,12 @@
 								uniforms: true,
 								merging: true,
 							} )
-					.addEffect( RGBShiftShader, {amount: 0.1} )
-					.addEffect( DotScreenShader )
-//					.addEffect( ColorifyShader, {color:new THREE.Color(0,0.5,0)} )
-					//.addParameter( 'angle' )
-					//.addEffect( FreiChenShader )
-					.addEffect( ColorifyShader, {color:new THREE.Color(1,-1,1)} )
-					.addEffect( FreiChenShader )
-
+					//.addEffect( RGBShiftShader, {amount: 0.1} )
+					//.addEffect( FocusShader )
+					//.addEffect( FXAAShader )
+					//.addEffect( ColorifyShader, {color:new THREE.Color(1,-1,1)} )
+					.addEffect( TriangleBlurShader, {delta: new THREE.Vector2(0.02,0)} )
+					.addEffect( TriangleBlurShader, {delta: new THREE.Vector2(0,0.02)} )
 /*			
 console.log(effects.passes[1].material.vertexShader);
 console.log(effects.passes[1].material.fragmentShader);
@@ -116,12 +121,15 @@ console.log(effects.statistics);
 //console.log(effects.parameters);
 
 				
+effects.update();
 
 			function animationLoop( time ) {
 
-				//effects.angle = time/1000;
+				//effects.angle = Math.sin(time/3000);
 				//effects.angle2 = time/50;
-
+				//effects.scale = 0.035 + 0.015*Math.sin(Math.floor(time/2000)**2.5);
+				
+				//effects.passes[1].uniforms['time_2'].value = Math.random();
 				object.rotation.set( time/1200, time/1300, time/1400 );
 
 				effects.render( scene, camera );

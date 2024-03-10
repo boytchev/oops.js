@@ -1,6 +1,10 @@
 
 *.bak
 misc/
+new/
+src/@oldies
+src/shaders/oops
+src/todo
 
 *.bkp
 demos/video-effect/future-bass-trap-future-bass-royalty-free-music-167020-license.txt

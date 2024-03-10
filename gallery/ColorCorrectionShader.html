@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { Vector3 } from 'three';
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { ColorCorrectionShader } from 'three/addons/shaders/ColorCorrectionShader.js';
+		
+		import { renderer, randomBalls, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+
+
+		var effects = new Effects( renderer )
+			.addEffect( ColorCorrectionShader )
+			.addParameter( 'powRGB', new Vector3(2,2,2) )
+			.addParameter( 'mulRGB', new Vector3(1,1,1) )
+			.addParameter( 'addRGB', new Vector3(0,0,0) );
+
+
+		var gui = new GUI( { title: '<big><em>Color Correction</em></big>' } );
+			gui.add( effects.powRGB, 'x', -2, 2 ).step( 0.01 ).name( 'PowRGB <right>red</right>' );
+			gui.add( effects.powRGB, 'y', -2, 2 ).step( 0.01 ).name( '<right>green</right>' );
+			gui.add( effects.powRGB, 'z', -2, 2 ).step( 0.01 ).name( '<right>blue</right>' );
+			gui.add( effects.mulRGB, 'x', -2, 2 ).step( 0.01 ).name( 'MulRGB <right>red</right>' );
+			gui.add( effects.mulRGB, 'y', -2, 2 ).step( 0.01 ).name( '<right>green</right>' );
+			gui.add( effects.mulRGB, 'z', -2, 2 ).step( 0.01 ).name( '<right>blue</right>' );
+			gui.add( effects.addRGB, 'x', -2, 2 ).step( 0.01 ).name( 'AddRGB <right>red</right>' );
+			gui.add( effects.addRGB, 'y', -2, 2 ).step( 0.01 ).name( '<right>green</right>' );
+			gui.add( effects.addRGB, 'z', -2, 2 ).step( 0.01 ).name( '<right>blue</right>' ).$input.classList.add('bottom');
+
+
+		randomBalls( );
+		animationLoop( effects );
+
+	</script>
+
+</body>
+</html>

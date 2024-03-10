@@ -2,12 +2,10 @@
 
 **Oops.js** is a library which attempts to squeeze higher performance from Three.js postprocessing effects, by:
 
-* merging the source codes of several shaders
-* embedding static uniforms as shader constants
+* baking static uniforms in the shader code
+* merging several compatible shaders into one
+* reducing the number of postprocessing passes
 
-Additionally, the library makes small adjustment to the shaders properties,
-so they are not completely the same as their Three.js counterparts.
-More information and online demos are available at:
 
 ## [https://boytchev.github.io/oops.js/](https://boytchev.github.io/oops.js/)
 

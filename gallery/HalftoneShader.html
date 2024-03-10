@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { Vector3 } from 'three';
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { HalftoneShader } from 'three/addons/shaders/HalftoneShader.js';
+		
+		import { renderer, randomBalls, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+
+
+		var effects = new Effects( renderer )
+			.addEffect( HalftoneShader )
+			.addParameter( 'shape' )
+			.addParameter( 'radius' )
+			.addParameter( 'rotateR', 0.26 )
+			.addParameter( 'rotateG', 0.52 )
+			.addParameter( 'rotateB', 0.79 )
+			.addParameter( 'scatter' )
+			.addParameter( 'blending' )
+			.addParameter( 'blendingMode' )
+			.addParameter( 'greyscale' )
+			.addParameter( 'disable' );
+
+
+		var gui = new GUI( { title: '<big><em>HalftoneShader</em></big>' } );
+
+			gui.add( effects, 'shape', {Dot:1, Ellipse:2, Line:3, Square:4} ).name( 'Shape' );
+			gui.add( effects, 'radius', 1, 20 ).step(0.1).name( 'Radius' );
+			gui.add( effects, 'scatter', 0, 10 ).step(0.1).name( 'Scatter' );
+			
+			gui.add( effects, 'rotateR', 0, 2*Math.PI ).step(0.01).name( 'Rotate <right>red</right>' );
+			gui.add( effects, 'rotateG', 0, 2*Math.PI ).step(0.01).name( '<right>green</right>' );
+			gui.add( effects, 'rotateB', 0, 2*Math.PI ).step(0.01).name( '<right>blue</right>' );
+
+			gui.add( effects, 'blending', 0, 1 ).step(0.01).name( 'Blending' );
+			gui.add( effects, 'blendingMode', {Linear:1, Multiply:2, Add:3, Lighter:4, Darker:5} ).step(0.01).name( '<right>mode</right>' );
+			
+			gui.add( effects, 'greyscale' ).name( 'Greyscale' );
+			gui.add( effects, 'disable' ).name( 'Disable' );
+
+
+		randomBalls( );
+		animationLoop( effects );
+
+
+	</script>
+
+</body>
+</html>

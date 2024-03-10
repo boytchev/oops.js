@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { Color } from 'three';
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { BleachBypassShader } from 'three/addons/shaders/BleachBypassShader.js';
+		
+		import { renderer, scene, randomBallsAndCubes, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+
+
+		var effects = new Effects( renderer )
+			.addEffect( BleachBypassShader )
+			.addParameter( 'opacity' );
+
+
+		var gui = new GUI( { title: '<big><em>Bleach Bypass</em></big>' } );
+			gui.add( effects, 'opacity', 0, 6 ).step( 0.01 ).name( 'Opacity' ).$input.classList.add('bottom');
+
+
+		scene.background = new Color( 'lightgray' );
+		randomBallsAndCubes( );
+		animationLoop( effects );
+
+	</script>
+
+</body>
+</html>

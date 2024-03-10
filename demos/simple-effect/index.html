@@ -23,6 +23,9 @@
 	<script type="module">
 
 		import * as THREE from 'three';
+		import { SepiaShader } from 'three/addons/shaders/SepiaShader.js';
+		import { FilmShader } from 'three/addons/shaders/FilmShader.js';
+		
 		import { Effects } from 'oops';
 		import { Platon } from 'platons';
 
@@ -48,8 +51,8 @@
 
 		// create the composer
 		var effects = new Effects( renderer )
-				.addEffect( 'Sepia' )
-				.addEffect( 'Film' );
+				.addEffect( SepiaShader )
+				.addEffect( FilmShader );
 
 
 		// adjust composer size

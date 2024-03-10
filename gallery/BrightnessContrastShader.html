@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { BrightnessContrastShader } from 'three/addons/shaders/BrightnessContrastShader.js';
+		
+		import { renderer, randomBalls, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+
+
+		var effects = new Effects( renderer )
+			.addEffect( BrightnessContrastShader )
+			.addParameter( 'brightness' )
+			.addParameter( 'contrast' );
+				
+				
+		var gui = new GUI( { title: '<big><em>Brightness Contrast</em></big>' } );
+			gui.add( effects, 'brightness', -1, 1 ).step( 0.01 ).name( 'Brightness' );
+			gui.add( effects, 'contrast', -1, 1 ).step( 0.01 ).name( 'Contrast' ).$input.classList.add('bottom');
+				
+
+		randomBalls( );
+		animationLoop( effects );
+
+	</script>
+
+</body>
+</html>

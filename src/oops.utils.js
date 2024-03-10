@@ -4,6 +4,7 @@
 	isShader( something )
 	bakeUniform( pass, shaderName, uniformName, uniformValue )
 	renameWord( pass, shaderName, word, newWord )
+	renameText( pass, shaderName, text, newText )
 	getGlobalNames( pass, shaderName )
 	defaultTextureName( pass )
 	defaultUVCoordName( pass )
@@ -13,6 +14,7 @@
 */
 
 import { Vector2, Vector3, Color } from 'three';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { KB } from './oops.kb.js';
 
 
@@ -90,6 +92,12 @@ function bakeUniform( pass, shaderName, uniformName, uniformValue )
 			`uniform vec2 ${uniformName};`,
 			`#define ${uniformName} vec2(${uniformValue.x},${uniformValue.y})`
 		)) return true;
+
+	if( uniformValue==true || uniformValue==false )
+		if( replaced(
+			`uniform bool ${uniformName};`,
+			`#define ${uniformName} ${uniformValue}`
+		)) return true;
 		
 	if( replaced(
 		`uniform float ${uniformName};`,
@@ -121,11 +129,23 @@ function renameWord( pass, shaderName, word, newWord )
 
 
 
+// renames a text in shader source (verbatim)
+
+function renameText( pass, shaderName, text, newText )
+{
+	var glsl = pass.material[shaderName];
+
+	pass.material[shaderName] = glsl.replaceAll( text, newText );
+	
+} // renameText
+
+
+
 // shows information about shaders
 
 function showShaders( effects )
 {
-	console.group( 'Shaders' );
+	console.group( 'Effects' );
 	
 	for( var pass of effects.passes )
 	{
@@ -136,34 +156,57 @@ function showShaders( effects )
 		
 		if( effects.options.shaders && pass.material?.vertexShader )
 		{
+			console.groupCollapsed( 'Vertex shader' );
 			console.log( pass.material.vertexShader );
+			console.groupEnd( ); // Vertex shader
+			
+			console.groupCollapsed( 'Fragment shader' );
 			console.log( pass.material.fragmentShader );
+			console.groupEnd( ); // Fragment shader
 		}
-		else
-		if( effects.options.uniforms )
+
+		if( effects.options.uniforms && pass.uniforms )
 		{
-			console.log( 'uniforms', pass.uniforms );
+			console.groupCollapsed( 'Uniforms' );
+			for( var [key, value] of Object.entries(pass.uniforms) )
+				console.log( `${key}:`, value );
+			console.groupEnd( ); // Uniforms
 		}
-		else
-		{
-			console.log( '(no info)' );
-		}
-		console.groupEnd( );
+		
+		console.groupEnd( ); // Pass
+		
 	} // for pass
 	
-	console.groupEnd( );
+	if( effects.options.uniforms && effects.sizeUniforms.length>0 )
+	{
+		console.groupCollapsed( 'Size Uniforms' );
+		for( var key of effects.sizeUniforms )
+			console.log( key );
+		console.groupEnd( ); // Size Uniforms
+	}
+		
+	console.groupEnd( ); // Effects
 	
 } // showShaders
 
 
 
 // get the default name of input texture
-function defaultTextureName( pass )
+function defaultTextureName( something )
 {
-	if( pass.material )
-	if( KB[pass.material.name] )
-	if( KB[pass.material.name].defaultTextureName instanceof String )
-		return KB[pass.material.name].defaultTextureName;
+	var name;
+
+	if( something instanceof ShaderPass )
+		name = something.material.name;
+	else
+	if( isShader(something) )
+		name = something.name;
+
+	if( name )
+	if( KB[name] )
+	if( KB[name].defaultTextureName instanceof String 
+		|| typeof KB[name].defaultTextureName === 'string' )
+		return KB[name].defaultTextureName;
 				
 	return 'tDiffuse';
 	
@@ -176,7 +219,8 @@ function defaultUVCoordName( pass )
 {
 	if( pass.material )
 	if( KB[pass.material.name] )
-	if( KB[pass.material.name].defaultUVCoordName instanceof String )
+	if( KB[pass.material.name].defaultUVCoordName instanceof String 
+		|| typeof KB[pass.material.name].defaultUVCoordName === 'string' )
 		return KB[pass.material.name].defaultUVCoordName;
 				
 	return 'vUv';
@@ -200,6 +244,24 @@ function hasSimpleShader( pass )
 	
 
 
+// strip parentheses pair
+function stripParentheses( string, openParen, closeParen )
+{
+	var	result = '',
+		nesting = 0;
+		
+	for( var ch of string )
+	{
+		if( ch==openParen ) nesting++;
+		if( nesting==0 ) result += ch;
+		if( ch==closeParen ) nesting--;
+	}
+	
+	return result;
+}
+
+
+
 // get a list of all global constants, variables and
 // functions in shader code
 
@@ -212,22 +274,16 @@ function getGlobalNames( pass, shaderName, excludeDefaults=false )
 		result = [];
 	
 	// remove all {...} sections, this eliminates all local definitions
-	var	stripped = '',
-		nesting = 0;
+	// then remove all (...) sections, to eliminate all functions parameters
+	var stripped = stripParentheses( glsl, '{', '}' );
+		stripped = stripParentheses( stripped, '(', ')' );
 		
-	for( var ch of glsl )
-	{
-		if( ch=='{' ) nesting++;
-		if( nesting==0 ) stripped += ch;
-		if( ch=='}' ) nesting--;
-	}
-	
 	// get all words after type names
-	const TYPES = ['void','int','float','vec2','vec3','vec4','mat2','mat3','mat4','sampler2D'];
+	const TYPES = ['void','int','float','vec2','vec3','vec4','mat2','mat3','mat4','sampler2D','bool'];
 	
 	for( var type of TYPES )
 	{
-		var regex = new RegExp( `(?<=${type}[\\s]*)[\\w]+`, 'g' );
+		var regex = new RegExp( `(?<=${type}[\\s]+)[\\w]+`, 'g' );
 		var matches = stripped.matchAll( regex );
 		result.push( ...[...matches].map( x => x[0] ) );
 	}
@@ -241,6 +297,7 @@ function getGlobalNames( pass, shaderName, excludeDefaults=false )
 	{
 		var words = [
 				'main',
+				'varying',
 				defaultTextureName( pass ),
 				defaultUVCoordName( pass ),
 				...Object.keys(pass.uniforms),
@@ -290,7 +347,6 @@ function mergeSimplePasses( thisPass, thatPass, options )
 
 		var regex;
 
-
 		// rename "void main()" -> "vec4 main_2(sampler2D tDiffuse, vec2 vUv)"
 		// rename "void main(void)" -> "vec4 main_2(sampler2D tDiffuse, vec2 vUv)"
 		regex = new RegExp( `void[\\s]+main[\\s]*\\([\\s]*(void)?[\\s]*\\)`, 'g' );
@@ -323,6 +379,7 @@ function mergeSimplePasses( thisPass, thatPass, options )
 
 		// merge uniforms, if collission, thisUN overwrites thatUN
 		thisPass.uniforms = {...thatUN,...thisUN};
+		thisPass.material.uniforms = thisPass.uniforms;
 	} // fragment shaders
 	
 	
@@ -330,7 +387,6 @@ function mergeSimplePasses( thisPass, thatPass, options )
 	{
 		thisPass.material.name += '+'+thatPass.material.name;
 	} // fragment shaders
-
 	
 	return true;
 	
@@ -338,4 +394,4 @@ function mergeSimplePasses( thisPass, thatPass, options )
 
 
 
-export { isShader, bakeUniform, renameWord, getGlobalNames, showShaders, hasSimpleShader, mergeSimplePasses };
+export { isShader, bakeUniform, renameWord, renameText, getGlobalNames, showShaders, hasSimpleShader, mergeSimplePasses, defaultTextureName };

@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script>
+		const EXAMPLE_RENDERER_OPTIONS = {antialias: false};
+	</script>
+	
+	<script type="module">
+
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+		
+		import { renderer, randomBallsAndCubes, backgroundHatched, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+
+
+		var effects = new Effects( renderer )
+			.addEffect( FXAAShader );
+			
+			
+		var gui = new GUI( { title: '<big><em>FXAA</em></big>' } );
+			
+			
+		randomBallsAndCubes( );
+		backgroundHatched( 'black', 'white' );
+		animationLoop( effects );
+
+	</script>
+
+</body>
+</html>

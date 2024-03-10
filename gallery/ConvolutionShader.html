@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { Vector2 } from 'three';
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { ConvolutionShader } from 'three/addons/shaders/ConvolutionShader.js';
+		
+		import { renderer, randomBalls, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+
+
+		// TO DO: default convolution kernel, not user provided
+
+		var effects = new Effects( renderer )
+			.addEffect( ConvolutionShader )
+			.addParameter( 'uImageIncrement', new Vector2(1/innerWidth,0) )
+			.addParameter( 'cKernel' );
+			
+			
+		function changeKernel( value )
+		{
+			var kernelSize = 25,
+				halfWidth = (kernelSize - 1)/2,
+				values = effects.cKernel,
+				sum = 0;
+				
+			for( var i=0; i<kernelSize; i++ )
+			{
+				var x = i-halfWidth;
+				switch( value )
+				{
+					case 'Random': 
+							values[i] = Math.random() - 0.5;
+							break;
+						
+					case 'Over sharpen': 
+							values[i] = (x==0) ? 25 : -1;
+							break;
+
+					case 'Astigmatism': 
+							values[i] = Math.exp(1+Math.cos( 0.5*x ));
+							break;
+							
+					case 'Double vision': 
+							values[i] = i%(kernelSize-1)?0:1;
+							break;
+														
+					case 'Double silhouette': 
+							values[i] = (x<-10 || x>10) ? 10 : -1;
+							break;
+
+					default: 
+							values[i] = Math.exp( -x*x/32 );
+				}
+				sum += values[i];
+			}
+			
+			for( var i=0; i<kernelSize; i++ )
+				values[i] /= sum;
+		}
+
+		var data = { filter: 'Default' };
+		
+		var gui = new GUI( { title: '<big><em>Convolution</em></big>' } );
+			gui.add( effects.uImageIncrement, 'x', 0, 25/innerWidth ).step( 0.0001 );
+			gui.add( effects.uImageIncrement, 'y', 0, 25/innerHeight ).step( 0.0001 );
+			gui.add( data, 'filter', ['Blur (default)', 'Random', 'Over sharpen', 'Astigmatism', 'Double vision', 'Double silhouette'] ).onChange( changeKernel );
+
+		randomBalls( );
+		animationLoop( effects );
+
+
+		window.addEventListener( 'resize', onWindowResize );
+
+		function onWindowResize()
+		{
+			effects.uImageIncrement.set( 1/innerWidth, 0*innerHeight );
+			gui.controllers[0].updateDisplay( );
+			gui.controllers[1].updateDisplay( );
+		}
+
+	</script>
+
+</body>
+</html>

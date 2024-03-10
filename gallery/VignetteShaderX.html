@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js",
+		  "oops/shaders/": "../src/shaders/"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { Color } from 'three';
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		
+		import { renderer, scene, randomBalls, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+		import { VignetteShaderX } from 'oops/shaders/VignetteShaderX.js';
+
+		var effects = new Effects( renderer )
+			.addEffect( VignetteShaderX )
+			.addParameter( 'radius' )
+			.addParameter( 'blur' )
+			.addParameter( 'color' );
+			
+			
+		var gui = new GUI( { title: '<big><em>Vignette X</em></big>' } );
+			gui.add( effects, 'radius', 0, 2 ).step( 0.01 ).name( 'Radius' );
+			gui.add( effects, 'blur', 0, 5 ).step( 0.1 ).name( 'Blur' );
+			gui.addColor( effects, 'color' ).name( 'Color' ).$text.classList.add('bottom');
+
+
+		scene.background = new Color( 'linen' );
+		randomBalls( );
+		animationLoop( effects );
+
+	</script>
+
+</body>
+</html>

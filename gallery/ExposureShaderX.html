@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js",
+		  "oops/shaders/": "../src/shaders/"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		
+		import { renderer, randomBalls, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+		import { ExposureShaderX } from 'oops/shaders/ExposureShaderX.js';
+
+
+		var effects = new Effects( renderer )
+			.addEffect( ExposureShaderX )
+			.addParameter( 'exposure' );	
+			
+			
+		var gui = new GUI( { title: '<big><em>Exposure X</em></big>' } );
+			gui.add( effects, 'exposure', -3, 3 ).step( 0.1 ).name( 'Exposure' ).$input.classList.add('bottom');
+
+			
+		randomBalls( );
+		animationLoop( effects );
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js",
+		  "oops/shaders/": "../src/shaders/"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		
+		import { renderer, scene, randomBalls, backgroundGrid, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+		import { VerticalTiltShiftShaderX } from 'oops/shaders/VerticalTiltShiftShaderX.js';
+		
+		
+		var effects = new Effects( renderer )
+			.addEffect( VerticalTiltShiftShaderX )
+			.addParameter( 'position' )
+			.addParameter( 'span' )
+			.addParameter( 'amount' );
+				
+				
+		randomBalls( );
+		backgroundGrid( 'black', 'linen', 50 );
+		animationLoop( effects );
+
+
+		var gui = new GUI( { title: '<big><em>Vertical Tilt-shift X</em></big>' } );
+			gui.add( effects, 'position', 0, 1 ).step( 0.01 ).name( 'Position' );
+			gui.add( effects, 'amount', 0, 10 ).step( 0.1 ).name( 'Amount' );
+			gui.add( effects, 'span', 0, 0.2 ).step( 0.01 ).name( 'Span' ).$input.classList.add('bottom');
+
+
+		window.addEventListener( 'resize', onWindowResize );
+
+		function onWindowResize()
+		{
+			scene.background.repeat.set( innerWidth/50, innerHeight/50 );
+		}
+
+	</script>
+
+</body>
+</html>
