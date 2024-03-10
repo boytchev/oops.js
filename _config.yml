@@ -1,2 +1,11 @@
 logo: /assets/logo.jpg
 theme: jekyll-theme-minimal
+
+navigation:
+  - name: Gallery
+    link: gallery/index.html
+#    sublist:
+#      - name: Image
+#        link: ./index.html#small-image
+#  - name: Another Page
+#    link: ./another-page.html
