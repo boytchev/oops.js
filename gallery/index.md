@@ -6,68 +6,68 @@ The X-shaders are alternative Three.js shaders with fix issues,
 extended functionality or are completely new.
 
 <span style="font-size:80%; font-weight:300;">
-<b><big style="color: Crimson">A</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">A</big></b>
 [ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
 <!--
 &middot; [AfterimageShader](#afterimageshader)
 -->
-<b><big style="color: Crimson">B</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">B</big></b>
 [BasicShader](#basicshader)
 &middot; [BleachBypassShader](#bleachbypassshader)
 &middot; BlendShader
 &middot; BokehShader
 &middot; BokehShader2
 &middot; [BrightnessContrastShader](#brightnesscontrastshader)
-<b><big style="color: Crimson">C</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">C</big></b>
 [ColorCorrectionShader](#colorcorrectionshader)
 &middot; [ColorifyShader](#colorifyshader)
 &middot; [ColorifyShader X](#colorifyshader-x)
 &middot; [ConvolutionShader](#convolutionshader)
 &middot; [CopyShader](#copyshader)
-<b><big style="color: Crimson">D</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">D</big></b>
 DepthLimitedBlurShader
 &middot; DigitalGlitch
 &middot; DOFMipMapShader
 &middot; [DotScreenShader](#dotscreenshader)
 &middot; [DotScreenShader X](#dotscreenshader-x)
-<b><big style="color: Crimson">E</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">E</big></b>
 [ExposureShader](#exposureshader)
 &middot; [ExposureShader X](#exposureshader-x)
-<b><big style="color: Crimson">F</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">F</big></b>
 [FilmShader](#filmshader)
 &middot; [FilmShader X](#filmshader-x)
 &middot; [FocusShader](#focusshader)
 &middot; [FreiChenShader](#freichenshader)
 &middot; [FXAAShader](#fxaashader)
-<b><big style="color: Crimson">G</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">G</big></b>
 [GammaCorrectionShader](#gammacorrectionshader)
 &middot; GodRaysShader
-<b><big style="color: Crimson">H</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">H</big></b>
 [HalftoneShader](#halftoneshader)
 &middot; [HorizontalBlurShader](#horizontalblurshader)
 &middot; [HorizontalBlurShader X](#horizontalblurshader-x)
 &middot; [HorizontalTiltShiftShader](#horizontaltiltshiftshader)
 &middot; [HorizontalTiltShiftShader X](#horizontaltiltshiftshader-x)
 &middot; [HueSaturationShader](#huesaturationshader)
-<b><big style="color: Crimson">K</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">K</big></b>
 [KaleidoShader](#kaleidoshader)
 &middot; [KaleidoShader X](#kaleidoshader-x)
-<b><big style="color: Crimson">L</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">L</big></b>
 [LuminosityHighPassShader](#luminosityhighpassshader)
 &middot; [LuminosityShader](#luminosityshader)
-<b><big style="color: Crimson">M</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">M</big></b>
 [MirrorShader](#mirrorshader)
 &middot; MMDToonShader
 <!--
 &middot; [MotionBlurShader](#motionblurshader)
 -->
-&<b><big style="color: Crimson">N</big></b>
+&<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">N</big></b>
 NormalMapShader
-<b><big style="color: Crimson">O</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">O</big></b>
 OutputShader
-<b><big style="color: Crimson">R</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">R</big></b>
 [RGBShiftShader](#rgbshiftshader)
-<b><big style="color: Crimson">S</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">S</big></b>
 SAOShader
 &middot; [SepiaShader](#sepiashader)
 &middot; SMAAShader
@@ -75,14 +75,14 @@ SAOShader
 &middot; SSAOShader
 &middot; SSRShader
 &middot; SubsurfaceScatteringShader
-<b><big style="color: Crimson">T</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">T</big></b>
 [TechnicolorShader](#technicolorshader)
 &middot; [TechnicolorShader X](#technicolorshader-x)
 &middot; ToonShader
 &middot; [TriangleBlurShader](#triangleblurshader)
-<b><big style="color: Crimson">U</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">U</big></b>
 [UnpackDepthRGBAShader](#unpackdepthrgbashader)
-<b><big style="color: Crimson">V</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">V</big></b>
 VelocityShader
 &middot; [VerticalBlurShader](#verticalblurshader)
 &middot; [VerticalBlurShader X](#verticalblurshader-x)
@@ -91,9 +91,9 @@ VelocityShader
 &middot; [VignetteShader](#vignetteshader)
 &middot; [VignetteShader X](#vignetteshader-x)
 &middot; VolumeShader
-<b><big style="color: Crimson">W</big></b>
+<span style="color: Crimson; font-size: 1.5em; font-weight: bold;">W</big></b>
 WaterRefractionShader
-</span>
+<big style="color: Crimson">
 
 
 
@@ -112,7 +112,7 @@ Example: [ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
 
 <!--
 ## AfterimageShader
-<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]</span>
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]<big style="color: Crimson">
 
 A shader that applies the frame onto cumulative image of older versions of the frame, thus
 building an after image effect. This effect is similar to [MotionBlurShader](#motionblurshader).
@@ -591,7 +591,7 @@ Example: [MirrorShader.html](MirrorShader.html)
 
 <!--
 ## MotionBlurShader
-<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]</span>
+<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]<big style="color: Crimson">
 
 A shader that applies the frame onto cumulative image of older versions of the frame, thus
 building a motion blur effect. This effect is similar to [AfterimageShader](#afterimageshader).
