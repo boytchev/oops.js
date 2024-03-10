@@ -20,7 +20,9 @@ not suitable for end users.
 ## More information
 
 * **[Effects Gallery](gallery/)** of individual postprocessing effects.
-<!--* [Tutorias](demos/) &ndash; a short tutorial of using Oops.js
+
+<!--
+* [Tutorias](demos/) &ndash; a short tutorial of using Oops.js
 * [Tests](tests/) &ndash; some non-binding performance tests
 * [Shaders Types](examples/types.md) &ndash; general classification of shader types-->
 
