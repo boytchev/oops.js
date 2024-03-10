@@ -6,66 +6,84 @@ The X-shaders are alternative Three.js shaders with fix issues,
 extended functionality or are completely new.
 
 <span style="font-size:80%; font-weight:300;">
+<b><big>A</big></b>
 [ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
 <!--
 &middot; [AfterimageShader](#afterimageshader)
 -->
-&middot; [BasicShader](#basicshader)
+<b><big>B</big></b>
+[BasicShader](#basicshader)
 &middot; [BleachBypassShader](#bleachbypassshader)
 &middot; BlendShader
 &middot; BokehShader
 &middot; BokehShader2
 &middot; [BrightnessContrastShader](#brightnesscontrastshader)
-&middot; [ColorCorrectionShader](#colorcorrectionshader)
+<b><big>C</big></b>
+[ColorCorrectionShader](#colorcorrectionshader)
 &middot; [ColorifyShader](#colorifyshader)
 &middot; [ColorifyShader X](#colorifyshader-x)
 &middot; [ConvolutionShader](#convolutionshader)
 &middot; [CopyShader](#copyshader)
-&middot; DepthLimitedBlurShader
+<b><big>D</big></b>
+DepthLimitedBlurShader
 &middot; DigitalGlitch
 &middot; DOFMipMapShader
 &middot; [DotScreenShader](#dotscreenshader)
 &middot; [DotScreenShader X](#dotscreenshader-x)
-&middot; [ExposureShader](#exposureshader)
+<b><big>E</big></b>
+[ExposureShader](#exposureshader)
 &middot; [ExposureShader X](#exposureshader-x)
-&middot; [FilmShader](#filmshader)
+<b><big>F</big></b>
+[FilmShader](#filmshader)
 &middot; [FilmShader X](#filmshader-x)
 &middot; [FocusShader](#focusshader)
 &middot; [FreiChenShader](#freichenshader)
 &middot; [FXAAShader](#fxaashader)
-&middot; [GammaCorrectionShader](#gammacorrectionshader)
+<b><big>G</big></b>
+[GammaCorrectionShader](#gammacorrectionshader)
 &middot; GodRaysShader
-&middot; [HalftoneShader](#halftoneshader)
+<b><big>H</big></b>
+[HalftoneShader](#halftoneshader)
 &middot; [HorizontalBlurShader](#horizontalblurshader)
 &middot; [HorizontalBlurShader X](#horizontalblurshader-x)
 &middot; [HorizontalTiltShiftShader](#horizontaltiltshiftshader)
 &middot; [HorizontalTiltShiftShader X](#horizontaltiltshiftshader-x)
 &middot; [HueSaturationShader](#huesaturationshader)
-&middot; [KaleidoShader](#kaleidoshader)
+<b><big>K</big></b>
+[KaleidoShader](#kaleidoshader)
 &middot; [KaleidoShader X](#kaleidoshader-x)
-&middot; [LuminosityHighPassShader](#luminosityhighpassshader)
+<b><big>L</big></b>
+[LuminosityHighPassShader](#luminosityhighpassshader)
 &middot; [LuminosityShader](#luminosityshader)
-&middot; [MirrorShader](#mirrorshader)
+<b><big>M</big></b>
+[MirrorShader](#mirrorshader)
 &middot; MMDToonShader
 <!--
 &middot; [MotionBlurShader](#motionblurshader)
 -->
-&middot; NormalMapShader
-&middot; OutputShader
-&middot; [RGBShiftShader](#rgbshiftshader)
-&middot; SAOShader
+&<b><big>N</big></b>
+NormalMapShader
+<b><big>O</big></b>
+OutputShader
+<b><big>R</big></b>
+[RGBShiftShader](#rgbshiftshader)
+<b><big>S</big></b>
+SAOShader
 &middot; [SepiaShader](#sepiashader)
 &middot; SMAAShader
 &middot; [SobelOperatorShader](#sobeloperatorshader)
 &middot; SSAOShader
 &middot; SSRShader
 &middot; SubsurfaceScatteringShader
-&middot; [TechnicolorShader](#technicolorshader)
+<b><big>T</big></b>
+[TechnicolorShader](#technicolorshader)
 &middot; [TechnicolorShader X](#technicolorshader-x)
 &middot; ToonShader
 &middot; [TriangleBlurShader](#triangleblurshader)
-&middot; [UnpackDepthRGBAShader](#unpackdepthrgbashader)
-&middot; VelocityShader
+<b><big>U</big></b>
+[UnpackDepthRGBAShader](#unpackdepthrgbashader)
+<b><big>V</big></b>
+VelocityShader
 &middot; [VerticalBlurShader](#verticalblurshader)
 &middot; [VerticalBlurShader X](#verticalblurshader-x)
 &middot; [VerticalTiltShiftShader](#verticaltiltshiftshader)
@@ -73,7 +91,8 @@ extended functionality or are completely new.
 &middot; [VignetteShader](#vignetteshader)
 &middot; [VignetteShader X](#vignetteshader-x)
 &middot; VolumeShader
-&middot; WaterRefractionShader
+<b><big>W</big></b>
+WaterRefractionShader
 </span>
 
 
