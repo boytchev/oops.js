@@ -57,7 +57,7 @@ DepthLimitedBlurShader
 [MirrorShader](#mirrorshader)
 &middot; MMDToonShader
 &middot; [MotionBlurPassX](#motionblurpass-x)
-&<span style="color: Crimson; font-size: 1.2em; font-weight: bold;">N</span>
+<span style="color: Crimson; font-size: 1.2em; font-weight: bold;">N</span>
 NormalMapShader
 <span style="color: Crimson; font-size: 1.2em; font-weight: bold;">O</span>
 OutputShader
