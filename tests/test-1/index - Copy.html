@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link rel="stylesheet" href="../../gallery/styles.css">
+		<link rel="stylesheet" href="../../examples/styles.css">
 		<script type="importmap">
 		  {
 			"imports": {
@@ -115,9 +115,9 @@
 			
 			function oopsPostprocessing( ) {
 	
-				var effects = new Effects( renderer,{shaders:true} )
-					.addEffect( RGBShiftShader, {amount: 0.02} )
-					.addEffect( ColorifyShader, {color:new THREE.Color(1,2,3)} )
+				var effects = new Effects( renderer )
+					.addEffect( 'RGBShift', {amount: 0.02} )
+					.addEffect( 'Colorify', {color:new THREE.Color(1,2,3)} )
 					
 				return effects;
 				
