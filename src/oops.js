@@ -2,6 +2,10 @@
 	
 		.addEffect( effect, bakedParameters={} )
 		.render( scene, camera, deltaTime )
+		
+		.addEffect( NameOfShader, {...} )
+		.addEffect( NameOfPass, {...} )
+		.addEffect( new NameOfPass(...), {...} )
 */
 
 import { Vector2, Vector3, Color } from 'three';
@@ -11,7 +15,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 
-import { isShader, bakeUniform, renameWord, getGlobalNames, showShaders, hasSimpleShader, mergeSimplePasses, defaultTextureName } from './oops.utils.js';
+import { isShader, isPass, isPassClass, isString, bakeUniform, renameWord, getGlobalNames, showShaders, hasSimpleShader, mergeSimplePasses, defaultTextureName } from './oops.utils.js';
 import { KB } from './oops.kb.js';
 
 
@@ -65,31 +69,54 @@ class Effects extends EffectComposer
 	addEffect( effect, bakedParameters={} )
 	{
 		this.needsUpdate = true;
+
+		var name, pass;
 		
 		if( isShader(effect) )
 		{
-			if( this.options.verbose ) console.log(`effect '${effect.name}'`);
-			
-			var pass = new ShaderPass( effect, defaultTextureName(effect) );
-			pass.id = this.passes.length;
-			
-			// preprocess fragment shader if needed
-			// this is usually done to fix bugs
-			if( KB[effect.name] )
-			if( KB[effect.name].onLoad )
-				KB[effect.name].onLoad( pass, effect );
-			
-			for( var uniformName of Object.keys(bakedParameters) )
-				pass.uniforms[uniformName].value = bakedParameters[uniformName];
-			
-			//console.log( getGlobalNames( pass, 'fragmentShader', true ) );
-				
-			this.insertPass( pass, this.passes.length-1 );
-			
-			return this; // for chaining
+			// .addEffect( ShaderInstance, {...} )
+			name = effect.name;
+			pass = new ShaderPass( effect, defaultTextureName(effect) );
 		}
+		else
+		if( isPass(effect) )
+		{
+			// .addEffect( PassInstance, {...} )
+			// .addEffect( new PassClass(...), {...} )
+			name = effect.constructor.name;
+			pass = effect;
+		}
+		else
+		if( isPassClass(effect) )
+		{
+			// .addEffect( PassClass, {...} )
+			name = effect.name;
+			pass = new effect( );
+		}
+		else
+		{
+			throw new Error( `OOPS. The first parameter to addEffect(...) is not a Three.js shader, post-processing pass or pass class. It cannot be processed.` );
+		}
+
+		if( this.options.verbose ) console.log(`effect '${name}'`);
 		
-		throw new Error( `OOPS. The first parameter to addEffect(...) is not a classic Three.js shader. It cannot be processed.` );
+		pass.name = name;
+		pass.id = this.passes.length;
+			
+		// preprocess fragment shader if needed
+		// this is usually done to fix bugs
+		if( KB[name] )
+		if( KB[name].onLoad )
+			KB[name].onLoad( pass, effect );
+		
+		for( var uniformName of Object.keys(bakedParameters) )
+			pass.uniforms[uniformName].value = bakedParameters[uniformName];
+			
+		//console.log( getGlobalNames( pass, 'fragmentShader', true ) );
+			
+		this.insertPass( pass, this.passes.length-1 );
+		
+		return this; // for chaining
 		
 	} // Effects.addEffect
 
@@ -105,7 +132,7 @@ class Effects extends EffectComposer
 		let publicName = param1;
 
 		var uniformName, value;
-		if( param2?.constructor.name === 'String' )
+		if( isString(param2?.name) )
 		{
 			// cases 3 and 4
 			uniformName = param2;
@@ -213,7 +240,7 @@ class Effects extends EffectComposer
 		for( var pass of this.passes )
 		{
 			// bake all static uniforms that are not textures (i.e. null values)
-			if( pass.uniforms )
+			if( pass.uniforms && pass instanceof ShaderPass )
 				for( var uniformName of Object.keys(pass.uniforms) )
 				{
 					// skip parameters

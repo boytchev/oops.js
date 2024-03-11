@@ -2,7 +2,7 @@
 //
 // ExposureShaderX.js
 //
-// Based on Three.js ExposureShaderX.js
+// Based on Three.js ExposureShader.js
 //
 // Modifications: exposure has a different domain and impact
 

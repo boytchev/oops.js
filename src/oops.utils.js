@@ -2,6 +2,8 @@
 	OOPS Effects Utils
 	
 	isShader( something )
+	isPass( something )
+	isString( something )
 	bakeUniform( pass, shaderName, uniformName, uniformValue )
 	renameWord( pass, shaderName, word, newWord )
 	renameText( pass, shaderName, text, newText )
@@ -14,6 +16,7 @@
 */
 
 import { Vector2, Vector3, Color } from 'three';
+import { Pass } from 'three/addons/postprocessing/Pass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { KB } from './oops.kb.js';
 
@@ -26,11 +29,20 @@ function toFloat( x )
 		return x.toFixed( 1 );
 	else
 		return x+'';
+} // toFloat
+
+
+
+// returns whether something is a string
+
+function isString( something )
+{
+	return ( something instanceof String ) || (typeof something === 'string' );
+	
 }
 
 
-
-// return true is something looks like a Three.jsshader
+// return true is something looks like a Three.js shader
 
 function isShader( something )
 {
@@ -43,6 +55,28 @@ function isShader( something )
 	return true;
 	
 } // isShader
+
+
+
+// return true is something is THREE.Pass
+
+function isPassClass( something )
+{
+
+	return( something.prototype instanceof Pass );
+	
+} // isPassClass
+
+
+
+// return true is something is an instance of THREE.Pass
+
+function isPass( something )
+{
+
+	return( something instanceof Pass );
+	
+} // isPass
 
 
 
@@ -204,8 +238,7 @@ function defaultTextureName( something )
 
 	if( name )
 	if( KB[name] )
-	if( KB[name].defaultTextureName instanceof String 
-		|| typeof KB[name].defaultTextureName === 'string' )
+	if( isString(KB[name].defaultTextureName) )
 		return KB[name].defaultTextureName;
 				
 	return 'tDiffuse';
@@ -219,8 +252,7 @@ function defaultUVCoordName( pass )
 {
 	if( pass.material )
 	if( KB[pass.material.name] )
-	if( KB[pass.material.name].defaultUVCoordName instanceof String 
-		|| typeof KB[pass.material.name].defaultUVCoordName === 'string' )
+	if( isString(KB[pass.material.name].defaultUVCoordName) )
 		return KB[pass.material.name].defaultUVCoordName;
 				
 	return 'vUv';
@@ -252,9 +284,9 @@ function stripParentheses( string, openParen, closeParen )
 		
 	for( var ch of string )
 	{
-		if( ch==openParen ) nesting++;
-		if( nesting==0 ) result += ch;
-		if( ch==closeParen ) nesting--;
+		if( ch==openParen )  result += ch, nesting++;
+		if( nesting==0 )     result += ch;
+		if( ch==closeParen ) result += ch, nesting--;
 	}
 	
 	return result;
@@ -297,7 +329,6 @@ function getGlobalNames( pass, shaderName, excludeDefaults=false )
 	{
 		var words = [
 				'main',
-				'varying',
 				defaultTextureName( pass ),
 				defaultUVCoordName( pass ),
 				...Object.keys(pass.uniforms),
@@ -394,4 +425,4 @@ function mergeSimplePasses( thisPass, thatPass, options )
 
 
 
-export { isShader, bakeUniform, renameWord, renameText, getGlobalNames, showShaders, hasSimpleShader, mergeSimplePasses, defaultTextureName };
+export { isShader, isPass, isPassClass, isString, bakeUniform, renameWord, renameText, getGlobalNames, showShaders, hasSimpleShader, mergeSimplePasses, defaultTextureName };

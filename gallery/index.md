@@ -8,9 +8,7 @@ extended functionality or are completely new.
 <span style="font-size:80%; font-weight:300;">
 <span style="color: Crimson; font-size: 1.2em; font-weight: bold;">A</span>
 [ACESFilmicToneMappingShader](#acesfilmictonemappingshader)
-<!--
-&middot; [AfterimageShader](#afterimageshader)
--->
+&middot; [AfterimagePass](#afterimagepass)
 <span style="color: Crimson; font-size: 1.2em; font-weight: bold;">B</span>
 [BasicShader](#basicshader)
 &middot; [BleachBypassShader](#bleachbypassshader)
@@ -58,9 +56,7 @@ DepthLimitedBlurShader
 <span style="color: Crimson; font-size: 1.2em; font-weight: bold;">M</span>
 [MirrorShader](#mirrorshader)
 &middot; MMDToonShader
-<!--
-&middot; [MotionBlurShader](#motionblurshader)
--->
+&middot; [MotionBlurPassX](#motionblurpass-x)
 &<span style="color: Crimson; font-size: 1.2em; font-weight: bold;">N</span>
 NormalMapShader
 <span style="color: Crimson; font-size: 1.2em; font-weight: bold;">O</span>
@@ -110,19 +106,17 @@ Example: [ACESFilmicToneMappingShader.html](ACESFilmicToneMappingShader.html)
 	
 
 
-<!--
-## AfterimageShader
-<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]<big style="color: Crimson">
+## AfterimagePass
 
-A shader that applies the frame onto cumulative image of older versions of the frame, thus
-building an after image effect. This effect is similar to [MotionBlurShader](#motionblurshader).
+A pass with own shader that applies the frame onto cumulative image of older
+versions of the frame, thus building an after image effect. This effect is
+similar to [MotionBlurPassX](#motionblurpass-x).
 	
 * **`damp`** – damping factor, i.e. how much of the old frame to use (float, from 0 to 1, default value 0.96) 
 
-Example: [AfterimageShader.html](AfterimageShader.html)
+Example: [AfterimagePass.html](AfterimagePass.html)
 		
-[<img style="width:100%" src="AfterimageShader.jpg">](AfterimageShader.html)
--->	
+[<img style="width:100%" src="AfterimagePass.jpg">](AfterimagePass.html)
 	
 
 
@@ -589,19 +583,16 @@ Example: [MirrorShader.html](MirrorShader.html)
 		
 
 
-<!--
-## MotionBlurShader
-<span style="float: right; position: relative; top: -3em; font-weight:300;">[ type: S<sup>2</sup> ]<big style="color: Crimson">
-
-A shader that applies the frame onto cumulative image of older versions of the frame, thus
-building a motion blur effect. This effect is similar to [AfterimageShader](#afterimageshader).
+## MotionBlurPass X
+A pass with own shader that applies the frame onto cumulative image of older
+versions of the frame, thus building a motion blur effect. This effect is similar
+to [AfterimagePass](#afterimagepass).
 	
 * **`damp`** – damping factor, i.e. how much of the old frame to use (float, from 0 to 1, default value 0.9) 
 
-Example: [MotionBlurShader.html](MotionBlurShader.html)
+Example: [MotionBlurPassX.html](MotionBlurPassX.html)
 		
-[<img style="width:100%" src="MotionBlurShader.jpg">](MotionBlurShader.html)
--->
+[<img style="width:100%" src="MotionBlurPassX.jpg">](MotionBlurPassX.html)
 
 
 
