@@ -307,7 +307,7 @@ class Effects extends EffectComposer
 
 			// rename frame size uniforms (if any)			
 			if( pass.material )
-			if( KB[pass.material.name].onSize )
+			if( KB[pass.material.name]?.onSize )
 			{
 				for( var name of ['X','Y','XY','InvX','InvY','InvXY'] )
 				{
