@@ -9,14 +9,8 @@
 			simpleShader: boolean,						// if true, shader uses tDiffuse, vUv and has no passes
 			cannotSelfMerge: boolean,					// if true, shader cannot merge with itself in a single shader
 			onLoad: function(pass,effect), // called after loading a fragment shader
-			frameSizeName: string,						// name of uniform bound to frame/screen size in pixels
-			frameSizeXName: string,						// name of uniform bound to frame/screen width in pixels
-			frameSizeYName: string,						// name of uniform bound to frame/screen height in pixels
-			frameSizeInverseName: string,				// name of uniform bound to frame/screen reciprocal size in pixels
-			frameSizeXInverseName: string,				// name of uniform bound to frame/screen reciprocal width in pixels
-			frameSizeYInverseName: string,				// name of uniform bound to frame/screen reciprocal height in pixels
-			timeName: string,							// name of uniform bound to time in milliseconds
-			onLoad: function(pass),						// function to call when a pass is loaded
+			onSize: {X,Y,XY,InvX,InvY,InvXY:string,...}	// names of uniforms bound to frame/screen size in pixels
+			onTime: string,								// name of uniform bound to time in milliseconds
 		}
 	}
 */
@@ -29,9 +23,8 @@ import { renameWord, renameText } from './oops.utils.js';
 const KB = {
 
 	/*------------------------------------------------------
-		The OuputShader defines toneMappingExposure not in
-		the shade code, but in include file, so it is not
-		possible to bake its value in the shader code.
+		The definition of "toneMappingExposure" is not in the shade code, but
+		in an include file, so it is not possible to bake it
 	*/
 	OutputShader: {
 		simpleShader: false,
@@ -40,41 +33,37 @@ const KB = {
 
 	
 	/*------------------------------------------------------
-		The fragment shader of FreiChenShader contains:
-			vec3 sample;
-		which causes:
-			ERROR: 0:95: 'sample' : Illegal use of reserved word
-		Also this:
-			vec2 texel = vec2( 1.0 / aspect.x, 1.0 / aspect.y );
-		causes:
-			ERROR: 0:63: '=' : global variable initializers must be constant expressions
+		The fragment shader contains "vec3 sample", which causes error:
+			ERROR: 'sample' : Illegal use of reserved word
+		It also contains "vec2 texel = vec2(...", which causes error:
+			ERROR: '=' : global variable initializers must be constant expressions
 	*/
 	FreiChenShader: {
-		frameSizeName: 'aspect',
+		onSize: {XY: 'aspect'},
 		onLoad: onLoadFreiChenShader,
 	},
 
 	
 	DotScreenShader: {
-		frameSizeName: 'tSize',
+		onSize: {XY: 'tSize'},
 		onLoad: onLoadDotScreenShader,
 	},
 
 	
 	DotScreenShaderX: {
-		frameSizeName: 'tSize',
+		onSize: {XY: 'tSize'},
 		onLoad: onLoadDotScreenShader,
 	},
 
 	
 	FilmShader: {
-		timeName: 'time',
+		onTime: 'time',
 		onLoad: onLoadFilmShader,
 	},
 
 	
 	FilmShaderX: {
-		timeName: 'time',
+		onTime: 'time',
 		onLoad: onLoadFilmShader,
 	},
 
@@ -85,53 +74,51 @@ const KB = {
 
 	
 	FocusShader: {
-		frameSizeXName: 'screenWidth',
-		frameSizeYName: 'screenHeight',
+		onSize: {X: 'screenWidth', Y: 'screenHeight'},
 	},
 
 	
 	FXAAShader: {
-		frameSizeInverseName: 'resolution',
+		onSize: {InvXY: 'resolution'},
 		onLoad: onLoadFXAAShader,
 		cannotSelfMerge: true,
 	},
 
 
 	SobelOperatorShader: {
-		frameSizeName: 'resolution',
+		onSize: {XY: 'resolution'},
 	},
 
 
 	KaleidoShaderX: {
-		frameSizeName: 'resolution',
+		onSize: {XY: 'resolution'},
 	},
 
 
 	HalftoneShader: {
-		frameSizeXName: 'width',
-		frameSizeYName: 'height',
+		onSize: {X: 'width', Y: 'height'},
 		cannotSelfMerge: true,
 		defaultUVCoordName: 'vUV',
 	},
 
 
 	HorizontalBlurShader: {
-		frameSizeXInverseName: 'h',
+		onSize: {InvX: 'h'},
 	},
 
 
 	HorizontalBlurShaderX: {
-		frameSizeXInverseName: 'h',
+		onSize: {InvX: 'h'},
 	},
 
 
 	HorizontalTiltShiftShader: {
-		frameSizeXInverseName: 'h',
+		onSize: {InvX: 'h'},
 	},
 
 
 	HorizontalTiltShiftShaderX: {
-		frameSizeXInverseName: 'h',
+		onSize: {InvX: 'h'},
 	},
 
 
@@ -149,22 +136,22 @@ const KB = {
 	
 	
 	VerticalBlurShader: {
-		frameSizeYInverseName: 'v',
+		onSize: {InvY: 'v'},
 	},
 
 
 	VerticalBlurShaderX: {
-		frameSizeYInverseName: 'v',
+		onSize: {InvY: 'v'},
 	},
 
 
 	VerticalTiltShiftShader: {
-		frameSizeYInverseName: 'v',
+		onSize: {InvY: 'v'},
 	},
 	
 	
 	VerticalTiltShiftShaderX: {
-		frameSizeYInverseName: 'v',
+		onSize: {InvY: 'v'},
 	},
 	
 	

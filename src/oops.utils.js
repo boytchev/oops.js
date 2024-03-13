@@ -211,10 +211,10 @@ function showShaders( effects )
 		
 	} // for pass
 	
-	if( effects.options.uniforms && effects.sizeUniforms.length>0 )
+	if( effects.options.uniforms && effects.onSizeUniforms.length>0 )
 	{
 		console.groupCollapsed( 'Size Uniforms' );
-		for( var key of effects.sizeUniforms )
+		for( var key of effects.onSizeUniforms )
 			console.log( key );
 		console.groupEnd( ); // Size Uniforms
 	}

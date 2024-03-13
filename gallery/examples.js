@@ -112,6 +112,46 @@ function backgroundGrid( gridColor = 'white', backgroundColor = 'black', factor=
 }
 
 
+function gridWall( z, gridColor = 'black', backgroundColor = 'white', defaultMaterial )
+{
+	const S = 64;
+	
+	var canvas = document.createElement( 'canvas' );
+		canvas.width = S;
+		canvas.height = S;
+
+	var context = canvas.getContext( '2d' );
+		context.fillStyle = backgroundColor;
+		context.fillRect( 0, 0, S, S );
+
+		context.lineWidth =	 5;
+		context.strokeStyle = gridColor;
+		context.strokeRect( 0, 0, S, S );
+
+	var texture = new THREE.CanvasTexture(canvas);
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set( 16, 10 );
+		
+	var geometry = new THREE.PlaneGeometry( 1600, 1000 );
+	var material;
+
+	if( defaultMaterial )
+		material = defaultMaterial;
+	else
+		material = new THREE.MeshBasicMaterial( {
+			color: 'white',
+			map: texture,
+			side: THREE.DoubleSide,
+		} );
+
+		var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 0, 0, z );
+			
+		scene.add( mesh );
+}
+
+
 function backgroundHatched( gridColor = 'white', backgroundColor = 'black', factor=8 )
 {
 	const S = 16;
@@ -178,4 +218,4 @@ function animate( t )
 
 renderer.setAnimationLoop( animate );
 
-export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, backgroundGrid, backgroundHatched, animationLoop };
+export { renderer, camera, scene, light, controls, randomBalls, randomBallsAndCubes, gridWall, backgroundGrid, backgroundHatched, animationLoop };

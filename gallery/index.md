@@ -12,7 +12,7 @@ used to pick a desired effect and to play with its parameters.
 [Basic](#basic)
 &middot; [BleachBypass](#bleachbypass)
 &middot; Blend
-&middot; Bokeh
+&middot; [Bokeh](#bokeh)
 &middot; Bokeh2
 &middot; [BrightnessContrast](#brightnesscontrast)
 <span style="color: Crimson; font-size: 1.2em; font-weight: bold;">C</span>
@@ -143,6 +143,26 @@ effect in photography.
 Example: [BleachBypass.html](BleachBypass.html)
 		
 [<img src="BleachBypass.jpg">](BleachBypass.html)
+
+
+
+
+## Bokeh
+
+This effects implements the out-of-focus [bokeh](https://en.wikipedia.org/wiki/Bokeh)
+effect in photography. Objects at focal distance appear sharp, while closer
+objects or objects further away are blurred with a circuler pattern. The size of
+the focused area, known as [depth of field](https://en.wikipedia.org/wiki/Depth_of_field)
+(DOF) depends on the lens [aperture](https://en.wikipedia.org/wiki/Aperture). Higher
+aperture shrinks DOF, so a tiny slice of the space is on focus.
+		
+* **`focus`** – focal distance to the camera (float, from 0, default value 1)
+* **`aperture`** – lens aperture (float, from 0 to 0.00010, default value 0.025, which is extremely large)
+* **`maxblur`** – maximal level of blur effect (float, from 0 to 0.5, default value 0.015)
+
+Example: [Bokeh.html](Bokeh.html)
+		
+[<img src="Bokeh.jpg">](Bokeh.html)
 
 
 

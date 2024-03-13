@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+	<script type="importmap">
+	  {
+		"imports": {
+		  "three":         "../libs/build/three.module.js",
+		  "three/addons/": "../libs/examples/jsm/",
+		  "oops":          "../src/oops.js"
+		}
+	  }
+	</script>
+</head>
+
+
+<body>
+	<script type="module">
+
+		import * as THREE from 'three';
+		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+		import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+		
+		import { renderer, scene, camera, gridWall, randomBalls, animationLoop } from './examples.js';
+		import { Effects } from 'oops';
+
+
+		var effects = new Effects( renderer, {verbose:true,shaders:true} )
+			.addEffect( new BokehPass(scene,camera,{focus:800,aperture:0.00001,maxblur:0.02}) )
+			.addParameter( 'focus' )
+			.addParameter( 'aperture' )
+			.addParameter( 'maxblur', 0.015 );
+			
+			
+		var data = {aperture:1};
+		
+		
+		var gui = new GUI( { title: '<big><em>Bokeh</em></big>' } );
+			gui.add( effects, 'focus', 200, 2000 ).step( 10 ).name( 'Focus' );
+			gui.add( data, 'aperture', 0, 12 ).step( 0.05 ).name( 'Aperture' ).onChange( x => effects.aperture = x * 0.00001 );
+			gui.add( effects, 'maxblur', 0, 0.5 ).step( 0.002 ).name( 'Max blur' ).$input.classList.add('bottom');
+
+
+		gridWall( -500, 'black', 'dimgray' );
+		randomBalls( 100, new THREE.MeshBasicMaterial({color:'white',wireframe:true}) );
+		animationLoop( effects );
+		
+	</script>
+
+</body>
+</html>

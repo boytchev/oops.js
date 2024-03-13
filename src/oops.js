@@ -45,14 +45,11 @@ class Effects extends EffectComposer
 		this.addPass( new OutputPass() );
 		
 		this.parameters = {};
+
 		this.options = options;
-		this.sizeUniforms = [];
-		this.sizeXUniforms = [];
-		this.sizeYUniforms = [];
-		this.sizeInverseUniforms = [];
-		this.sizeXInverseUniforms = [];
-		this.sizeYInverseUniforms = [];
-		this.timeUniforms = [];
+
+		this.onSizeUniforms = [];
+		this.onTimeUniforms = [];
 		
 		this.statistics = {
 			'removed uniforms': 0,
@@ -194,7 +191,7 @@ class Effects extends EffectComposer
 		
 		// pass new time to time uniforms
 		var time = (Date.now() % (24*60*60))/1000;
-		for( var uniform of this.timeUniforms )
+		for( var uniform of this.onTimeUniforms )
 		{
 			uniform.value = time;
 //			console.log(uniform === this.passes[1].uniforms.time_2);
@@ -249,13 +246,13 @@ class Effects extends EffectComposer
 					// skip hidden uniforms
 					if( KB[pass.material.name] )
 					{
-						if( KB[pass.material.name].frameSizeName == uniformName ) continue;
-						if( KB[pass.material.name].frameSizeXName == uniformName ) continue;
-						if( KB[pass.material.name].frameSizeYName == uniformName ) continue;
-						if( KB[pass.material.name].frameSizeInverseName == uniformName ) continue;
-						if( KB[pass.material.name].frameSizeXInverseName == uniformName ) continue;
-						if( KB[pass.material.name].frameSizeYInverseName == uniformName ) continue;
-						if( KB[pass.material.name].timeName == uniformName ) continue;
+						if( KB[pass.material.name].onSize?.X == uniformName ) continue;
+						if( KB[pass.material.name].onSize?.Y == uniformName ) continue;
+						if( KB[pass.material.name].onSize?.XY == uniformName ) continue;
+						if( KB[pass.material.name].onSize?.InvX == uniformName ) continue;
+						if( KB[pass.material.name].onSize?.InvY == uniformName ) continue;
+						if( KB[pass.material.name].onSize?.InvXY == uniformName ) continue;
+						if( KB[pass.material.name].onTime == uniformName ) continue;
 					}
 										
 					var uniformValue = pass.uniforms[uniformName].value;
@@ -307,148 +304,67 @@ class Effects extends EffectComposer
 				renameWord( pass, 'fragmentShader', ident, newIdent );
 				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
 			} // for ident
+
+			// rename frame size uniforms (if any)			
+			if( pass.material )
+			if( KB[pass.material.name].onSize )
+			{
+				for( var name of ['X','Y','XY','InvX','InvY','InvXY'] )
+				{
+					ident = KB[pass.material.name].onSize[name];
+					if( !ident ) continue;
+					
+					newIdent = `${ident}_${pass.id}`;
+					
+					// rename ident
+					pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
+					delete pass.uniforms[ident]; // remove old name
+					
+					switch( name )
+					{
+						case 'X':
+								pass.uniforms[newIdent].value = this._width;
+								break;
+						case 'Y':
+								pass.uniforms[newIdent].value = this._height;
+								break;
+						case 'XY':
+								pass.uniforms[newIdent].value.set( this._width, this._height );
+								break;
+						case 'InvX':
+								pass.uniforms[newIdent].value = 1/this._width;
+								break;
+						case 'InvY':
+								pass.uniforms[newIdent].value = 1/this._height;
+								break;
+						case 'InvXY':
+								pass.uniforms[newIdent].value.set( 1/this._width, 1/this._height );
+								break;
+					}
 			
-			// rename frame size uniforms (if any)
-			if( pass.material )
-			if( KB[pass.material.name] )
-			if( KB[pass.material.name].frameSizeName )
-			{
-				ident = KB[pass.material.name].frameSizeName;
-				newIdent = `${ident}_${pass.id}`;
+					var onSize = {};
+						onSize[name] = pass.uniforms[newIdent];
 
-				// rename ident
-				pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
-				delete pass.uniforms[ident]; // remove old name
-				
-				pass.uniforms[newIdent].value.set( this._width, this._height );
-				
-				this.sizeUniforms.push( pass.uniforms[newIdent] );
-				
-				renameWord( pass, 'fragmentShader', ident, newIdent );
-				
-				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
+					this.onSizeUniforms.push( onSize );
+						
+					renameWord( pass, 'fragmentShader', ident, newIdent );
+					if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
+				} // for name
 			}
-
-			// rename frame inverse size uniforms (if any)
-			if( pass.material )
-			if( KB[pass.material.name] )
-			if( KB[pass.material.name].frameSizeInverseName )
-			{
-				ident = KB[pass.material.name].frameSizeInverseName;
-				newIdent = `${ident}_${pass.id}`;
-
-				// rename ident
-				pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
-				delete pass.uniforms[ident]; // remove old name
-				
-				pass.uniforms[newIdent].value.set( 1/this._width, 1/this._height );
-				
-				this.sizeInverseUniforms.push( pass.uniforms[newIdent] );
-				
-				renameWord( pass, 'fragmentShader', ident, newIdent );
-				
-				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
-			}
-
-			// rename frame size-x uniforms (if any)
-			if( pass.material )
-			if( KB[pass.material.name] )
-			if( KB[pass.material.name].frameSizeXName )
-			{
-				ident = KB[pass.material.name].frameSizeXName;
-				newIdent = `${ident}_${pass.id}`;
-
-				// rename ident
-				pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
-				delete pass.uniforms[ident]; // remove old name
-
-				pass.uniforms[newIdent].value = this._width;
-
-				this.sizeXUniforms.push( pass.uniforms[newIdent] );
-				
-				renameWord( pass, 'fragmentShader', ident, newIdent );
-				
-				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
-			}
-
-			// rename frame size-y uniforms (if any)
-			if( pass.material )
-			if( KB[pass.material.name] )
-			if( KB[pass.material.name].frameSizeYName )
-			{
-				ident = KB[pass.material.name].frameSizeYName;
-				newIdent = `${ident}_${pass.id}`;
-
-				// rename ident
-				pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
-				delete pass.uniforms[ident]; // remove old name
-
-				pass.uniforms[newIdent].value = this._height;
-				
-				this.sizeYUniforms.push( pass.uniforms[newIdent] );
-				
-				renameWord( pass, 'fragmentShader', ident, newIdent );
-				
-				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
-			}
-
-			// rename frame inverse size-x uniforms (if any)
-			if( pass.material )
-			if( KB[pass.material.name] )
-			if( KB[pass.material.name].frameSizeXInverseName )
-			{
-				ident = KB[pass.material.name].frameSizeXInverseName;
-				newIdent = `${ident}_${pass.id}`;
-
-				// rename ident
-				pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
-				delete pass.uniforms[ident]; // remove old name
-
-				pass.uniforms[newIdent].value = 1/this._width;
-
-				this.sizeXInverseUniforms.push( pass.uniforms[newIdent] );
-				
-				renameWord( pass, 'fragmentShader', ident, newIdent );
-				
-				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
-			}
-
-			// rename frame inverse size-y uniforms (if any)
-			if( pass.material )
-			if( KB[pass.material.name] )
-			if( KB[pass.material.name].frameSizeYInverseName )
-			{
-				ident = KB[pass.material.name].frameSizeYInverseName;
-				newIdent = `${ident}_${pass.id}`;
-
-				// rename ident
-				pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
-				delete pass.uniforms[ident]; // remove old name
-
-				pass.uniforms[newIdent].value = 1/this._height;
-				
-				this.sizeYInverseUniforms.push( pass.uniforms[newIdent] );
-				
-				renameWord( pass, 'fragmentShader', ident, newIdent );
-				
-				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
-			}
-
-// TO DO: optimize the next ifs with the previous ifs
 
 			// rename time uniforms (if any)
 			if( pass.material )
 			if( KB[pass.material.name] )
-			if( KB[pass.material.name].timeName )
+			if( KB[pass.material.name].onTime )
 			{
-				ident = KB[pass.material.name].timeName;
+				ident = KB[pass.material.name].onTime;
 				newIdent = `${ident}_${pass.id}`;
 
 				// rename ident
 				pass.uniforms[newIdent] = pass.uniforms[ident]; // dubplicate uniform
 				delete pass.uniforms[ident]; // remove old name
 
-				this.timeUniforms.push( pass.uniforms[newIdent] );
+				this.onTimeUniforms.push( pass.uniforms[newIdent] );
 				
 				renameWord( pass, 'fragmentShader', ident, newIdent );
 				
@@ -506,18 +422,15 @@ class Effects extends EffectComposer
 		super.setSize( width, height );
 
 		// pass new sizes to size uniforms
-		for( var uniform of this.sizeUniforms )
-			uniform.value.set( width, height );
-		for( var uniform of this.sizeXUniforms )
-			uniform.value = width;
-		for( var uniform of this.sizeYUniforms )
-			uniform.value = height;
-		for( var uniform of this.sizeInverseUniforms )
-			uniform.value.set( 1/width, 1/height );
-		for( var uniform of this.sizeXInverseUniforms )
-			uniform.value = 1/width;
-		for( var uniform of this.sizeYInverseUniforms )
-			uniform.value = 1/height;
+		for( var uniform of this.onSizeUniforms )
+		{
+			if( uniform.X )  uniform.X.value = width;
+			if( uniform.Y )  uniform.Y.value = height;
+			if( uniform.XY ) uniform.XY.value.set( width, height );
+			if( uniform.InvX )  uniform.InvX.value = 1/width;
+			if( uniform.InvY )  uniform.InvY.value = 1/height;
+			if( uniform.InvXY ) uniform.InvXY.value.set( 1/width, 1/height );
+		}
 		
 	} // Effects.resize
 	
