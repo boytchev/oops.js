@@ -1,9 +1,7 @@
-# Test 1 Raw Data<br><small>[Merging 2 simple effects]</small>
+# Test 1 Raw Data
 
 The tabular data contains: (1) number of renderings per frame; (2) averate FPS
 for EffectsComposer; (3) average FPS for Effects + oops.js; and (4) performance gain
-
-<small>
 
 ```
 3/14/2024, 11:00:53 AM
@@ -44,7 +42,6 @@ Direct3D11 vs_5_0 ps_5_0, D3D11
 1024 2.98 3.81 (+28%)
 ```
 
-</small>
 
 <!--
 # Test 1<br><small>[Merging 2 shaders in one]</small>
