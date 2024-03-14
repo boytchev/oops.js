@@ -6,7 +6,7 @@ renders the scene 1, 2, ... 1024 times per frame. A temporal average is
 calculated every second and the final results are collected after continuous
 full-screen running for around 20 seconds or more.
 
-## Test 1<br><small>[Merging 2 simple effects]</small>
+## Test 1 &ndash; Merging 2 simple effects
 
 This test merges 2 simple effects ([RGBShift](../gallery/index.md#rgbshift)
 and [Colorify](../gallery/index.md#colorify)). Performance is increased by
