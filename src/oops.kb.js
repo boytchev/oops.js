@@ -217,6 +217,16 @@ function onLoadFXAAShader( pass, effect )
 		#endif
 ` );
 	renameWord( pass, 'fragmentShader', 'NUM_SAMPLES', 'FXAA_NUM_SAMPLES' );
+
+	renameText( pass, 'fragmentShader',
+		'#define FxaaTexTop(t, p) texture2D(t, p, -100.0)',
+		'#define FxaaTexTop(tDiffuse, vUv) texture2D(tDiffuse, vUv)'
+	);
+	
+	renameText( pass, 'fragmentShader',
+		'#define FxaaTexOff(t, p, o, r) texture2D(t, p + (o * r), -100.0)',
+		'#define FxaaTexOff(tDiffuse, vUv, o, r) texture2D(tDiffuse, vUv + (o * r))'
+	);
 }
 
 

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="styles.css">
+		<script type="importmap">
+		  {
+			"imports": {
+			  "three":         "../../libs/build/three.module.js",
+			  "three/addons/": "../../libs/examples/jsm/",
+			  "oops":          "../../src/oops.js"
+			}
+		  }
+		</script>
+	</head>
+
+
+	<body>
+		<p class="caption">Issue №7</p>
+		<p class="subcaption">There must be 3 shapes below</p>
+		
+		<script type="module">
+
+			// imports from Three.js
+			
+			import * as THREE from 'three';
+
+			import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
+			import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+
+			import { Effects } from 'oops';
+
+
+			// a simple 3D scene with a single cube
+			
+			var renderer = new THREE.WebGLRenderer( {antialias: true} );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( innerWidth, innerHeight );
+				renderer.setAnimationLoop( animationLoop );
+				
+				document.body.appendChild( renderer.domElement );
+				document.body.style = 'margin: 0; overflow: hidden;';
+					
+			var camera = new THREE.PerspectiveCamera( 60, innerWidth / innerHeight, 0.1, 100 );
+				camera.position.z = 2;
+
+			var scene = new THREE.Scene();
+				scene.background = new THREE.Color( 'dimgray' );
+
+			var object = new THREE.Mesh( 
+					new THREE.OctahedronGeometry( 0.8 ),
+					new THREE.MeshNormalMaterial( )
+				);
+				scene.add( object );
+
+				
+			// manage frame resize
+				
+			window.addEventListener( 'resize', onWindowResize );
+
+			function onWindowResize( )
+			{
+
+				camera.aspect = innerWidth / innerHeight;
+				camera.updateProjectionMatrix();
+				
+				renderer.setSize( innerWidth, innerHeight );
+
+				effects.setSize( innerWidth, innerHeight );
+
+			} // init.onWindowResize
+
+
+			var effects = new Effects( renderer )
+					.addEffect( RGBShiftShader, {amount: 0.1} )
+					.addEffect( FXAAShader )
+
+			function animationLoop( time )
+			{
+		
+				object.rotation.set( time/700, time/800, time/770 );
+				
+				effects.render( scene, camera );
+				
+			} // animationLoop
+
+		</script>
+
+	</body>
+</html>
+
+

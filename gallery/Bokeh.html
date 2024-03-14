@@ -27,7 +27,7 @@
 		import { Effects } from 'oops';
 
 
-		var effects = new Effects( renderer, {verbose:true,shaders:true} )
+		var effects = new Effects( renderer )
 			.addEffect( new BokehPass(scene,camera,{focus:800,aperture:0.00001,maxblur:0.02}) )
 			.addParameter( 'focus' )
 			.addParameter( 'aperture' )

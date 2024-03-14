@@ -1,0 +1,19 @@
+﻿.caption {
+	color: white;
+	position: absolute;
+	top: -1em;
+	left: 0.5em;
+	font-size: 1.5em;
+	font-family: Calibri;
+	font-weight: 900;
+}
+
+.subcaption {
+	color: white;
+	position: absolute;
+	top: 1em;
+	left: 0.75em;
+	font-family: Calibri;
+	font-weight: 100;
+}
+

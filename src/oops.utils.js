@@ -183,8 +183,8 @@ function showShaders( effects )
 	
 	for( var pass of effects.passes )
 	{
-		if( pass.material?.name )
-			console.groupCollapsed( 'Pass '+pass.constructor.name+' ('+pass.material.name+')' );
+		if( pass.name )
+			console.groupCollapsed( 'Pass '+pass.constructor.name+' ('+pass.name+')' );
 		else
 			console.groupCollapsed( 'Pass '+pass.constructor.name );
 		
@@ -226,20 +226,10 @@ function showShaders( effects )
 
 
 // get the default name of input texture
-function defaultTextureName( something )
+function defaultTextureName( pass )
 {
-	var name;
-
-	if( something instanceof ShaderPass )
-		name = something.material.name;
-	else
-	if( isShader(something) )
-		name = something.name;
-
-	if( name )
-	if( KB[name] )
-	if( isString(KB[name].defaultTextureName) )
-		return KB[name].defaultTextureName;
+	if( isString(KB[pass.name]?.defaultTextureName) )
+		return KB[pass.name].defaultTextureName;
 				
 	return 'tDiffuse';
 	
@@ -250,10 +240,8 @@ function defaultTextureName( something )
 // get the default name of UV coordinates
 function defaultUVCoordName( pass )
 {
-	if( pass.material )
-	if( KB[pass.material.name] )
-	if( isString(KB[pass.material.name].defaultUVCoordName) )
-		return KB[pass.material.name].defaultUVCoordName;
+	if( isString(KB[pass.name]?.defaultUVCoordName) )
+		return KB[pass.name].defaultUVCoordName;
 				
 	return 'vUv';
 	
@@ -266,9 +254,9 @@ function hasSimpleShader( pass )
 {
 	if( !pass.material ) return false; // all simple shaders have materials in their passes
 	
-	if( !KB[pass.material.name] ) return true;
+	if( !KB[pass.material.name] ) return true; // all simple shaders have materials with names
 		
-	if( typeof KB[pass.material.name].simpleShader === 'undefined' ) return true;
+	if( typeof KB[pass.material.name]?.simpleShader === 'undefined' ) return true;
 	
 	return KB[pass.material.name].simpleShader;
 	
@@ -416,7 +404,7 @@ function mergeSimplePasses( thisPass, thatPass, options )
 	
 	// process shader names
 	{
-		thisPass.material.name += '+'+thatPass.material.name;
+		thisPass.name += '+'+thatPass.name;
 	} // fragment shaders
 	
 	return true;

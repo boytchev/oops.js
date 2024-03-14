@@ -102,8 +102,7 @@ class Effects extends EffectComposer
 			
 		// preprocess fragment shader if needed
 		// this is usually done to fix bugs
-		if( KB[name] )
-		if( KB[name].onLoad )
+		if( KB[name]?.onLoad )
 			KB[name].onLoad( pass, effect );
 		
 		for( var uniformName of Object.keys(bakedParameters) )
@@ -153,7 +152,7 @@ class Effects extends EffectComposer
 		
 		if( !pass.uniforms[uniformName] )
 		{
-			throw new Error( `There is no parameter '${publicName}' in '${pass.material.name}'.` );
+			throw new Error( `There is no parameter '${publicName}' in '${pass.name}'.` );
 		}
 			
 		
@@ -194,11 +193,8 @@ class Effects extends EffectComposer
 		for( var uniform of this.onTimeUniforms )
 		{
 			uniform.value = time;
-//			console.log(uniform === this.passes[1].uniforms.time_2);
 		}
-		
-		//this.passes[1].uniforms.time_2.value = Math.random();
-		
+				
 		super.render( deltaTime );
 
 	} // Effects.render
@@ -244,15 +240,15 @@ class Effects extends EffectComposer
 					if( pass.uniforms[uniformName].oopsParameter ) continue;
 
 					// skip hidden uniforms
-					if( KB[pass.material.name] )
+					if( KB[pass.name] )
 					{
-						if( KB[pass.material.name].onSize?.X == uniformName ) continue;
-						if( KB[pass.material.name].onSize?.Y == uniformName ) continue;
-						if( KB[pass.material.name].onSize?.XY == uniformName ) continue;
-						if( KB[pass.material.name].onSize?.InvX == uniformName ) continue;
-						if( KB[pass.material.name].onSize?.InvY == uniformName ) continue;
-						if( KB[pass.material.name].onSize?.InvXY == uniformName ) continue;
-						if( KB[pass.material.name].onTime == uniformName ) continue;
+						if( KB[pass.name].onSize?.X == uniformName ) continue;
+						if( KB[pass.name].onSize?.Y == uniformName ) continue;
+						if( KB[pass.name].onSize?.XY == uniformName ) continue;
+						if( KB[pass.name].onSize?.InvX == uniformName ) continue;
+						if( KB[pass.name].onSize?.InvY == uniformName ) continue;
+						if( KB[pass.name].onSize?.InvXY == uniformName ) continue;
+						if( KB[pass.name].onTime == uniformName ) continue;
 					}
 										
 					var uniformValue = pass.uniforms[uniformName].value;
@@ -268,16 +264,16 @@ class Effects extends EffectComposer
 						this.statistics['removed uniforms']++;
 					}
 					else
-					if( KB[pass.material.name] &&
-						KB[pass.material.name].ignoreUniformBaking &&
-						KB[pass.material.name].ignoreUniformBaking.indexOf(uniformName)>=-1 )
+					if( 
+						KB[pass.name]?.ignoreUniformBaking &&
+						KB[pass.name].ignoreUniformBaking.indexOf(uniformName)>=-1 )
 					{
 						// this uniform is known to be unbakeable
 						// so ignore the fact that it cannot be baked
 					}
 					else
 					{
-						if( this.options.warning ) console.warn( `\twarning '${uniformName}' in ${pass.material.name} cannot be baked` );
+						if( this.options.warning ) console.warn( `\twarning '${uniformName}' in ${pass.name} cannot be baked` );
 					}	
 					
 				} // for uniformName
@@ -306,12 +302,11 @@ class Effects extends EffectComposer
 			} // for ident
 
 			// rename frame size uniforms (if any)			
-			if( pass.material )
-			if( KB[pass.material.name]?.onSize )
+			if( KB[pass.name]?.onSize )
 			{
 				for( var name of ['X','Y','XY','InvX','InvY','InvXY'] )
 				{
-					ident = KB[pass.material.name].onSize[name];
+					ident = KB[pass.name].onSize[name];
 					if( !ident ) continue;
 					
 					newIdent = `${ident}_${pass.id}`;
@@ -353,11 +348,9 @@ class Effects extends EffectComposer
 			}
 
 			// rename time uniforms (if any)
-			if( pass.material )
-			if( KB[pass.material.name] )
-			if( KB[pass.material.name].onTime )
+			if( KB[pass.name]?.onTime )
 			{
-				ident = KB[pass.material.name].onTime;
+				ident = KB[pass.name].onTime;
 				newIdent = `${ident}_${pass.id}`;
 
 				// rename ident
@@ -389,14 +382,14 @@ class Effects extends EffectComposer
 			// this = this+that;
 			var thisPass = this.passes[i];
 			var thatPass = this.passes[i+1];
-			
+
 			// currently only simple passes can be handled
 			if( !hasSimpleShader( thisPass ) ) continue;
 			if( !hasSimpleShader( thatPass ) ) continue;
 			
 			// are passes compatible
-			if( thisPass.material.name == thatPass.material.name )
-				if( KB[thisPass.material.name].cannotSelfMerge )
+			if( thisPass.name == thatPass.name )	
+				if( KB[thisPass.name].cannotSelfMerge )
 					continue;
 			
 			if( mergeSimplePasses( thisPass, thatPass, this.options ) )
