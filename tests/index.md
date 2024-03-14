@@ -1,18 +1,16 @@
 # Performance Tests
 
-This page contains a few preliminary tests to measure and compare performance
-of the traditional use of postprocessing effects versus the new approach. To
-isolate rendering time, each test does N = 1, 2, ... 1024 renderings per frame.
-A temporal average is calculated every second and the final results are
-collected after continuous full-screen running for 20 seconds.
+This page contains preliminary tests to measure and compare performance of the
+traditional use of postprocessing effects versus the new approach. Each test
+renders the scene 1, 2, ... 1024 times per frame. A temporal average is
+calculated every second and the final results are collected after continuous
+full-screen running for around 20 seconds or more.
 
-<!--
-## Test 1<br><small>[Merging 2 shaders in one]</small>
+## Test 1<br><small>[Merging 2 simple effects]</small>
 
-This test merges 2 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader)
-and [ColorifyShader](../examples/index.md#colorifyshader))
-into one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
-Merging increases performance by **20%-40%** ([details](test-1/details.md)).
+This test merges 2 simple effects ([RGBShift](../examples/index.md#rgbshift)
+and [Colorify](../examples/index.md#colorify)). Performance is increased by
+**20%-30%** ([raw data](test-1/rawdata.md)) on various hardware configurations.
 
 Run: [test-1.html](test-1/index.html)
 	
@@ -20,6 +18,7 @@ Run: [test-1.html](test-1/index.html)
 
 
 
+<!--
 ## Test 2<br><small>[Merging 3 shaders in one]</small>
 
 This test merges 3 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader),

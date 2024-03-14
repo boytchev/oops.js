@@ -1,3 +1,52 @@
+# Test 1 Raw Data<br><small>[Merging 2 simple effects]</small>
+
+The tabular data contains: (1) number of renderings per frame; (2) averate FPS
+for EffectsComposer; (3) average FPS for Effects + oops.js; and (4) performance gain
+
+<small>
+
+```
+3/14/2024, 11:00:53 AM
+Resolution 1536x864 (1920x1080)
+Intel(R) UHD Graphics 630
+Direct3D11 vs_5_0 ps_5_0, D3D11
+
+1 144 144 (+0%)
+2 95.7 111 (+16%)
+4 56.0 66.1 (+18%)
+8 30.3 36.2 (+20%)
+16 15.9 19.1 (+20%)
+32 8.12 9.80 (+21%)
+64 4.10 4.46 (+9%)
+128 1.92 2.32 (+21%)
+256 0.920 1.13 (+23%)
+512 0.462 0.574 (+24%)
+1024 0.248 0.302 (+22%)
+```
+
+
+```
+3/14/2024, 11:14:19 AM
+Resolution 1536x864 (1920x1080)
+NVIDIA GeForce GTX 1660 Ti
+Direct3D11 vs_5_0 ps_5_0, D3D11
+
+1 144 144 (+0%)
+2 144 144 (+0%)
+4 144 144 (+0%)
+8 144 144 (+0%)
+16 144 144 (+0%)
+32 92.5 117 (+27%)
+64 47.0 59.9 (+27%)
+128 23.7 30.2 (+28%)
+256 11.9 15.2 (+28%)
+512 5.96 7.61 (+28%)
+1024 2.98 3.81 (+28%)
+```
+
+</small>
+
+<!--
 # Test 1<br><small>[Merging 2 shaders in one]</small>
 
 <img src="diagram.png">
@@ -23,6 +72,7 @@
 | 256 | 7.09 | 9.80 | +38% |
 | 512 | 3.56 | 4.91 | +38% |
 | 1024 | 1.80 | 2.67 | +49% |
+
 
 
 
@@ -68,3 +118,4 @@
 | 512 | 0.346 | 0.570 | +65% |
 | 1024 | 0.178 | 0.241 | +36% |
 
+-->

@@ -11,7 +11,7 @@ At the same time the library profides a simple user-friendly
 API to combine various postprocessing effects.
 
 * **[Effects Gallery](gallery/)** of individual postprocessing effects
-* **[Performance Tests](tests/)** of rendering postprocessed scenes
+* **[Performance Tests](tests/)** of different effects configurations
 
 <!--
 * [Tutorias](demos/) &ndash; a short tutorial of using Oops.js

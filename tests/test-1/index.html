@@ -82,7 +82,7 @@
 					renderer.setSize( innerWidth, innerHeight );
 					
 					for( var composer of composers )
-						effects.setSize( innerWidth, innerHeight );
+						composer.setSize( innerWidth, innerHeight );
 
 				} // init.onWindowResize
 
@@ -127,7 +127,7 @@
 			
 			composers = [ traditionalPostprocessing(), oopsPostprocessing( ) ];
 			
-			Stats.init( 'Test 1', ['EffectComposer', 'EffectComposer + OOPS'] );
+			Stats.init( 'Test 1', ['EffectComposer', 'Effects (oops.js)'] );
 			
 			
 

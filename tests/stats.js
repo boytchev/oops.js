@@ -43,7 +43,7 @@ function init( caption, composerNames )
 		'256 per frame': 256,
 		'512 per frame': 512,
 		'1024 per frame': 1024,
-	} ).name( 'Renders' ).onChange( reset );
+	} ).name( 'Renderings' ).onChange( reset );
 		
 	var guiFPS = gui.addFolder( 'FPS' );
 		guiFPS.add( params, 'fps' ).name( '<right>Measured</right>' );
