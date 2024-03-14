@@ -1,19 +1,27 @@
 ﻿.caption {
+	width: 15em;
+	background: black;
 	color: white;
 	position: absolute;
 	top: -1em;
-	left: 0.5em;
+	left: 0;
+	padding-left: 0.5em;
 	font-size: 1.5em;
 	font-family: Calibri;
 	font-weight: 900;
 }
 
 .subcaption {
+	width: 22.5em;
+	background: black;
 	color: white;
 	position: absolute;
-	top: 1em;
-	left: 0.75em;
+	top: 0.8em;
+	left: 0em;
+	padding-left: 0.75em;
+	padding-bottom: 0.2em;
 	font-family: Calibri;
 	font-weight: 100;
+	border-bottom-right-radius: 0.75em;
 }
 

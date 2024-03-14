@@ -1,16 +1,12 @@
-# Tests
+# Performance Tests
 
 This page contains a few preliminary tests to measure and compare performance
 of the traditional use of postprocessing effects versus the new approach. To
-isolate rendering time, each test runs N = 1, 2, ... 1024 renderings per frame.
+isolate rendering time, each test does N = 1, 2, ... 1024 renderings per frame.
 A temporal average is calculated every second and the final results are
 collected after continuous full-screen running for 20 seconds.
 
-The tests are preliminary and not statistically sound. However, they show that
-the reduction of number of passes increaces performance, but merging shaders with
-many samplings may actually decrease it (see Test 4).
-
-
+<!--
 ## Test 1<br><small>[Merging 2 shaders in one]</small>
 
 This test merges 2 simple shaders ([RGBShiftShader](../examples/index.md#rgbshiftshader)
@@ -82,3 +78,4 @@ Run: [test-5.html](test-5/index.html)
 	
 [<img src="test-5/snapshot.jpg">](test-5/index.html)
 
+-->
