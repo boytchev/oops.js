@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link rel="stylesheet" href="../../examples/styles.css">
+		<link rel="stylesheet" href="../../gallery/styles.css">
 		<script type="importmap">
 		  {
 			"imports": {
@@ -83,7 +83,7 @@
 					renderer.setSize( innerWidth, innerHeight );
 					
 					for( var composer of composers )
-						effects.setSize( innerWidth, innerHeight );
+						composer.setSize( innerWidth, innerHeight );
 
 				} // init.onWindowResize
 
@@ -122,9 +122,9 @@
 			function oopsPostprocessing( ) {
 	
 				var effects = new Effects( renderer )
-					.addEffect( 'RGBShift', {amount: 0.02} )
-					.addEffect( 'Colorify', {color:new THREE.Color(2,1,0.5)} )
-					.addEffect( 'BrightnessContrast', {brightness: -0.2, contrast: 0.5} );
+					.addEffect( RGBShiftShader, {amount: 0.02} )
+					.addEffect( ColorifyShader, {color:new THREE.Color(2,1,0.5)} )
+					.addEffect( BrightnessContrastShader, {brightness: -0.2, contrast: 0.5} );
 
 				return effects;
 				
@@ -134,7 +134,7 @@
 			
 			composers = [ traditionalPostprocessing(), oopsPostprocessing( ) ];
 			
-			Stats.init( 'Test 2', ['EffectComposer', 'EffectComposer + OOPS'] );
+			Stats.init( 'Test №2', ['EffectComposer', 'Effects (oops.js)'] );
 			
 			
 
