@@ -20,7 +20,7 @@ Run: [test-1.html](test-1/index.html)
 
 
 
-## Test №2: Three simple effects</small>
+## Test №2: Three simple effects
 
 This test merges 3 simple effects ([RGBShift](../gallery/index.md#rgbshift),
 [Colorify](../gallery/index.md#colorify) and [BrightnessContrast](../gallery/index.md#brightnesscontrast)).
