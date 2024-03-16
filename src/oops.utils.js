@@ -188,18 +188,21 @@ function showShaders( effects )
 		else
 			console.groupCollapsed( 'Pass '+pass.constructor.name );
 		
-		if( effects.options.shaders && pass.material?.vertexShader )
+		if( effects.options.SHADERS && pass.material?.vertexShader )
 		{
 			console.groupCollapsed( 'Vertex shader' );
 			console.log( pass.material.vertexShader );
 			console.groupEnd( ); // Vertex shader
-			
+		}
+
+		if( effects.options.SHADERS && pass.material?.fragmentShader )
+		{
 			console.groupCollapsed( 'Fragment shader' );
 			console.log( pass.material.fragmentShader );
 			console.groupEnd( ); // Fragment shader
 		}
 
-		if( effects.options.uniforms && pass.uniforms )
+		if( effects.options.SHADERS && pass.uniforms )
 		{
 			console.groupCollapsed( 'Uniforms' );
 			for( var [key, value] of Object.entries(pass.uniforms) )
@@ -211,7 +214,7 @@ function showShaders( effects )
 		
 	} // for pass
 	
-	if( effects.options.uniforms && effects.onSizeUniforms.length>0 )
+	if( effects.options.SHADERS && effects.onSizeUniforms.length>0 )
 	{
 		console.groupCollapsed( 'Size Uniforms' );
 		for( var key of effects.onSizeUniforms )
@@ -354,7 +357,7 @@ function mergeSimplePasses( thisPass, thatPass, options )
 		else
 		{
 			// warn that there is mismatch between shaders, maybe not simple shaders?
-			if( options.warning ) console.warn( `\twarning Two passes (${thisPass.id} and ${thatPass.id}) are declared as simple in the OOPS KB, but their vertex shaders are not compatible -- only the first vertex shader is used` );
+			if( options.WARNINGS ) console.warn( `\twarning Two passes (${thisPass.id} and ${thatPass.id}) are declared as simple in the OOPS KB, but their vertex shaders are not compatible -- only the first vertex shader is used` );
 		}
 	} // vertex shaders
 

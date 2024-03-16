@@ -11,6 +11,7 @@ At the same time the library profides a simple user-friendly
 API to combine various postprocessing effects.
 
 * **[Effects Gallery](gallery/)** of individual postprocessing effects
+* **[Short Tutorial](tutorial/)** of how to use and combine effects
 * **[Performance Tests](tests/)** of different effects configurations
 
 <!--

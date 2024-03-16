@@ -95,7 +95,7 @@ class Effects extends EffectComposer
 			throw new Error( `OOPS. The first parameter to addEffect(...) is not a Three.js shader, post-processing pass or pass class. It cannot be processed.` );
 		}
 
-		if( this.options.verbose ) console.log(`effect '${name}'`);
+		if( this.options.VERBOSE ) console.log(`effect '${name}'`);
 		
 		pass.name = name;
 		pass.id = this.passes.length;
@@ -141,7 +141,7 @@ class Effects extends EffectComposer
 			value = param2;
 		}
 		
-		if( this.options.verbose ) console.log(`\tparameter '${publicName}' (internally '${uniformName}')`);
+		if( this.options.VERBOSE ) console.log(`\tparameter '${publicName}' (internally '${uniformName}')`);
 
 		if( this.parameters[publicName] )
 		{
@@ -212,7 +212,7 @@ class Effects extends EffectComposer
 		this.updateRenameGlobals( );
 		this.updateMergePasses( );
 
-		if( this.options.verbose )
+		if( this.options.VERBOSE )
 		{
 			console.group( 'Statistics' );
 			for( var [key, value] of Object.entries(this.statistics) )
@@ -220,7 +220,7 @@ class Effects extends EffectComposer
 			console.groupEnd( 'Statistics' );
 		}
 		
-		if( this.options.shaders || this.options.uniforms ) showShaders( this );
+		if( this.options.SHADERS || this.options.VERBOSE ) showShaders( this );
 		
 	} // Effects.update	// update passes and shaders before renderings
 	
@@ -260,7 +260,7 @@ class Effects extends EffectComposer
 					if( bakeUniform( pass, 'fragmentShader', uniformName, uniformValue ) )
 					{
 						renameWord( pass, 'fragmentShader', uniformName, `${uniformName}_${pass.id}` );
-						if( this.options.verbose ) console.log( `\tbake '${uniformName}' (internally '${uniformName}_${pass.id}')` );
+						if( this.options.VERBOSE ) console.log( `\tbake '${uniformName}' (internally '${uniformName}_${pass.id}')` );
 						this.statistics['removed uniforms']++;
 					}
 					else
@@ -273,7 +273,7 @@ class Effects extends EffectComposer
 					}
 					else
 					{
-						if( this.options.warning ) console.warn( `\twarning '${uniformName}' in ${pass.name} cannot be baked` );
+						if( this.options.WARNINGS ) console.warn( `\twarning '${uniformName}' in ${pass.name} cannot be baked` );
 					}	
 					
 				} // for uniformName
@@ -298,7 +298,7 @@ class Effects extends EffectComposer
 				
 				// rename global ident
 				renameWord( pass, 'fragmentShader', ident, newIdent );
-				if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
+				if( this.options.VERBOSE ) console.log( `\trename '${ident}' to '${newIdent}'` );
 			} // for ident
 
 			// rename frame size uniforms (if any)			
@@ -343,7 +343,7 @@ class Effects extends EffectComposer
 					this.onSizeUniforms.push( onSize );
 						
 					renameWord( pass, 'fragmentShader', ident, newIdent );
-					if( this.options.verbose ) console.log( `\trename '${ident}' to '${newIdent}'` );
+					if( this.options.VERBOSE ) console.log( `\trename '${ident}' to '${newIdent}'` );
 				} // for name
 			}
 
@@ -374,7 +374,7 @@ class Effects extends EffectComposer
 	// attempt to merge passes
 	updateMergePasses( )
 	{
-		if( this.options.merging === false ) return;
+		if( this.options.MERGE === false ) return;
 		
 		// process all passes
 		for( var i = this.passes.length-2; i>0; i-- )
@@ -394,7 +394,7 @@ class Effects extends EffectComposer
 			
 			if( mergeSimplePasses( thisPass, thatPass, this.options ) )
 			{
-				if( this.options.verbose ) console.log('merged pass',i+1,'into',i);
+				if( this.options.VERBOSE ) console.log('merged pass',i+1,'into',i);
 				//console.log('@@@@oldpasses',this.passes)
 				this.removePass( thatPass );
 				this.statistics['removed passes']++;

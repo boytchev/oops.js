@@ -10,7 +10,7 @@
 		  "three":         "../../libs/build/three.module.js",
 		  "three/addons/": "../../libs/examples/jsm/",
 		  "oops":          "../../src/oops.js",
-		  "platons":	   "./T3-O247-O336.js"
+		  "platons":	   "./T2-T435-O525.js"
 		}
 	  }
 	</script>
@@ -18,13 +18,14 @@
 
 
 <body>
-	<a class="caption" href="../">&larr; Simple Effect</a>
+	<div class="caption">Adding passes</div>
 	
 	<script type="module">
 
+		// skip to the next comment
+		
 		import * as THREE from 'three';
-		import { SepiaShader } from 'three/addons/shaders/SepiaShader.js';
-		import { FilmShader } from 'three/addons/shaders/FilmShader.js';
+		import { AfterimagePass } from 'three/addons/postprocessing/AfterimagePass.js';
 		
 		import { Effects } from 'oops';
 		import { Platon } from 'platons';
@@ -32,6 +33,7 @@
 		var renderer = new THREE.WebGLRenderer( {antialias: true} );
 			renderer.setPixelRatio( window.devicePixelRatio );
 			renderer.setSize( innerWidth, innerHeight );
+			renderer.setAnimationLoop( animate );
 			document.body.appendChild( renderer.domElement );
 			document.body.style = 'margin: 0; overflow: hidden;';
 				
@@ -48,14 +50,6 @@
 		var platon = new Platon();
 			scene.add( platon );
 
-
-		// create the composer
-		var effects = new Effects( renderer )
-				.addEffect( SepiaShader )
-				.addEffect( FilmShader );
-
-
-		// adjust composer size
 		window.addEventListener( 'resize', onWindowResize );
 
 		function onWindowResize()
@@ -67,19 +61,18 @@
 			effects.setSize( innerWidth, innerHeight );
 		}
 
-		onWindowResize();
 
+		// next comment
 
-		// use the composer to render animation
-		function animate( t )
+		var effects = new Effects( renderer )
+				.addEffect( new AfterimagePass(0.99) );
+
+		function animate( time )
 		{
-			platon.rotation.set( Math.PI/6, t/1000, Math.PI/4*0 );
+			platon.rotation.set( Math.PI/6, time/1000, 0 );
 			effects.render( scene, camera );
 		}
 
-		renderer.setAnimationLoop( animate );
-
 	</script>
-
 </body>
 </html>

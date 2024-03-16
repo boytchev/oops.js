@@ -104,16 +104,16 @@
 
 			var effects = new Effects( renderer, {
 								verbose: true,
-								warning: true,
+								WARNINGS: true,
 								shaders: true,
 								uniforms: true,
-								merging: true,
+								MERGE: true,
 							} )
-					//.addEffect( RGBShiftShader, {amount: 0.1} )
-					//.addEffect( FocusShader )
-					//.addEffect( FXAAShader )
-					.addEffect( MotionBlurPassX )
-					.addParameter( 'damp' )
+					.addEffect( RGBShiftShader, {amount: 0.1} )
+					.addEffect( FXAAShader )
+					//	.addEffect( FocusShader )
+					//.addEffect( MotionBlurPassX )
+					//.addParameter( 'damp' )
 					//.addEffect( ColorifyShader, {color:new THREE.Color(1,-1,1)} )
 					//.addEffect( FreiChenShader )
 

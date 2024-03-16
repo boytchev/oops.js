@@ -12,7 +12,7 @@ full-screen running for around 20 seconds or more.
 
 This test merges 2 simple effects ([RGBShift](../gallery/index.md#rgbshift)
 and [Colorify](../gallery/index.md#colorify)). Performance is increased by
-**20%-30%** ([raw data](test-1/rawdata.md)).
+**20%-40%** ([raw data](test-1/rawdata.md)).
 
 Run: [test-1.html](test-1/index.html)
 	

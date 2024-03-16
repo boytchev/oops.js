@@ -10,7 +10,7 @@
 		  "three":         "../../libs/build/three.module.js",
 		  "three/addons/": "../../libs/examples/jsm/",
 		  "oops":          "../../src/oops.js",
-		  "platons":	   "./T4-T348-T549.js"
+		  "platons":	   "./T3-O247-O336.js"
 		}
 	  }
 	</script>
@@ -18,17 +18,23 @@
 
 
 <body>
-	<a class="caption" href="../">&larr; Static Parameters</a>
+	<div class="caption">Adding shaders</div>
 	
 	<script type="module">
 
+		// skip to the next comment
+		
 		import * as THREE from 'three';
+		import { FilmShader } from 'three/addons/shaders/FilmShader.js';
+		import { SepiaShader } from 'three/addons/shaders/SepiaShader.js';
+		
 		import { Effects } from 'oops';
 		import { Platon } from 'platons';
 
 		var renderer = new THREE.WebGLRenderer( {antialias: true} );
 			renderer.setPixelRatio( window.devicePixelRatio );
 			renderer.setSize( innerWidth, innerHeight );
+			renderer.setAnimationLoop( animate );
 			document.body.appendChild( renderer.domElement );
 			document.body.style = 'margin: 0; overflow: hidden;';
 				
@@ -36,7 +42,7 @@
 			camera.position.z = 3;
 
 		var scene = new THREE.Scene();
-			scene.background = new THREE.Color('Purple')
+			scene.background = new THREE.Color('MidnightBlue')
 			
 		var light = new THREE.DirectionalLight( 'white', 3 );
 			light.position.set( 0, 1, 1 );
@@ -45,16 +51,6 @@
 		var platon = new Platon();
 			scene.add( platon );
 
-
-		// create the effect composer
-		var zero = new THREE.Vector3(0,0,0);
-		var effects = new Effects( renderer )
-				.addEffect( 'Halftone', {radius: 80/1, rotate: zero, blending: 0.2} )
-				.addEffect( 'Halftone', {radius: 80/3, rotate: zero, blending: 0.4} )
-				.addEffect( 'Halftone', {radius: 80/9, rotate: zero, blending: 0.3} );
-
-
-		// adjust composer size
 		window.addEventListener( 'resize', onWindowResize );
 
 		function onWindowResize()
@@ -66,19 +62,19 @@
 			effects.setSize( innerWidth, innerHeight );
 		}
 
-		onWindowResize();
 
+		// next comment
 
-		// use the composer to render animation
-		function animate( t )
+		var effects = new Effects( renderer )
+				.addEffect( FilmShader )
+				.addEffect( SepiaShader );
+
+		function animate( time )
 		{
-			platon.rotation.set( Math.PI/6, t/1000, Math.PI/4*0 );
+			platon.rotation.set( Math.PI/6, time/1000, 0 );
 			effects.render( scene, camera );
 		}
 
-		renderer.setAnimationLoop( animate );
-
 	</script>
-
 </body>
 </html>
