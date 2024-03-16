@@ -6,11 +6,13 @@ renders the scene 1, 2, ... 1024 times per frame. A temporal average is
 calculated every second and the final results are collected after continuous
 full-screen running for around 20 seconds or more.
 
-## Test 1 &ndash; Merging 2 simple effects
+
+
+## Test №1: Two simple effects
 
 This test merges 2 simple effects ([RGBShift](../gallery/index.md#rgbshift)
 and [Colorify](../gallery/index.md#colorify)). Performance is increased by
-**20%-30%** ([raw data](test-1/rawdata.md)) on various hardware configurations.
+**20%-30%** ([raw data](test-1/rawdata.md)).
 
 Run: [test-1.html](test-1/index.html)
 	
@@ -18,21 +20,18 @@ Run: [test-1.html](test-1/index.html)
 
 
 
-<!--
-## Test 2<br><small>[Merging 3 shaders in one]</small>
+## Test №2: Three simple effects</small>
 
-This test merges 3 simple shaders ([RGBShiftShader](../gallery/index.md#rgbshiftshader),
-[ColorifyShader](../gallery/index.md#colorifyshader) and
-[BrightnessContrastShader](../gallery/index.md#brightnesscontrastshader)) into
-one OOPS shader. The shader is used by a ShaderPass in an EffectComposer.
-Merging increases performance by **40%-70%** ([details](test-2/details.md)).
+This test merges 3 simple effects ([RGBShift](../gallery/index.md#rgbshift),
+[Colorify](../gallery/index.md#colorify) and [BrightnessContrast](../gallery/index.md#brightnesscontrast)).
+Performance is increased by **40%-55%** ([raw data](test-2/rawdata.md)).
 
 Run: [test-2.html](test-2/index.html)
 	
 [<img src="test-2/snapshot.jpg">](test-2/index.html)
 
 
-
+<!--
 ## Test 3<br><small>[Merging 4 shaders in one]</small>
 
 This test merges 4 simple shaders ([RGBShiftShader](../gallery/index.md#rgbshiftshader),
