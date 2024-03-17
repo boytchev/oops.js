@@ -2,7 +2,16 @@
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
 
-const AVERAGE_WAIT_COUNT = 20; // default 20
+const AVERAGE_WAIT_COUNT_FPS120 = 15; // at FPS64+
+const AVERAGE_WAIT_COUNT_FPS80 = 14; // at FPS32+
+const AVERAGE_WAIT_COUNT_FPS60 = 13; // at FPS16+
+const AVERAGE_WAIT_COUNT_FPS40 = 12; // at FPS8+
+const AVERAGE_WAIT_COUNT_FPS20  = 11;  // at FPS4+
+const AVERAGE_WAIT_COUNT_FPS10  = 10;  // at FPS4+
+const AVERAGE_WAIT_COUNT_FPS5  = 9;  // at FPS4+
+const AVERAGE_WAIT_COUNT_FPS1  = 8;  // at FPS0+
+const AVERAGE_WAIT_COUNT_FPS0  = 7;  // at FPS0+
+var AVERAGE_WAIT_COUNT = 0;
 const REPORT_TIME_MS = 1000; // in miliseconds, default 1000
 
 
@@ -16,6 +25,8 @@ var autoComposers = 0,
 	autoText;
 
 var params = {index: 0, count: 1, fps: 'pending', avgfps: 'pending', auto: autoTestStart, autoInfo: '' };
+
+var firstRun = true;
 
 
 function init( caption, composerNames )
@@ -97,7 +108,7 @@ function autoTestStart( )
 		autoTestStop( );
 		return;
 	}
-	
+
 	oldResult = null;
 	autoText = '';
 	
@@ -106,9 +117,9 @@ function autoTestStart( )
 	autoRun = true;
 	
 	console.group( 'Automatic tests' );
+	showVideoCardInfo( );
 	console.log( (new Date()).toLocaleString() );
 	if( autoRun ) autoText += (new Date()).toLocaleString();
-	showVideoCardInfo( );
 	
 	params.index = 0;
 	params.count = 1;
@@ -125,6 +136,7 @@ function autoTestStart( )
 
 function autoTestNext( )
 {
+	avgfps = 0;
 	params.index++;
 	if( params.index >= autoComposers )
 	{
@@ -173,9 +185,9 @@ function showVideoCardInfo( ) {
 	}
 
 	var str = `
-Resolution ${innerWidth}x${innerHeight} (${devicePixelRatio*innerWidth}x${devicePixelRatio*innerHeight})
 ${gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)}
 `;
+//Resolution ${innerWidth}x${innerHeight} (${devicePixelRatio*innerWidth}x${devicePixelRatio*innerHeight})
 
 	console.log( str );
 	if( autoRun ) autoText += str;
@@ -186,6 +198,9 @@ ${gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)}
 
 function update( )
 {
+	if( firstRun ) showVideoCardInfo();
+	firstRun = false;
+	
 	counter++;
 	
 	var time = ( performance || Date ).now( );
@@ -196,10 +211,40 @@ function update( )
 	
 	var fps = 1000 * counter / (time-oldTime );
 	
-	if( reports == 1 )
+	if( reports == 1 || avgfps == 0 )
 		avgfps = fps;
 	else
-		avgfps = fps*0.3+0.7*avgfps;
+		avgfps = fps*0.5+0.5*avgfps;
+//
+const AVERAGE_WAIT_COUNT_FPS120 = 20; // at FPS64+
+const AVERAGE_WAIT_COUNT_FPS80 = 19; // at FPS32+
+const AVERAGE_WAIT_COUNT_FPS60 = 18; // at FPS16+
+const AVERAGE_WAIT_COUNT_FPS40 = 17; // at FPS8+
+const AVERAGE_WAIT_COUNT_FPS20  = 16;  // at FPS4+
+const AVERAGE_WAIT_COUNT_FPS10  = 15;  // at FPS4+
+const AVERAGE_WAIT_COUNT_FPS5  = 14;  // at FPS4+
+const AVERAGE_WAIT_COUNT_FPS1  = 13;  // at FPS0+
+const AVERAGE_WAIT_COUNT_FPS0  = 12;  // at FPS0+
+
+
+	if( avgfps>120 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS120;
+	else
+	if( avgfps>80 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS80;
+	else
+	if( avgfps>60 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS60;
+	else
+	if( avgfps>40 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS40;
+	else
+	if( avgfps>20 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS20;
+	else
+	if( avgfps>10 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS10;
+	else
+	if( avgfps>5 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS5;
+	else
+	if( avgfps>1 ) AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS1;
+	else
+		AVERAGE_WAIT_COUNT = AVERAGE_WAIT_COUNT_FPS0;
+
 	
 	params.fps = fps.toFixed(2) + ' fps';
 	if( reports < AVERAGE_WAIT_COUNT )
@@ -210,13 +255,13 @@ function update( )
 	oldTime = time;
 	counter = 0;
 	
-	if( reports == AVERAGE_WAIT_COUNT )
+	if( reports >= AVERAGE_WAIT_COUNT )
 	{
 		var avg;
 		
-		if( avgfps>=100 ) avg = avgfps.toFixed(0); else
-		if( avgfps>=10 ) avg = avgfps.toFixed(1); else
-		if( avgfps>=1 ) avg = avgfps.toFixed(2); else
+//		if( avgfps>=100 ) avg = avgfps.toFixed(0); else
+//		if( avgfps>=10 ) avg = avgfps.toFixed(1); else
+//		if( avgfps>=1 ) avg = avgfps.toFixed(2); else
 		avg = avgfps.toFixed(3);
 			
 		if( showGPU ) showVideoCardInfo( );	

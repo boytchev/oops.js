@@ -62,6 +62,12 @@ const KB = {
 	},
 
 	
+	FilmPass: {
+		onTime: 'time',
+//		onLoad: onLoadFilmShader,
+	},
+
+	
 	FilmShaderX: {
 		onTime: 'time',
 		onLoad: onLoadFilmShader,

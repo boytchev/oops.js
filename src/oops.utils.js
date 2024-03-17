@@ -73,7 +73,6 @@ function isPassClass( something )
 
 function isPass( something )
 {
-
 	return( something instanceof Pass );
 	
 } // isPass
